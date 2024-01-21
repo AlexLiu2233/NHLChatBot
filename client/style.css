@@ -1,0 +1,70 @@
+div.view {
+    width: 80%;
+}
+
+ul.menu {
+    padding: 0%;
+    margin: 0%;
+    list-style: none;
+}
+
+li.menu-item {
+    background-color: rgb(49, 69, 196);
+    width: 50%;
+    padding: 0%;
+    margin: 0%;
+    float: left;
+}
+
+a.menu-link {
+    background-color: rgb(49, 69, 196);
+    color: white;
+    display: block;
+    text-decoration: none;
+}
+
+a.menu-link:hover {
+    background-color: rgb(132, 145, 218);
+    color: rgb(254, 255, 145);
+}
+
+img.menu-icon {
+    width: 1em;
+    height: 1em;
+    filter: invert(100%);
+    vertical-align: middle;
+}
+
+div.app-view {
+    width: calc(100% / 5);
+}
+
+ul.room-list {
+    list-style: none;
+    padding: 0%;
+    margin: 0%;
+    background-color: rgb(245, 245, 245);
+}
+
+a.room-link {
+    text-decoration: none;
+    color: black;
+}
+
+li.room:hover {
+    background-color: rgb(213, 218, 243);
+}
+
+img.chat-icon {
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+}
+
+div.page-control {
+    background-color: rgb(49, 69, 196);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
