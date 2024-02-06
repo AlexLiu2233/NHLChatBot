@@ -51,6 +51,10 @@ class LobbyView {
     this.inputElem = this.elem.querySelector('.page-control-input'); // input element for new room name
     this.buttonElem = this.elem.querySelector('.page-control-button'); // button for creating a room
 
+    this.lobby.onNewRoom = (newRoom) => {
+      this.redrawList(); // Redraw the entire list whenever a new room is added
+    };
+
     this.redrawList(); // Call redrawList to draw the initial list of rooms
 
     this.buttonElem.addEventListener('click', () => {
@@ -196,6 +200,9 @@ class Lobby {
   addRoom(id, name, image = 'assets/everyone-icon.png', messages = []) {
     const newRoom = new Room(id, name, image, messages);
     this.rooms[id] = newRoom; // Add the new Room object to the rooms
+    if (this.onNewRoom) { // Check if the onNewRoom callback is defined
+      this.onNewRoom(newRoom); // Call the callback with the new room
+    }
   }
 }
 
