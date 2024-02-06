@@ -1,3 +1,6 @@
+var profile = { username: "Alice" };
+
+
 // Removes the contents of the given DOM element (equivalent to elem.innerHTML = '' but faster)
 function emptyDOM(elem) {
   while (elem.firstChild) elem.removeChild(elem.firstChild);
@@ -24,7 +27,7 @@ class LobbyView {
     this.elem = createDOM(
       '<div class="view" id="app-view">' +
       '<ul class="menu" id="app-menu">' +
-      '<li class="menu-item"><ah ref="#/">Rooms</a></li>' +
+      '<li class="menu-item"><a href="#/">Rooms</a></li>' +
       '<li class="menu-item"><a href="#/profile">Profile</a></li>' +
       '</ul>' +
       '<div id="page-view">' +
@@ -59,7 +62,7 @@ class LobbyView {
 
     this.buttonElem.addEventListener('click', () => {
       const roomName = this.inputElem.value;
-      if(roomName) {
+      if (roomName) {
         this.lobby.addRoom(Date.now().toString(), roomName); // Using current timestamp as unique ID
         this.redrawList();
         this.inputElem.value = ''; // Clear the input field
@@ -70,31 +73,31 @@ class LobbyView {
   // Code in part generated
   redrawList() {
     // First, clear the list to ensure it's empty before adding updated room list
-    this.listElem.innerHTML = ''; 
-  
+    this.listElem.innerHTML = '';
+
     // Loop through each room object in the lobby's rooms
     Object.values(this.lobby.rooms).forEach(room => {
       // Create a new list item element for each room
       const roomElement = document.createElement('li');
       roomElement.className = 'room'; // Assign class for styling
-  
+
       // Create a hyperlink for each room that leads to its chat page
       const roomLink = document.createElement('a');
       roomLink.className = 'room-link'; // Assign class for styling
       roomLink.href = `#/chat/${room.id}`; // Dynamic href that includes the room's ID
-  
+
       // Set the inner HTML of the link to display the room's image and name
       roomLink.innerHTML = `<img class="chat-icon" src="${room.image}"> ${room.name}`;
-  
+
       // Append the link to the list item
       roomElement.appendChild(roomLink);
-  
+
       // Finally, append the list item to the list element in the DOM
       this.listElem.appendChild(roomElement);
     });
   }
 }
-  
+
 
 // Define the ChatView class
 class ChatView {
@@ -126,16 +129,55 @@ class ChatView {
               </div>
           </div>
       </div>
-  </div>
-  `  
-    );
+  </div>`);
 
     this.titleElem = this.elem.querySelector('.room-name'); // h4 element for the room name
     this.chatElem = this.elem.querySelector('.message-list'); // div.message-list container
     this.inputElem = this.elem.querySelector('textarea'); // textarea for entering message
     this.buttonElem = this.elem.querySelector('button'); // button for sending message
 
+    this.room = null;
+    this.buttonElem.addEventListener('click', () => this.sendMessage());
+    this.inputElem.addEventListener('keyup', (event) => {
+      if (event.key === 'Enter' && !event.shiftKey) {
+        this.sendMessage();
+        event.preventDefault(); // Prevent newline for Enter alone
+      }
+    });
   }
+
+  sendMessage() {
+    const text = this.inputElem.value;
+    if (text.trim()) {
+      this.room.addMessage(profile.username, text);
+      this.inputElem.value = '';
+    }
+  }
+
+  setRoom(room) {
+    this.room = room;
+    this.titleElem.textContent = room.name;
+    emptyDOM(this.chatElem); // Clear existing messages
+
+    // Populate existing messages
+    room.messages.forEach(message => this.addMessageToDOM(message));
+
+    // Set up the listener for new messages
+    this.room.onNewMessage = (message) => {
+      this.addMessageToDOM(message);
+    };
+  }
+
+  // Helper method to add a message to the DOM, in part generated
+  addMessageToDOM(message) {
+    const messageElement = document.createElement('div');
+    messageElement.className = message.username === profile.username ? 'message my-message' : 'message';
+    messageElement.innerHTML = `<span class="message-user">${message.username}</span>: <span class="message-text">${message.text}</span>`;
+    this.chatElem.appendChild(messageElement);
+    this.chatElem.scrollTop = this.chatElem.scrollHeight; // Scroll to the bottom
+  }
+
+
 }
 
 // Define the ProfileView class
@@ -176,8 +218,13 @@ class Room {
 
   addMessage(username, text) {
     if (!text.trim()) return; // Ignore empty or whitespace-only messages
+
     const message = { username, text };
     this.messages.push(message);
+
+    if (this.onNewMessage) {
+      this.onNewMessage(message);
+    }
   }
 }
 
@@ -186,10 +233,10 @@ class Lobby {
   constructor() {
     // Initialize rooms with 4 Room objects
     this.rooms = {
-      '1': new Room('1', 'Room 1', 'assets/image1.png'),
-      '2': new Room('2', 'Room 2', 'assets/image2.png'),
-      '3': new Room('3', 'Room 3', 'assets/image3.png'),
-      '4': new Room('4', 'Room 4', 'assets/image4.png'),
+      'room-1': new Room('room-1', 'Room 1', 'assets/image1.png'),
+      'room-2': new Room('room-2', 'Room 2', 'assets/image2.png'),
+      'room-3': new Room('room-3', 'Room 3', 'assets/image3.png'),
+      'room-4': new Room('room-4', 'Room 4', 'assets/image4.png'),
     };
   }
 
@@ -206,8 +253,6 @@ class Lobby {
   }
 }
 
-
-
 // Define the main function that will be called once the page is loaded
 function main() {
 
@@ -222,16 +267,22 @@ function main() {
     emptyDOM(pageView); // Use the helper function to clear the content
 
     const hash = window.location.hash.replace('#/', '');
-    switch (hash) {
-      case '':
-        pageView.appendChild(lobbyView.elem);
-        break;
-      case "profile":
-        pageView.appendChild(profileView.elem);
-        break;
-      default:
+    if (hash === '') {
+      pageView.appendChild(lobbyView.elem);
+    } else if (hash === "profile") {
+      pageView.appendChild(profileView.elem);
+    } else if (hash.startsWith("chat/")) {
+      console.log("hash is " + hash);
+      const roomId = hash.split("/")[1]; // Directly use the part after "chat/" as the roomId
+      console.log("roomId is " + roomId);
+    
+      const room = lobby.getRoom(roomId); // Use the roomId to access the room
+      if (room) {
+        chatView.setRoom(room);
         pageView.appendChild(chatView.elem);
-        break;
+      } else {
+        console.log("Room not found");
+      }
     }
   }
 
