@@ -25,6 +25,32 @@ Service.getAllRooms = function () {
   });
 };
 
+Service.addRoom = function(data) {
+  // Start a network request to the server.
+  return fetch(this.origin + "/chat", {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+  // This function is called when the server responds.
+  .then(response => {
+    if (!response.ok) {
+      // If the server responded with an error, throw an Error -> catch
+      return response.text().then(text => {
+        throw new Error(text);
+      });
+    }
+    return response.json();
+  })
+  .catch(error => {
+    // If there was a problem the error will be passed along with a rejected Promise
+    return Promise.reject(error);
+  });
+}
+
+
 // Removes the contents of the given DOM element (equivalent to elem.innerHTML = '' but faster)
 function emptyDOM(elem) {
   while (elem.firstChild) elem.removeChild(elem.firstChild);
@@ -86,10 +112,21 @@ class LobbyView {
 
     this.buttonElem.addEventListener('click', () => {
       const roomName = this.inputElem.value;
+      const roomImage = '/path/to/default/image.png'; // You should update this path to the actual default image path for the room
+
       if (roomName) {
-        this.lobby.addRoom(Date.now().toString(), roomName); // Using current timestamp as unique ID
-        this.redrawList();
-        this.inputElem.value = ''; // Clear the input field
+        // Call the addRoom function from the Service object
+        Service.addRoom({ name: roomName, image: roomImage })
+          .then(newRoom => {
+            // Upon successful creation, add the room to the lobby and redraw the list
+            this.lobby.addRoom(newRoom.id, newRoom.name);
+            this.redrawList();
+            this.inputElem.value = ''; // Clear the input field
+          })
+          .catch(error => {
+            // Handle any errors that occurred during the request
+            console.error('Error creating room:', error);
+          });
       }
     });
   }
