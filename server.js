@@ -11,8 +11,8 @@ broker.on('connection', function connection(ws) {
 
 		// Convert Buffer messages into string
 		if (message instanceof Buffer) {
-            message = message.toString();
-        }
+			message = message.toString();
+		}
 
 		try {
 			// Assuming `message` should be a stringified JSON, otherwise it will throw an error.

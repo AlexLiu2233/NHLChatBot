@@ -10,7 +10,8 @@ Service.getAllRooms = function () {
     var xhr = new XMLHttpRequest();
     xhr.open("GET", this.origin + "/chat");
     xhr.onload = function () {
-      if (xhr.status === 200) {
+      if (xhr.status === 200) { 
+        // Request successful, resolve using response text
         resolve(JSON.parse(xhr.responseText));
       } else {
         // Create an Error object with the statusText from the server response
@@ -62,14 +63,6 @@ function createDOM(htmlString) {
   template.innerHTML = htmlString.trim();
   return template.content.firstChild;
 }
-
-// example usage
-var messageBox = createDOM(
-  `<div>
-          <span>Alice</span>
-          <span>Hello World</span>
-      </div>`
-);
 
 // Define the LobbyView class
 class LobbyView {
@@ -213,7 +206,7 @@ class ChatView {
     if (text.trim()) {
       this.room.addMessage(profile.username, text);
 
-      // Send message to server (Task 4)
+      // Send message to server {roomId, username, text} (Task 4)
       const message = { roomId: this.room.id, username: profile.username, text: text };
       this.socket.send(JSON.stringify(message)); 
 
@@ -336,20 +329,22 @@ function main() {
   const profileView = new ProfileView();
 
   function renderRoute() {
+    // Get element where page content will be displayed
     const pageView = document.getElementById('page-view');
     emptyDOM(pageView); // Use the helper function to clear the content
 
-    const hash = window.location.hash.replace('#/', '');
-    if (hash === '') {
+    const hash = window.location.hash.replace('#/', ''); // Remove '#/' from hash to get route name
+    if (hash === '') { // hash empty -> at Lobby View
       pageView.appendChild(lobbyView.elem);
-    } else if (hash === "profile") {
-      pageView.appendChild(profileView.elem);
-    } else if (hash.startsWith("chat/")) {
+    } else if (hash === "profile") { // hash profile -> at Profile View
+      pageView.appendChild(profileView.elem);  
+    } else if (hash.startsWith("chat/")) { // hash chat/ -> chatroom should be displayed
       console.log("hash is " + hash);
       const roomId = hash.split("/")[1]; // Directly use the part after "chat/" as the roomId
       console.log("roomId is " + roomId);
 
-      const room = lobby.getRoom(roomId); // Use the roomId to access the room
+      // Use the roomId to access the room; set in chat view + add to page
+      const room = lobby.getRoom(roomId); 
       if (room) {
         chatView.setRoom(room);
         pageView.appendChild(chatView.elem);
