@@ -1,5 +1,29 @@
 var profile = { username: "Alice" };
 
+var Service = {};
+
+Service.origin = window.location.origin;
+
+// Defines a function on the Service object for retrieving all chat rooms
+Service.getAllRooms = function () {
+  return new Promise((resolve, reject) => {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", this.origin + "/chat");
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+        resolve(JSON.parse(xhr.responseText));
+      } else {
+        // Create an Error object with the statusText from the server response
+        reject(new Error(xhr.responseText));
+      }
+    };
+    xhr.onerror = function () {
+      // A network error occurred. Reject the promise with a generic error message.
+      reject(new Error(xhr.responseText));
+    };
+    xhr.send();
+  });
+};
 
 // Removes the contents of the given DOM element (equivalent to elem.innerHTML = '' but faster)
 function emptyDOM(elem) {
@@ -231,13 +255,7 @@ class Room {
 // Define the Lobby class
 class Lobby {
   constructor() {
-    // Initialize rooms with 4 Room objects
-    this.rooms = {
-      'room-1': new Room('room-1', 'Room 1', 'assets/image1.png'),
-      'room-2': new Room('room-2', 'Room 2', 'assets/image2.png'),
-      'room-3': new Room('room-3', 'Room 3', 'assets/image3.png'),
-      'room-4': new Room('room-4', 'Room 4', 'assets/image4.png'),
-    };
+    this.rooms = {};
   }
 
   getRoom(roomId) {
@@ -275,7 +293,7 @@ function main() {
       console.log("hash is " + hash);
       const roomId = hash.split("/")[1]; // Directly use the part after "chat/" as the roomId
       console.log("roomId is " + roomId);
-    
+
       const room = lobby.getRoom(roomId); // Use the roomId to access the room
       if (room) {
         chatView.setRoom(room);
@@ -286,6 +304,27 @@ function main() {
     }
   }
 
+  function refreshLobby() {
+    Service.getAllRooms().then(function (roomsArray) {
+      roomsArray.forEach(function (room) {
+        if (lobby.rooms.hasOwnProperty(room.id)) {
+          var existingRoom = lobby.rooms[room.id];
+          existingRoom.name = room.name;
+          existingRoom.image = room.image;
+          // Assume server response includes a messages array for each room
+          existingRoom.messages = room.messages || existingRoom.messages;
+        } else {
+          // Also assume server provides messages array, use empty array as fallback
+          lobby.addRoom(room.id, room.name, room.image, room.messages || []);
+        }
+      });
+    }).catch(function (error) {
+      console.error("Failed to refresh lobby:", error);
+    });
+  }
+
+  // Set up the interval to call refreshLobby every 5 seconds
+  setInterval(refreshLobby, 5000);
 
   // Attach renderRoute to window's popstate event
   window.addEventListener('popstate', renderRoute);
@@ -293,7 +332,11 @@ function main() {
 
   // Call renderRoute once on initial load
   renderRoute();
-  cpen322.export(arguments.callee, { renderRoute, lobbyView, chatView, profileView, lobby });
+
+  // Instantiate Lobby and call refreshLobby once inside main function
+  refreshLobby();
+
+  cpen322.export(arguments.callee, { renderRoute, lobbyView, chatView, profileView, lobby, refreshLobby });
 }
 
 // Add the main function as the event handler for the window's load event
