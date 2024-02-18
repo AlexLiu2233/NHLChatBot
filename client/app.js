@@ -162,7 +162,8 @@ class LobbyView {
 
 // Define the ChatView class
 class ChatView {
-  constructor() {
+  constructor(socket) {
+    this.socket = socket
     this.elem = createDOM(
       `<div id="app-view">
       <ul id="app-menu">
@@ -211,6 +212,11 @@ class ChatView {
     const text = this.inputElem.value;
     if (text.trim()) {
       this.room.addMessage(profile.username, text);
+
+      // Send message to server (Task 4)
+      const message = { roomId: this.room.id, username: profile.username, text: text };
+      this.socket.send(JSON.stringify(message)); 
+
       this.inputElem.value = '';
     }
   }
@@ -311,10 +317,22 @@ class Lobby {
 // Define the main function that will be called once the page is loaded
 function main() {
 
+  const socket = new WebSocket('ws://localhost:8000');
+
+  // Add event listener to WebSocket
+  socket.addEventListener('message', function(event) {
+    // handle incoming message
+    const data = JSON.parse(event.data); 
+    const room = lobby.getRoom(data.roomId);
+    if (room) {
+      room.addMessage(data.username, data.text);
+    }
+  });
+
   // Instantiate view objects
   const lobby = new Lobby(); //new lobby object
   const lobbyView = new LobbyView(lobby);
-  const chatView = new ChatView();
+  const chatView = new ChatView(socket);
   const profileView = new ProfileView();
 
   function renderRoute() {
@@ -373,7 +391,7 @@ function main() {
   // Instantiate Lobby and call refreshLobby once inside main function
   refreshLobby();
 
-  cpen322.export(arguments.callee, { renderRoute, lobbyView, chatView, profileView, lobby, refreshLobby });
+  cpen322.export(arguments.callee, { renderRoute, lobbyView, chatView, profileView, lobby, refreshLobby, socket });
 }
 
 // Add the main function as the event handler for the window's load event
