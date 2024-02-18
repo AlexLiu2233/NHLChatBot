@@ -1,3 +1,42 @@
+// NPM ws module
+const WebSocket = require('ws');
+
+// WebSocket server that listens on a different port
+const broker = new WebSocket.Server({ port: 8000 });
+
+// WebSocket functionality to act as "message broker"
+broker.on('connection', function connection(ws) {
+	ws.binaryType = 'arraybuffer'; // on the client side
+	ws.on('message', function incoming(message) {
+
+		// Convert Buffer messages into string
+		if (message instanceof Buffer) {
+            message = message.toString();
+        }
+
+		try {
+			// Assuming `message` should be a stringified JSON, otherwise it will throw an error.
+			const parsedMessage = JSON.parse(message.toString());
+
+			// Iterate through all clients and broadcast the message
+			broker.clients.forEach(function each(client) {
+				if (client !== ws && client.readyState === WebSocket.OPEN) {
+					client.send(message);
+				}
+			});
+
+
+			// Add the message to the 'messages' object for the room
+			if (messages[parsedMessage.roomId]) {
+				messages[parsedMessage.roomId].push(parsedMessage);
+			}
+		} catch (e) {
+			console.error("Error parsing message", e);
+		}
+	});
+});
+
+
 const path = require('path');
 const fs = require('fs');
 const express = require('express');
@@ -9,6 +48,7 @@ function logRequest(req, res, next) {
 	next();
 }
 
+// Express Server
 const host = 'localhost';
 const port = 3000;
 const clientApp = path.join(__dirname, 'client');
@@ -83,4 +123,4 @@ app.post('/chat', (req, res) => {
 
 
 cpen322.connect('http://3.98.223.41/cpen322/test-a3-server.js');
-cpen322.export(__filename, { app, chatrooms, messages });
+cpen322.export(__filename, { app, chatrooms, messages, broker });
