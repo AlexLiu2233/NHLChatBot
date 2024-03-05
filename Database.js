@@ -5,27 +5,28 @@ const { MongoClient, ObjectID } = require('mongodb');	// require the mongodb dri
  * Database wraps a mongoDB connection to provide a higher-level abstraction layer
  * for manipulating the objects in our cpen322 app.
  */
-    function Database(mongoUrl, dbName){
+function Database(mongoUrl, dbName){
 	if (!(this instanceof Database)) return new Database(mongoUrl, dbName);
-	this.connected = new Promise((resolve, reject) => {
-		MongoClient.connect(
-			mongoUrl,
-			{
-				useNewUrlParser: true
-			},
-			(err, client) => {
-				if (err) reject(err);
-				else {
-					console.log('[MongoClient] Connected to ' + mongoUrl + '/' + dbName);
-					resolve(client.db(dbName));
-				}
-			}
-		)
+ 	this.connected = new Promise((resolve, reject) => {
+  		const client = new MongoClient(mongoUrl);
+
+  		client.connect()
+			.then(() => {
+   				// Ping the dbName to ensure it exists
+   				return client.db(dbName).command({ ping: 1 });
+  			})
+			.then(() => {
+  	 			console.log('[MongoClient] Connected to ' + mongoUrl + '/' + dbName);
+   				resolve(client.db(dbName));
+  			})
+  			.catch((err) => {
+  	 			reject(err);
+ 		 	});
 	});
-	this.status = () => this.connected.then(
-		db => ({ error: null, url: mongoUrl, db: dbName }),
-		err => ({ error: err })
-	);
+ 	this.status = () => this.connected.then(
+  		db => ({ error: null, url: mongoUrl, db: dbName }),
+  		err => ({ error: err })
+ 	);
 }
 
 Database.prototype.getRooms = function() {
