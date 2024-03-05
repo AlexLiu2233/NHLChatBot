@@ -95,17 +95,23 @@ app.listen(port, () => {
 });
 
 app.get('/chat', (req, res) => {
-    db.getRooms().then(rooms => {
-        let chatDetails = rooms.map(room => { // get from db instead of chatroom object
-            return {
-                id: room._id,
-                name: room.name,
-                image: room.image,
-                messages: messages[room._id] // Attach messages corresponding to the room _id
-            };
-        });
-        res.json(chatDetails);
-    }).catch(err => {
+	// Fetch chat rooms from the database
+    db.getRooms().then((rooms) => {
+		if (rooms) {
+			var tmp = [];
+			for (var i = 0; i < rooms.length; i++) {
+				var tmproom = { // obj with room info + messages, init from MongoDB
+					"_id": rooms[i]._id,
+					"name": rooms[i].name,
+					"image": rooms[i].image,
+					"messages": messages[rooms[i]._id]
+				};
+				tmp.push(tmproom);
+			}
+			res.json(tmp);
+		}
+	}).catch(err => {
+        console.error(err);
         res.status(500).send('Error fetching chat rooms');
     });
 });
