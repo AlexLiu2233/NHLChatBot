@@ -4,6 +4,11 @@ const WebSocket = require('ws');
 // WebSocket server that listens on a different port
 const broker = new WebSocket.Server({ port: 8000 });
 
+const Database = require('./Database.js')
+const db = new Database('mongodb://127.0.0.1:27017', 'cpen322-messenger');
+
+
+
 // WebSocket functionality to act as "message broker"
 broker.on('connection', function connection(ws) {
 	ws.binaryType = 'arraybuffer'; // on the client side
@@ -60,8 +65,14 @@ let chatrooms = [
 ];
 
 let messages = {};
-chatrooms.forEach(room => {
-	messages[room.id] = []; // initialize an empty array for each room
+
+// Call getRooms from the Database instance and initialize messages
+db.getRooms().then(rooms => {
+    rooms.forEach(room => {
+        messages[room._id.toString()] = []; // Initialize an empty array for each room using the _id field
+    });
+}).catch(err => {
+    console.error('Error initializing rooms:', err);
 });
 
 
@@ -84,15 +95,32 @@ app.listen(port, () => {
 });
 
 app.get('/chat', (req, res) => {
-	let chatDetails = chatrooms.map(room => {
-		return {
-			id: room.id,
-			name: room.name,
-			image: room.image,
-			messages: messages[room.id] // attach messages corresponding to the room id
-		};
-	});
-	res.json(chatDetails);
+    db.getRooms().then(rooms => {
+        let chatDetails = rooms.map(room => { // get from db instead of chatroom object
+            return {
+                id: room._id,
+                name: room.name,
+                image: room.image,
+                messages: messages[room._id] // Attach messages corresponding to the room _id
+            };
+        });
+        res.json(chatDetails);
+    }).catch(err => {
+        res.status(500).send('Error fetching chat rooms');
+    });
+});
+
+app.get('/chat/:room_id', (req, res) => {
+    const roomId = req.params.room_id; // Get the room ID from the request parameters
+    db.getRoom(roomId).then(room => {
+        if (room) {
+            res.json(room);
+        } else {
+            res.status(404).send(`Room ${roomId} was not found`);
+        }
+    }).catch(err => {
+        res.status(500).send(`Error fetching room: ${err}`);
+    });
 });
 
 // POST endpoint for creating a new chatroom
@@ -122,5 +150,5 @@ app.post('/chat', (req, res) => {
 });
 
 
-cpen322.connect('http://3.98.223.41/cpen322/test-a3-server.js');
-cpen322.export(__filename, { app, chatrooms, messages, broker });
+cpen322.connect('http://3.98.223.41/cpen322/test-a4-server.js');
+cpen322.export(__filename, { app, chatrooms, messages, broker, db });
