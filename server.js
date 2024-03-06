@@ -131,8 +131,23 @@ app.get('/chat/:room_id', (req, res) => {
 
 // POST endpoint for creating a new chatroom
 app.post('/chat', (req, res) => {
-   
-});
+	const newRoom = req.body; // Assume the new room's details are sent in the request body
+	if (!newRoom.name || !newRoom.image) {
+	  // If required fields are missing, send an HTTP 400 Bad Request response
+	  return res.status(400).send('Malformed request, name and image are required.');
+	}
+  
+	db.addRoom(newRoom).then(addedRoom => {
+	  // Add an entry to the messages object for the new room
+	  messages[addedRoom._id] = [];
+	  // Send the added room as the response
+	  res.status(201).json(addedRoom);
+	}).catch(err => {
+	  console.error(err);
+	  // If there's an error adding the room, send an HTTP 500 Internal Server Error response
+	  res.status(500).send('Internal Server Error');
+	});
+  });
 
 
 cpen322.connect('http://3.98.223.41/cpen322/test-a4-server.js');

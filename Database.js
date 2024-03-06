@@ -51,24 +51,28 @@ Database.prototype.getRooms = function(){
 }
 
 Database.prototype.addRoom = function (room) {
-	// Return a new promise
-	return new Promise((resolve, reject) => {
-	  // Reject if no room name is provided
+	return this.connected.then(db => {
 	  if (!room.name) {
-		return reject(new Error("Room name is required."));
+		return Promise.reject(new Error("Room name is required."));
 	  }
-	  // Attempt to connect to the database and add a room
-	  this.connected.then(db => {
+  
+	  // Create a new Promise for the insert operation
+	  return new Promise((resolve, reject) => {
 		db.collection("chatrooms").insertOne(room)
 		  .then(result => {
-			// Assign the MongoDB generated _id to the room object if insert was successful
-			room._id = result.insertedId;
-			resolve(room); // Resolve the promise with the updated room object
+			if (result.insertedId) {
+			  room._id = result.insertedId; // Set the _id of the room object to the insertedId
+			  resolve(room); // Resolve with the updated room object
+			} else {
+			  reject(new Error("Room insertion did not return an insertedId."));
+			}
 		  })
-		  .catch(reject); // Propagate any errors that occur during insertion
-	  }).catch(reject);
+		  .catch(reject); // If an error occurs during insertion, pass it to the reject function
+	  });
 	});
   };
+  
+  
   
 Database.prototype.getLastConversation = function(room_id, before){
 	return this.connected.then(db =>
