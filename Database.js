@@ -51,30 +51,25 @@ Database.prototype.getRooms = function(){
 }
 
 Database.prototype.addRoom = function (room) {
-	return this.connected.then(db =>
-		new Promise((resolve, reject) => {
-			
-			if (room["name"]) {
-				db.collection("chatrooms").insert(room, function (err) {
-					if (err) return;
-					resolve(db.collection("chatrooms").findOne({ _id: room._id }));
-				});
-			} else reject(new Error('name field is not valid'));
-		})
-	)
-}
-
-
-
-Database.prototype.addRoom = function(room){
-	return this.connected.then(db =>
-		new Promise((resolve, reject) => {
-			/* TODO: insert a room in the "chatrooms" collection in `db`
-			 * and resolve the newly added room */
-		})
-	)
-}
-
+	// Return a new promise
+	return new Promise((resolve, reject) => {
+	  // Reject if no room name is provided
+	  if (!room.name) {
+		return reject(new Error("Room name is required."));
+	  }
+	  // Attempt to connect to the database and add a room
+	  this.connected.then(db => {
+		db.collection("chatrooms").insertOne(room)
+		  .then(result => {
+			// Assign the MongoDB generated _id to the room object if insert was successful
+			room._id = result.insertedId;
+			resolve(room); // Resolve the promise with the updated room object
+		  })
+		  .catch(reject); // Propagate any errors that occur during insertion
+	  }).catch(reject);
+	});
+  };
+  
 Database.prototype.getLastConversation = function(room_id, before){
 	return this.connected.then(db =>
 		new Promise((resolve, reject) => {

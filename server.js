@@ -131,28 +131,7 @@ app.get('/chat/:room_id', (req, res) => {
 
 // POST endpoint for creating a new chatroom
 app.post('/chat', (req, res) => {
-	const data = req.body;
-	if (!data.name) {
-		// If name field is not present, send a 400 error
-		res.status(400).send('Name field is required');
-	} else {
-		// Create a new room with a unique ID
-		const newRoom = {
-			id: generateUniqueId(),
-			name: data.name,
-			image: data.image,
-			messages: []
-		};
-
-		// Add the new room to the chatrooms array
-		chatrooms.push(newRoom);
-
-		// Initialize an empty message array for the new room
-		messages[newRoom.id] = [];
-
-		// Send the new room back as the response
-		res.status(200).json(newRoom);
-	}
+   
 });
 
 
