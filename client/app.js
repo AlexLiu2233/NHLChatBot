@@ -51,6 +51,29 @@ Service.addRoom = function(data) {
   });
 }
 
+Service.getLastConversation = function(roomId, before) {
+  return new Promise((resolve, reject) => {
+      var xhr = new XMLHttpRequest();
+      var url = `${this.origin}/chat/${roomId}/messages`;
+
+      if (before) {
+          url += `?before=${before}`;
+      }
+
+      xhr.open("GET", url);
+      xhr.onload = function () {
+          if (xhr.status === 200) {
+              resolve(JSON.parse(xhr.responseText));
+          } else {
+              reject(new Error('Failed to load conversation: ' + xhr.statusText));
+          }
+      };
+      xhr.onerror = function () {
+          reject(new Error('Network error'));
+      };
+      xhr.send();
+  });
+};
 
 // Removes the contents of the given DOM element (equivalent to elem.innerHTML = '' but faster)
 function emptyDOM(elem) {

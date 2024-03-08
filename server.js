@@ -7,38 +7,41 @@ const broker = new WebSocket.Server({ port: 8000 });
 const Database = require('./Database.js')
 const db = new Database('mongodb://127.0.0.1:27017', 'cpen322-messenger');
 
+const messageBlockSize = 10;
 
 
 // WebSocket functionality to act as "message broker"
 broker.on('connection', function connection(ws) {
 	ws.binaryType = 'arraybuffer'; // on the client side
-	ws.on('message', function incoming(message) {
+	// Update this section inside the WebSocket 'message' event listener
+ws.on('message', function incoming(message) {
+    // Existing message parsing and broadcasting logic...
 
-		// Convert Buffer messages into string
-		if (message instanceof Buffer) {
-			message = message.toString();
-		}
+    const parsedMessage = JSON.parse(message.toString());
 
-		try {
-			// Assuming `message` should be a stringified JSON, otherwise it will throw an error.
-			const parsedMessage = JSON.parse(message.toString());
+    // Initialize the message array for the room if it doesn't exist
+    if (!messages[parsedMessage.roomId]) {
+        messages[parsedMessage.roomId] = [];
+    }
 
-			// Iterate through all clients and broadcast the message
-			broker.clients.forEach(function each(client) {
-				if (client !== ws && client.readyState === WebSocket.OPEN) {
-					client.send(message);
-				}
-			});
+    // Add the new message to the array for the room
+    messages[parsedMessage.roomId].push(parsedMessage);
 
+    // Check if the message block size is reached
+    if (messages[parsedMessage.roomId].length === messageBlockSize) {
+        const conversation = {
+            room_id: parsedMessage.roomId,
+            timestamp: Date.now(),
+            messages: messages[parsedMessage.roomId]
+        };
 
-			// Add the message to the 'messages' object for the room
-			if (messages[parsedMessage.roomId]) {
-				messages[parsedMessage.roomId].push(parsedMessage);
-			}
-		} catch (e) {
-			console.error("Error parsing message", e);
-		}
-	});
+        // Add the conversation to the database
+        db.addConversation(conversation).then(() => {
+            // Empty the messages array for the room after successfully saving the conversation
+            messages[parsedMessage.roomId] = [];
+        }).catch(err => console.error("Error saving conversation:", err));
+    }
+});
 });
 
 
@@ -129,6 +132,25 @@ app.get('/chat/:room_id', (req, res) => {
     });
 });
 
+app.get('/chat/:room_id/messages', (req, res) => {
+    const roomId = req.params.room_id;
+    const before = req.query.before ? parseInt(req.query.before, 10) : Date.now();
+
+    db.getLastConversation(roomId, before)
+        .then(conversation => {
+            if (conversation) {
+                res.json(conversation);
+            } else {
+                res.status(404).send('No conversation found');
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(500).send('Error fetching conversation');
+        });
+});
+
+
 // POST endpoint for creating a new chatroom
 app.post('/chat', (req, res) => {
 	const newRoom = req.body; // Assume the new room's details are sent in the request body
@@ -151,4 +173,4 @@ app.post('/chat', (req, res) => {
 
 
 cpen322.connect('http://3.98.223.41/cpen322/test-a4-server.js');
-cpen322.export(__filename, { app, chatrooms, messages, broker, db });
+cpen322.export(__filename, { app, chatrooms, messages, broker, db, messageBlockSize });
