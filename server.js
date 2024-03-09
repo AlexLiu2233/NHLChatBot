@@ -115,28 +115,25 @@ app.get('/chat', (req, res) => {
 	});
 });
 
-app.post('/chat/', (req, res) => {
-
-	if (!req.body.name || typeof req.body.name !== 'string') {
-        return res.status(400).send("Error: The name field is required.");
-    }
-
-	const { name, image } = req.body;
-	if (!name || !image) {
-		console.error("Error: The name and image fields are required.");
-		return res.status(400).send("Malformed request, name and image are required.");
-	}
-
-	db.addRoom({ name, image })
-		.then(addedRoom => {
-			console.log("Insert operation result:", addedRoom);
-			res.status(201).json(addedRoom); // Respond with the added room details
-		})
-		.catch(err => {
-			console.error(err);
-			res.status(500).send("Internal Server Error");
-		});
-});
+// POST endpoint for creating a new chatroom
+app.post('/chat', (req, res) => {
+	var result = req.body;
+		if (!result["name"]) {
+			res.status(400).send("data does not have a name field");
+		} else {
+			tmp_id = Math.random() + "";
+			var tmp_room = {
+				"_id": tmp_id,
+				"name": result["name"],
+				"image": result["image"],
+			};
+			messages[tmp_id] = [];
+			db.addRoom(tmp_room)
+				.then((tmp_room) => {
+					res.status(200).send(JSON.stringify(tmp_room));
+				});
+		}
+  });
 
 app.get('/chat/:room_id', (req, res) => {
 	const roomId = req.params.room_id; // Get the room ID from the request parameters

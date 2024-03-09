@@ -43,7 +43,7 @@ function Database(mongoUrl, dbName) {
 			const result = await db.collection('chatrooms').insertOne(room);
 			const insertedDocument = await db.collection('chatrooms').findOne({_id: result.insertedId});
 			// Convert ObjectId to string
-			insertedDocument._id = insertedDocument._id.toString();
+			//insertedDocument._id = insertedDocument._id.toString();
 			console.log("Insert operation result:", insertedDocument);
 			return insertedDocument;
 		} catch (error) {
