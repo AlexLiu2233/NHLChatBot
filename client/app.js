@@ -10,7 +10,7 @@ Service.getAllRooms = function () {
     var xhr = new XMLHttpRequest();
     xhr.open("GET", this.origin + "/chat");
     xhr.onload = function () {
-      if (xhr.status === 200) { 
+      if (xhr.status === 200) {
         // Request successful, resolve using response text
         resolve(JSON.parse(xhr.responseText));
       } else {
@@ -26,7 +26,7 @@ Service.getAllRooms = function () {
   });
 };
 
-Service.addRoom = function(data) {
+Service.addRoom = function (data) {
   // Start a network request to the server.
   return fetch(this.origin + "/chat", {
     method: 'POST',
@@ -35,45 +35,63 @@ Service.addRoom = function(data) {
     },
     body: JSON.stringify(data)
   })
-  // This function is called when the server responds.
-  .then(response => {
-    if (!response.ok) {
-      // If the server responded with an error, throw an Error -> catch
-      return response.text().then(text => {
-        throw new Error(text);
-      });
-    }
-    return response.json();
-  })
-  .catch(error => {
-    // If there was a problem the error will be passed along with a rejected Promise
-    return Promise.reject(error);
-  });
+    // This function is called when the server responds.
+    .then(response => {
+      if (!response.ok) {
+        // If the server responded with an error, throw an Error -> catch
+        return response.text().then(text => {
+          throw new Error(text);
+        });
+      }
+      return response.json();
+    })
+    .catch(error => {
+      // If there was a problem the error will be passed along with a rejected Promise
+      return Promise.reject(error);
+    });
 }
 
-Service.getLastConversation = function(roomId, before) {
+Service.getLastConversation = function (roomId, before) {
   return new Promise((resolve, reject) => {
-      var xhr = new XMLHttpRequest();
-      var url = `${this.origin}/chat/${roomId}/messages`;
+    var xhr = new XMLHttpRequest();
+    var url = `${this.origin}/chat/${roomId}/messages`;
 
-      if (before) {
-          url += `?before=${before}`;
+    if (before) {
+      url += `?before=${before}`;
+    }
+
+    xhr.open("GET", url);
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+        resolve(JSON.parse(xhr.responseText));
+      } else {
+        reject(new Error('Failed to load conversation: ' + xhr.statusText));
       }
-
-      xhr.open("GET", url);
-      xhr.onload = function () {
-          if (xhr.status === 200) {
-              resolve(JSON.parse(xhr.responseText));
-          } else {
-              reject(new Error('Failed to load conversation: ' + xhr.statusText));
-          }
-      };
-      xhr.onerror = function () {
-          reject(new Error('Network error'));
-      };
-      xhr.send();
+    };
+    xhr.onerror = function () {
+      reject(new Error('Network error'));
+    };
+    xhr.send();
   });
 };
+
+function* makeConversationLoader(room) {
+  let lastTimestamp = Date.now();
+  while (true) {
+      room.canLoadConversation = false; // Prevent concurrent loads
+      // Fetch the last conversation using the room's _id
+      const conversation = yield Service.getLastConversation(room._id, lastTimestamp);
+      
+      if (conversation) {
+          room.addConversation(conversation);
+          lastTimestamp = conversation.timestamp - 1;
+          room.canLoadConversation = true;
+      } else {
+          // Stop if no more conversations are available
+          break;
+      }
+  }
+}
 
 // Removes the contents of the given DOM element (equivalent to elem.innerHTML = '' but faster)
 function emptyDOM(elem) {
@@ -135,7 +153,7 @@ class LobbyView {
         Service.addRoom({ name: roomName, image: roomImage })
           .then(newRoom => {
             // Upon successful creation, add the room to the lobby and redraw the list
-            this.lobby.addRoom(newRoom.id, newRoom.name);
+            this.lobby.addRoom(newRoom.id, newRoom.name, newRoom.image);
             this.redrawList();
             this.inputElem.value = ''; // Clear the input field
           })
@@ -222,6 +240,22 @@ class ChatView {
         event.preventDefault(); // Prevent newline for Enter alone
       }
     });
+    this.chatElem.addEventListener('scroll', () => {
+      // Check if scrolled to the top and can load more conversations
+      if (this.chatElem.scrollTop === 0 && this.room.canLoadConversation) {
+        // Disable loading to prevent duplicate fetches
+        this.room.canLoadConversation = false;
+        this.room.getLastConversation.next().value
+          .then(conversation => {
+            if (conversation) {
+              // Re-enable loading after adding the conversation
+              this.room.canLoadConversation = true;
+            }
+            // If there's no conversation, it means we've loaded all available conversations
+          })
+          .catch(error => console.error("Error loading conversation:", error));
+      }
+    });
   }
 
   sendMessage() {
@@ -231,7 +265,7 @@ class ChatView {
 
       // Send message to server {roomId, username, text} (Task 4)
       const message = { roomId: this.room.id, username: profile.username, text: text };
-      this.socket.send(JSON.stringify(message)); 
+      this.socket.send(JSON.stringify(message));
 
       this.inputElem.value = '';
     }
@@ -240,6 +274,23 @@ class ChatView {
   setRoom(room) {
     this.room = room;
     this.titleElem.textContent = room.name;
+
+    this.room.onFetchConversation = (conversation) => {
+      // Calculate the current scroll height before adding new messages
+      const currentScrollHeight = this.chatElem.scrollHeight;
+      
+      // Add messages to the chat view
+      // Assuming you have a method to create message elements from conversation messages
+      conversation.messages.forEach(message => {
+          const messageElem = this.createMessageElement(message);
+          this.chatElem.prepend(messageElem); // Prepend to the chat view
+      });
+      
+      // Adjust scroll position to maintain view
+      const newScrollHeight = this.chatElem.scrollHeight;
+      this.chatElem.scrollTop += newScrollHeight - currentScrollHeight;
+  };
+
     emptyDOM(this.chatElem); // Clear existing messages
 
     // Populate existing messages
@@ -293,10 +344,12 @@ class ProfileView {
 // Define the Room class
 class Room {
   constructor(id, name, image = 'assets/everyone-icon.png', messages = []) {
-    this.id = id;
+    this._id = id;
     this.name = name;
     this.image = image;
     this.messages = messages;
+    this.canLoadConversation = true;
+    this.getLastConversation = makeConversationLoader(this);
   }
 
   addMessage(username, text) {
@@ -307,6 +360,16 @@ class Room {
 
     if (this.onNewMessage) {
       this.onNewMessage(message);
+    }
+  }
+
+  addConversation(conversation) {
+    // Prepend new messages to the beginning of the messages array
+    this.messages = [...conversation.messages, ...this.messages];
+
+    // Call the onFetchConversation callback, if defined
+    if (this.onFetchConversation) {
+      this.onFetchConversation(conversation);
     }
   }
 }
@@ -336,9 +399,9 @@ function main() {
   const socket = new WebSocket('ws://localhost:8000');
 
   // Add event listener to WebSocket
-  socket.addEventListener('message', function(event) {
+  socket.addEventListener('message', function (event) {
     // handle incoming message
-    const data = JSON.parse(event.data); 
+    const data = JSON.parse(event.data);
     const room = lobby.getRoom(data.roomId);
     if (room) {
       room.addMessage(data.username, data.text);
@@ -360,14 +423,14 @@ function main() {
     if (hash === '') { // hash empty -> at Lobby View
       pageView.appendChild(lobbyView.elem);
     } else if (hash === "profile") { // hash profile -> at Profile View
-      pageView.appendChild(profileView.elem);  
+      pageView.appendChild(profileView.elem);
     } else if (hash.startsWith("chat/")) { // hash chat/ -> chatroom should be displayed
       console.log("hash is " + hash);
       const roomId = hash.split("/")[1]; // Directly use the part after "chat/" as the roomId
       console.log("roomId is " + roomId);
 
       // Use the roomId to access the room; set in chat view + add to page
-      const room = lobby.getRoom(roomId); 
+      const room = lobby.getRoom(roomId);
       if (room) {
         chatView.setRoom(room);
         pageView.appendChild(chatView.elem);

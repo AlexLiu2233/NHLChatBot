@@ -20,24 +20,37 @@ function Database(mongoUrl, dbName) {
 		db => ({ error: null, url: mongoUrl, db: dbName }),
 		err => ({ error: err })
 	);
+
+	Database.prototype.getRoom = async function(room_id) {
+		const db = await this.connected;
+		try {
+			const _id = ObjectId.isValid(room_id) ? new ObjectId(room_id) : room_id;
+			const room = await db.collection('chatrooms').findOne({ _id: _id });
+			if (!room) return null;
+			return { ...room, _id: room._id.toString() };
+		} catch (error) {
+			console.error("Error fetching the room from MongoDB:", error);
+			throw error; 
+		}
+	}
+	
+	Database.prototype.addRoom = async function(room) {
+		const db = await this.connected;
+		if (!room.name) {
+			throw new Error("The name field is required.");
+		}
+		try {
+			const result = await db.collection('chatrooms').insertOne(room);
+			const insertedDocument = await db.collection('chatrooms').findOne({_id: result.insertedId});
+			// Convert ObjectId to string
+			insertedDocument._id = insertedDocument._id.toString();
+			console.log("Insert operation result:", insertedDocument);
+			return insertedDocument;
+		} catch (error) {
+			throw error;
+		}
+	}	
 }
-
-Database.prototype.getRoom = function (room_id) {
-    return this.connected.then(db =>
-        new Promise((resolve, reject) => {
-            db.collection("chatrooms").findOne({ _id: room_id })
-                .then(room => {
-                    if (room) {
-                        resolve(room); // Room found, resolve with the room object
-                    } else {
-                        resolve(null); // No room found, resolve with null
-                    }
-                })
-                .catch(reject); // Actual error, reject the promise
-        })
-    );
-};
-
 
 // Retrieves all rooms in Database
 Database.prototype.getRooms = function () {
@@ -51,74 +64,34 @@ Database.prototype.getRooms = function () {
 	)
 }
 
-Database.prototype.addRoom = function (room) {
-    return this.connected.then(db => {
-        // Check if the room name is provided
-        if (!room.name) {
-            return Promise.reject(new Error("Room name is required."));
-        }
-
-        // Insert the room into the "chatrooms" collection
-        return new Promise((resolve, reject) => {
-            db.collection("chatrooms").insertOne(room)
-                .then(result => {
-                    // Fetch the newly inserted document using the insertedId
-                    db.collection("chatrooms").findOne({ _id: result.insertedId })
-                        .then(insertedRoom => {
-                            if (insertedRoom) {
-                                resolve(insertedRoom); // Resolve with the newly added room object
-                            } else {
-                                reject(new Error("Failed to retrieve the newly added room."));
-                            }
-                        })
-                        .catch(error => reject(error));
-                })
-                .catch(error => reject(error));
-        });
-    });
-};
-
 Database.prototype.getLastConversation = function (room_id, before = Date.now()) {
-	return this.connected.then(db =>
-		new Promise((resolve, reject) => {
-			// Find the latest conversation with timestamp less than `before`
-			db.collection("conversations").find({ room_id: room_id, timestamp: { $lt: before } })
-				.sort({ timestamp: -1 }) // Sort by timestamp in descending order to get the latest conversation
-				.limit(1) // Only fetch the latest (one) conversation
-				.toArray() // Convert the find result to an array
-				.then(conversations => {
-					if (conversations.length === 0) {
-						resolve(null); // Resolve with null if no conversations were found
-					} else {
-						resolve(conversations[0]); // Resolve with the found conversation
-					}
-				})
-				.catch(reject); // Reject promise if there's an error
-		})
-	);
+    return this.connected.then(db =>
+        db.collection("conversations").find({ room_id: room_id, timestamp: { $lt: before } })
+            .sort({ timestamp: -1 })
+            .limit(1)
+            .toArray()
+            .then(conversations => {
+                if (conversations.length === 0) {
+                    return null;
+                } else {
+                    return conversations[0];
+                }
+            })
+    );
 };
 
 Database.prototype.addConversation = function (conversation) {
     return this.connected.then(db =>
         new Promise((resolve, reject) => {
-            // Check if all required fields are present
             if (!conversation.room_id || !conversation.timestamp || !conversation.messages) {
                 reject(new Error("All fields (room_id, timestamp, messages) are required."));
                 return;
             }
-
-            // Insert conversation into the "conversations" collection
             db.collection("conversations").insertOne(conversation)
                 .then(result => {
-                    // Assuming `result.insertedId` contains the ID of the newly inserted document
-                    // Fetch the newly inserted document using the insertedId
                     db.collection("conversations").findOne({ _id: result.insertedId })
                         .then(insertedConversation => {
-                            if (insertedConversation) {
-                                resolve(insertedConversation);
-                            } else {
-                                reject(new Error("Failed to retrieve the newly added conversation."));
-                            }
+                            resolve(insertedConversation);
                         })
                         .catch(error => reject(error));
                 })

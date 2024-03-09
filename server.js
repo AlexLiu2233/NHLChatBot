@@ -13,41 +13,41 @@ const messageBlockSize = 10;
 // WebSocket functionality to act as "message broker"
 broker.on('connection', function connection(ws) {
 	ws.binaryType = 'arraybuffer'; // on the client side
-	// Update this section inside the WebSocket 'message' event listener
-ws.on('message', function incoming(message) {
-    // Existing message parsing and broadcasting logic...
+	ws.on('message', function incoming(message) {
 
-    const parsedMessage = JSON.parse(message.toString());
+		// Convert Buffer messages into string
+		if (message instanceof Buffer) {
+			message = message.toString();
+		}
 
-    // Initialize the message array for the room if it doesn't exist
-    if (!messages[parsedMessage.roomId]) {
-        messages[parsedMessage.roomId] = [];
-    }
+		try {
+			// Assuming `message` should be a stringified JSON, otherwise it will throw an error.
+			const parsedMessage = JSON.parse(message.toString());
 
-    // Add the new message to the array for the room
-    messages[parsedMessage.roomId].push(parsedMessage);
+			// Iterate through all clients and broadcast the message
+			broker.clients.forEach(function each(client) {
+				if (client !== ws && client.readyState === WebSocket.OPEN) {
+					client.send(message);
+				}
+			});
 
-    // Check if the message block size is reached
-    if (messages[parsedMessage.roomId].length === messageBlockSize) {
-        const conversation = {
-            room_id: parsedMessage.roomId,
-            timestamp: Date.now(),
-            messages: messages[parsedMessage.roomId]
-        };
 
-        // Add the conversation to the database
-        db.addConversation(conversation).then(() => {
-            // Empty the messages array for the room after successfully saving the conversation
-            messages[parsedMessage.roomId] = [];
-        }).catch(err => console.error("Error saving conversation:", err));
-    }
+			// Add the message to the 'messages' object for the room
+			if (messages[parsedMessage.roomId]) {
+				messages[parsedMessage.roomId].push(parsedMessage);
+			}
+		} catch (e) {
+			console.error("Error parsing message", e);
+		}
+	});
 });
-});
-
 
 const path = require('path');
 const fs = require('fs');
 const express = require('express');
+
+const app = express();
+app.use(express.json());
 
 const cpen322 = require('./cpen322-tester.js');
 
@@ -71,16 +71,12 @@ let messages = {};
 
 // Call getRooms from the Database instance and initialize messages
 db.getRooms().then(rooms => {
-    rooms.forEach(room => {
-        messages[room._id.toString()] = []; // Initialize an empty array for each room using the _id field
-    });
+	rooms.forEach(room => {
+		messages[room._id.toString()] = []; // Initialize an empty array for each room using the _id field
+	});
 }).catch(err => {
-    console.error('Error initializing rooms:', err);
+	console.error('Error initializing rooms:', err);
 });
-
-
-// express app
-let app = express();
 
 function generateUniqueId() {
 	return Math.random().toString(36).substr(2, 9); // Simple unique ID generator
@@ -99,7 +95,7 @@ app.listen(port, () => {
 
 app.get('/chat', (req, res) => {
 	// Fetch chat rooms from the database
-    db.getRooms().then((rooms) => {
+	db.getRooms().then((rooms) => {
 		if (rooms) {
 			var tmp = [];
 			for (var i = 0; i < rooms.length; i++) {
@@ -114,22 +110,45 @@ app.get('/chat', (req, res) => {
 			res.json(tmp);
 		}
 	}).catch(err => {
-        console.error(err);
-        res.status(500).send('Error fetching chat rooms');
-    });
+		console.error(err);
+		res.status(500).send('Error fetching chat rooms');
+	});
+});
+
+app.post('/chat/', (req, res) => {
+
+	if (!req.body.name || typeof req.body.name !== 'string') {
+        return res.status(400).send("Error: The name field is required.");
+    }
+
+	const { name, image } = req.body;
+	if (!name || !image) {
+		console.error("Error: The name and image fields are required.");
+		return res.status(400).send("Malformed request, name and image are required.");
+	}
+
+	db.addRoom({ name, image })
+		.then(addedRoom => {
+			console.log("Insert operation result:", addedRoom);
+			res.status(201).json(addedRoom); // Respond with the added room details
+		})
+		.catch(err => {
+			console.error(err);
+			res.status(500).send("Internal Server Error");
+		});
 });
 
 app.get('/chat/:room_id', (req, res) => {
-    const roomId = req.params.room_id; // Get the room ID from the request parameters
-    db.getRoom(roomId).then(room => {
-        if (room) {
-            res.json(room);
-        } else {
-            res.status(404).send(`Room ${roomId} was not found`);
-        }
-    }).catch(err => {
-        res.status(500).send(`Error fetching room: ${err}`);
-    });
+	const roomId = req.params.room_id; // Get the room ID from the request parameters
+	db.getRoom(roomId).then(room => {
+		if (room) {
+			res.json(room);
+		} else {
+			res.status(404).send(`Room ${roomId} was not found`);
+		}
+	}).catch(err => {
+		res.status(500).send(`Error fetching room: ${err}`);
+	});
 });
 
 app.get('/chat/:room_id/messages', (req, res) => {
@@ -149,28 +168,6 @@ app.get('/chat/:room_id/messages', (req, res) => {
             res.status(500).send('Error fetching conversation');
         });
 });
-
-
-// POST endpoint for creating a new chatroom
-app.post('/chat', (req, res) => {
-	const newRoom = req.body; // Assume the new room's details are sent in the request body
-	if (!newRoom.name || !newRoom.image) {
-	  // If required fields are missing, send an HTTP 400 Bad Request response
-	  return res.status(400).send('Malformed request, name and image are required.');
-	}
-  
-	db.addRoom(newRoom).then(addedRoom => {
-	  // Add an entry to the messages object for the new room
-	  messages[addedRoom._id] = [];
-	  // Send the added room as the response
-	  res.status(201).json(addedRoom);
-	}).catch(err => {
-	  console.error(err);
-	  // If there's an error adding the room, send an HTTP 500 Internal Server Error response
-	  res.status(500).send('Internal Server Error');
-	});
-  });
-
 
 cpen322.connect('http://3.98.223.41/cpen322/test-a4-server.js');
 cpen322.export(__filename, { app, chatrooms, messages, broker, db, messageBlockSize });
