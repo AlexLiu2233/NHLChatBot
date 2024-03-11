@@ -14,27 +14,44 @@ const messageBlockSize = 10;
 broker.on('connection', function connection(ws) {
 	ws.binaryType = 'arraybuffer'; // on the client side
 	ws.on('message', function incoming(message) {
-
-		// Convert Buffer messages into string
 		if (message instanceof Buffer) {
 			message = message.toString();
 		}
-
+	
 		try {
-			// Assuming `message` should be a stringified JSON, otherwise it will throw an error.
-			const parsedMessage = JSON.parse(message.toString());
-
-			// Iterate through all clients and broadcast the message
+			const parsedMessage = JSON.parse(message);
+	
+			// Broadcast the message to all connected clients
 			broker.clients.forEach(function each(client) {
 				if (client !== ws && client.readyState === WebSocket.OPEN) {
 					client.send(message);
 				}
 			});
-
-
-			// Add the message to the 'messages' object for the room
-			if (messages[parsedMessage.roomId]) {
-				messages[parsedMessage.roomId].push(parsedMessage);
+	
+			// Initialize messages array for the room if it doesn't exist
+			if (!messages[parsedMessage.roomId]) {
+				messages[parsedMessage.roomId] = [];
+			}
+	
+			// Add the new message to the room's messages array
+			messages[parsedMessage.roomId].push(parsedMessage);
+	
+			// Check if the messages array has reached the messageBlockSize
+			if (messages[parsedMessage.roomId].length === messageBlockSize) {
+				// Create a new conversation object
+				const newConversation = {
+					room_id: parsedMessage.roomId,
+					timestamp: Date.now(),
+					messages: messages[parsedMessage.roomId]
+				};
+	
+				// Add the new conversation to the database
+				db.addConversation(newConversation).then(() => {
+					// Reset the messages array for the room
+					messages[parsedMessage.roomId] = [];
+				}).catch(err => {
+					console.error('Error saving conversation to database:', err);
+				});
 			}
 		} catch (e) {
 			console.error("Error parsing message", e);
