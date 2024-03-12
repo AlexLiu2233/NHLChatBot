@@ -76,22 +76,40 @@ Service.getLastConversation = function (roomId, before) {
 };
 
 function* makeConversationLoader(room) {
-  let lastTimestamp = Date.now();
-  while (true) {
-      room.canLoadConversation = false; // Prevent concurrent loads
-      // Fetch the last conversation using the room's _id
-      const conversation = yield Service.getLastConversation(room._id, lastTimestamp);
-      
-      if (conversation) {
-          room.addConversation(conversation);
-          lastTimestamp = conversation.timestamp - 1;
-          room.canLoadConversation = true;
-      } else {
-          // Stop if no more conversations are available
-          break;
-      }
+  let lastConversationTimestamp = room.timeCreated; // Use the initial timestamp, if available
+
+  while (room.canLoadConversation) {
+    room.canLoadConversation = false; // Prevent new loads while one is in progress
+
+    // Wrap the asynchronous fetch in a promise that the generator will yield.
+    // This allows the caller to wait for the promise to resolve before continuing.
+    const conversationPromise = new Promise((resolve, reject) => {
+      Service.getLastConversation(room.id, lastConversationTimestamp)
+        .then(conversation => {
+          if (!conversation) {
+            // If no conversation is returned, stop trying to load more
+            resolve(null);
+          } else {
+            // Update the timestamp for the next fetch, assuming 'conversation.timestamp' is the latest one
+            lastConversationTimestamp = conversation.timestamp;
+            room.addConversation(conversation);
+            room.canLoadConversation = true; // Allow further loads
+            resolve(conversation);
+          }
+        })
+        .catch(error => {
+          console.error("Failed to fetch conversation:", error);
+          reject(error); // In case of error, reject the promise
+        });
+    });
+
+    // Yield the conversation promise itself. The caller must handle the promise resolution.
+    yield conversationPromise;
   }
 }
+
+
+
 
 // Removes the contents of the given DOM element (equivalent to elem.innerHTML = '' but faster)
 function emptyDOM(elem) {
@@ -477,4 +495,3 @@ function main() {
 
 // Add the main function as the event handler for the window's load event
 window.addEventListener('load', main);
-
