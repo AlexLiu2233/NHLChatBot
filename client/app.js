@@ -250,7 +250,6 @@ class ChatView {
     this.inputElem = this.elem.querySelector('textarea'); // textarea for entering message
     this.buttonElem = this.elem.querySelector('button'); // button for sending message
 
-    this.room = null;
     this.buttonElem.addEventListener('click', () => this.sendMessage());
     this.inputElem.addEventListener('keyup', (event) => {
       if (event.key === 'Enter' && !event.shiftKey) {
@@ -258,23 +257,46 @@ class ChatView {
         event.preventDefault(); // Prevent newline for Enter alone
       }
     });
-    this.chatElem.addEventListener('scroll', () => {
-      // Check if scrolled to the top and can load more conversations
-      if (this.chatElem.scrollTop === 0 && this.room.canLoadConversation) {
-        // Disable loading to prevent duplicate fetches
-        this.room.canLoadConversation = false;
-        this.room.getLastConversation.next().value
-          .then(conversation => {
-            if (conversation) {
-              // Re-enable loading after adding the conversation
-              this.room.canLoadConversation = true;
-            }
-            // If there's no conversation, it means we've loaded all available conversations
-          })
-          .catch(error => console.error("Error loading conversation:", error));
-      }
-    });
+     // Adjusted wheel listener for infinite scrolling
+     this.chatElem.addEventListener('wheel', (event) => this.wheelFunction(event));
+
+     this.room = null; // Initialize room as null
   }
+
+  async wheelFunction(event) {
+    const isScrollingUp = event.deltaY < 0;
+    if (isScrollingUp && this.chatElem.scrollTop === 0 && this.room && this.room.canLoadConversation) {
+        this.room.canLoadConversation = false; // Prevent further loads while processing
+        
+        try {
+            const { value: conversation, done } = await this.room.getLastConversation.next();
+            
+            if (!done && conversation) {
+                // Add the loaded conversation at the top of the chat
+                conversation.messages.forEach(message => {
+                    this.addMessageToDOM(message, true); // true indicates prepending
+                });
+            }
+            this.room.canLoadConversation = !done;
+        } catch (error) {
+            console.error("Error loading conversation:", error);
+        }
+    }
+}
+
+addMessageToDOM(message, prepend = false) {
+  const messageElement = document.createElement('div');
+  messageElement.className = message.username === profile.username ? 'message my-message' : 'message';
+  messageElement.innerHTML = `<span class="message-user">${message.username}</span>: <span class="message-text">${message.text}</span>`;
+  
+  if (prepend) {
+      this.chatElem.prepend(messageElement);
+  } else {
+      this.chatElem.appendChild(messageElement);
+  }
+  // Adjust scroll only when appending new messages
+  if (!prepend) this.chatElem.scrollTop = this.chatElem.scrollHeight;
+}
 
   sendMessage() {
     const text = this.inputElem.value;
@@ -368,6 +390,7 @@ class Room {
     this.messages = messages;
     this.canLoadConversation = true;
     this.getLastConversation = makeConversationLoader(this);
+    this.timeCreated = Date.now();
   }
 
   addMessage(username, text) {
