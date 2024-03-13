@@ -9,6 +9,12 @@ const db = new Database('mongodb://127.0.0.1:27017', 'cpen322-messenger');
 
 const messageBlockSize = 10;
 
+const SessionManager = require('./SessionManager.js')
+const sessionManager = new SessionManager();
+
+const protectRoute = sessionManager.middleware;
+
+const crypto = require('crypto');
 
 // WebSocket functionality to act as "message broker"
 broker.on('connection', function connection(ws) {
@@ -110,6 +116,20 @@ app.listen(port, () => {
 	console.log(`${new Date()}  App Started. Listening on ${host}:${port}, serving ${clientApp}`);
 });
 
+app.use((err, req, res, next) => {
+    if (err instanceof SessionManager.Error) {
+        if (req.headers.accept === 'application/json') {
+            res.status(401).json({ error: err.message });
+        } else {
+            res.redirect('/login');
+        }
+    } else {
+        console.error(err); // Log the error
+        res.status(500).send("Internal Server Error");
+    }
+});
+
+
 app.get('/chat', (req, res) => {
 	// Fetch chat rooms from the database
 	db.getRooms().then((rooms) => {
@@ -183,5 +203,33 @@ app.get('/chat/:room_id/messages', (req, res) => {
         });
 });
 
+app.post('/login', (req, res) => {
+    const { username, password } = req.body;
+
+    db.getUser(username).then(user => {
+        if (!user) {
+            return res.redirect('/login'); // User not found
+        }
+        if (isCorrectPassword(password, user.password)) {
+            sessionManager.createSession(res, username);
+            return res.redirect('/'); // Authentication successful
+        } else {
+            return res.redirect('/login'); // Authentication failed
+        }
+    }).catch(err => {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    });
+});
+
+function isCorrectPassword(password, saltedHash) {
+    const salt = saltedHash.substring(0, 20);
+    const originalHash = saltedHash.substring(20);
+    const hash = crypto.createHash('sha256').update(password + salt).digest('base64');
+    return originalHash === hash;
+}
+
+
+
 cpen322.connect('http://3.98.223.41/cpen322/test-a5-server.js');
-cpen322.export(__filename, { app, chatrooms, messages, broker, db, messageBlockSize });
+cpen322.export(__filename, { app, messages, db, messageBlockSize, sessionManager, isCorrectPassword });
