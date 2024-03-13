@@ -458,7 +458,18 @@ function main() {
   // Instantiate Lobby and call refreshLobby once inside main function
   refreshLobby();
 
-  cpen322.export(arguments.callee, { renderRoute, lobbyView, chatView, profileView, lobby, refreshLobby, socket });
+  cpen322.export('app.js', {
+    renderRoute, 
+    lobbyView, 
+    chatView, 
+    profileView, 
+    lobby, 
+    refreshLobby, 
+    socket, 
+    makeConversationLoader, 
+    getLastConversation,
+    // Add any other variables or functions you want to export
+  });
 }
 
 // Add the main function as the event handler for the window's load event
