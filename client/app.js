@@ -250,6 +250,7 @@ class ChatView {
     this.inputElem = this.elem.querySelector('textarea'); // textarea for entering message
     this.buttonElem = this.elem.querySelector('button'); // button for sending message
 
+    this.room = null;
     this.buttonElem.addEventListener('click', () => this.sendMessage());
     this.inputElem.addEventListener('keyup', (event) => {
       if (event.key === 'Enter' && !event.shiftKey) {
@@ -257,46 +258,7 @@ class ChatView {
         event.preventDefault(); // Prevent newline for Enter alone
       }
     });
-     // Adjusted wheel listener for infinite scrolling
-     this.chatElem.addEventListener('wheel', (event) => this.wheelFunction(event));
-
-     this.room = null; // Initialize room as null
   }
-
-  async wheelFunction(event) {
-    const isScrollingUp = event.deltaY < 0;
-    if (isScrollingUp && this.chatElem.scrollTop === 0 && this.room && this.room.canLoadConversation) {
-        this.room.canLoadConversation = false; // Prevent further loads while processing
-        
-        try {
-            const { value: conversation, done } = await this.room.getLastConversation.next();
-            
-            if (!done && conversation) {
-                // Add the loaded conversation at the top of the chat
-                conversation.messages.forEach(message => {
-                    this.addMessageToDOM(message, true); // true indicates prepending
-                });
-            }
-            this.room.canLoadConversation = !done;
-        } catch (error) {
-            console.error("Error loading conversation:", error);
-        }
-    }
-}
-
-addMessageToDOM(message, prepend = false) {
-  const messageElement = document.createElement('div');
-  messageElement.className = message.username === profile.username ? 'message my-message' : 'message';
-  messageElement.innerHTML = `<span class="message-user">${message.username}</span>: <span class="message-text">${message.text}</span>`;
-  
-  if (prepend) {
-      this.chatElem.prepend(messageElement);
-  } else {
-      this.chatElem.appendChild(messageElement);
-  }
-  // Adjust scroll only when appending new messages
-  if (!prepend) this.chatElem.scrollTop = this.chatElem.scrollHeight;
-}
 
   sendMessage() {
     const text = this.inputElem.value;
@@ -305,7 +267,7 @@ addMessageToDOM(message, prepend = false) {
 
       // Send message to server {roomId, username, text} (Task 4)
       const message = { roomId: this.room.id, username: profile.username, text: text };
-      this.socket.send(JSON.stringify(message));
+      this.socket.send(JSON.stringify(message)); 
 
       this.inputElem.value = '';
     }
@@ -314,23 +276,6 @@ addMessageToDOM(message, prepend = false) {
   setRoom(room) {
     this.room = room;
     this.titleElem.textContent = room.name;
-
-    this.room.onFetchConversation = (conversation) => {
-      // Calculate the current scroll height before adding new messages
-      const currentScrollHeight = this.chatElem.scrollHeight;
-      
-      // Add messages to the chat view
-      // Assuming you have a method to create message elements from conversation messages
-      conversation.messages.forEach(message => {
-          const messageElem = this.createMessageElement(message);
-          this.chatElem.prepend(messageElem); // Prepend to the chat view
-      });
-      
-      // Adjust scroll position to maintain view
-      const newScrollHeight = this.chatElem.scrollHeight;
-      this.chatElem.scrollTop += newScrollHeight - currentScrollHeight;
-  };
-
     emptyDOM(this.chatElem); // Clear existing messages
 
     // Populate existing messages
