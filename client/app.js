@@ -467,8 +467,6 @@ function main() {
     refreshLobby, 
     socket, 
     makeConversationLoader, 
-    getLastConversation,
-    // Add any other variables or functions you want to export
   });
 }
 

@@ -203,26 +203,30 @@ app.get('/chat/:room_id/messages', (req, res) => {
         });
 });
 
-app.post('/login', (req, res) => {
+app.post('/login', async (req, res) => {
     const { username, password } = req.body;
 
-    db.getUser(username).then(user => {
+    try {
+        const user = await db.getUser(username);
         if (!user) {
             return res.redirect('/login'); // User not found
         }
-        if (isCorrectPassword(password, user.password)) {
+        
+        // Ensure isCorrectPassword is awaited if it's async
+        const passwordMatches = await isCorrectPassword(password, user.password);
+        if (passwordMatches) {
             sessionManager.createSession(res, username);
             return res.redirect('/'); // Authentication successful
         } else {
             return res.redirect('/login'); // Authentication failed
         }
-    }).catch(err => {
+    } catch (err) {
         console.error(err);
-        res.status(500).send('Internal Server Error');
-    });
+        res.status(500).send('Internal Server Error on /login POST');
+    }
 });
 
-function isCorrectPassword(password, saltedHash) {
+async function isCorrectPassword(password, saltedHash) {
     const salt = saltedHash.substring(0, 20);
     const originalHash = saltedHash.substring(20);
     const hash = crypto.createHash('sha256').update(password + salt).digest('base64');
