@@ -106,7 +106,6 @@ function generateUniqueId() {
 }
 
 
-app.use(express.json()) 						// to parse application/json
 app.use(express.urlencoded({ extended: true })) // to parse application/x-www-form-urlencoded
 app.use(logRequest);							// logging for debug
 
@@ -116,16 +115,30 @@ app.listen(port, () => {
 	console.log(`${new Date()}  App Started. Listening on ${host}:${port}, serving ${clientApp}`);
 });
 
-app.use((err, req, res, next) => {
-    if (err instanceof SessionManager.Error) {
-        if (req.headers.accept === 'application/json') {
-            res.status(401).json({ error: err.message });
-        } else {
-            res.redirect('/login');
+// Place this before protectRoute applications to ensure the login page is accessible
+app.use('/', express.static(clientApp, { extensions: ['html'] }));
+
+// Login route definition
+app.post('/login', async (req, res) => {
+    const { username, password } = req.body;
+
+    try {
+        const user = await db.getUser(username);
+        if (!user) {
+            return res.redirect('/login'); // User not found
         }
-    } else {
-        console.error(err); // Log the error
-        res.status(500).send("Internal Server Error");
+        
+        // Ensure isCorrectPassword is awaited if it's async
+        const passwordMatches = await isCorrectPassword(password, user.password);
+        if (passwordMatches) {
+            sessionManager.createSession(res, username);
+            return res.redirect('/'); // Authentication successful
+        } else {
+            return res.redirect('/login'); // Authentication failed
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error on /login POST');
     }
 });
 
@@ -223,6 +236,28 @@ app.post('/login', async (req, res) => {
     } catch (err) {
         console.error(err);
         res.status(500).send('Internal Server Error on /login POST');
+    }
+});
+
+// Secure static file serving with session validation
+app.get('/app.js', protectRoute, (req, res) => {
+    res.sendFile(path.join(clientApp, 'app.js'));
+});
+
+app.get(['/index', '/index.html', '/'], protectRoute, (req, res) => {
+    res.sendFile(path.join(clientApp, 'index.html'));
+});
+
+app.use((err, req, res, next) => {
+    if (err instanceof SessionManager.Error) {
+        if (req.headers.accept === 'application/json') {
+            res.status(401).json({ error: err.message });
+        } else {
+            res.redirect('/login');
+        }
+    } else {
+        console.error(err); // Log the error
+        res.status(500).send("Internal Server Error");
     }
 });
 
