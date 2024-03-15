@@ -59,6 +59,37 @@ app.post('/login', async (req, res) => {
     }
 });
 
+app.get('/chat/:room_id/messages', protectRoute, (req, res) => {
+    const roomId = req.params.room_id;
+    const before = req.query.before ? parseInt(req.query.before, 10) : Date.now();
+
+    db.getLastConversation(roomId, before)
+        .then(conversation => {
+            if (conversation) {
+                res.json(conversation);
+            } else {
+                res.status(404).send('No conversation found');
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(500).send('Error fetching conversation');
+        });
+});
+
+
+app.get('/chat/:room_id', protectRoute, (req, res) => {
+	const roomId = req.params.room_id; // Get the room ID from the request parameters
+	db.getRoom(roomId).then(room => {
+		if (room) {
+			res.json(room);
+		} else {
+			res.status(404).send(`Room ${roomId} was not found`);
+		}
+	}).catch(err => {
+		res.status(500).send(`Error fetching room: ${err}`);
+	});
+});
 
 app.get('/chat', protectRoute, (req, res) => {
 	// Fetch chat rooms from the database
@@ -102,35 +133,23 @@ app.post('/chat', protectRoute, (req, res) => {
 		}
   });
 
-app.get('/chat/:room_id', protectRoute, (req, res) => {
-	const roomId = req.params.room_id; // Get the room ID from the request parameters
-	db.getRoom(roomId).then(room => {
-		if (room) {
-			res.json(room);
-		} else {
-			res.status(404).send(`Room ${roomId} was not found`);
-		}
-	}).catch(err => {
-		res.status(500).send(`Error fetching room: ${err}`);
-	});
+app.get('/profile', protectRoute, (req, res) => {
+    // Assuming the session middleware adds a username to the request object
+    if (req.username) {
+        res.json({ username: req.username });
+    } else {
+        // This case should ideally never happen due to the protectRoute middleware
+        res.status(404).send('User not found');
+    }
 });
 
-app.get('/chat/:room_id/messages', protectRoute, (req, res) => {
-    const roomId = req.params.room_id;
-    const before = req.query.before ? parseInt(req.query.before, 10) : Date.now();
+// Secure static file serving with session validation
+app.get('/app.js', protectRoute, (req, res) => {
+    res.sendFile(path.join(clientApp, 'app.js'));
+});
 
-    db.getLastConversation(roomId, before)
-        .then(conversation => {
-            if (conversation) {
-                res.json(conversation);
-            } else {
-                res.status(404).send('No conversation found');
-            }
-        })
-        .catch(err => {
-            console.error(err);
-            res.status(500).send('Error fetching conversation');
-        });
+app.get(['/index', '/index.html', '/'], protectRoute, (req, res) => {
+    res.sendFile(path.join(clientApp, 'index.html'));
 });
 
 app.post('/login', async (req, res) => {
@@ -154,15 +173,6 @@ app.post('/login', async (req, res) => {
         console.error(err);
         res.status(500).send('Internal Server Error on /login POST');
     }
-});
-
-// Secure static file serving with session validation
-app.get('/app.js', protectRoute, (req, res) => {
-    res.sendFile(path.join(clientApp, 'app.js'));
-});
-
-app.get(['/index', '/index.html', '/'], protectRoute, (req, res) => {
-    res.sendFile(path.join(clientApp, 'index.html'));
 });
 
 app.use((err, req, res, next) => {
