@@ -30,7 +30,12 @@ function SessionManager() {
 	};
 
 	this.deleteSession = (request) => {
-		/* To be implemented */
+		const token = request.session;
+		if (token && sessions[token]) {
+			delete request.username; // Delete the username property of the request
+			delete request.session; // Delete the session property of the request
+			delete sessions[token]; // Delete the session object from the sessions object
+		}
 	};
 
 	const decodeCookieValue = (cookieValue) => decodeURIComponent(cookieValue);

@@ -26,6 +26,17 @@ Service.getAllRooms = function () {
   });
 };
 
+Service.getProfile = function () {
+  return fetch(`${this.origin}/profile`)
+      .then(response => {
+          if (!response.ok) {
+              throw new Error('Failed to fetch profile');
+          }
+          return response.json();
+      })
+      .catch(error => Promise.reject(error));
+};
+
 Service.addRoom = function (data) {
   // Start a network request to the server.
   return fetch(this.origin + "/chat", {
@@ -107,9 +118,6 @@ function* makeConversationLoader(room) {
     yield conversationPromise;
   }
 }
-
-
-
 
 // Removes the contents of the given DOM element (equivalent to elem.innerHTML = '' but faster)
 function emptyDOM(elem) {
@@ -399,6 +407,14 @@ function main() {
   const lobbyView = new LobbyView(lobby);
   const chatView = new ChatView(socket);
   const profileView = new ProfileView();
+
+  // Fetch profile information and update the profile object
+  Service.getProfile().then(data => {
+    profile.username = data.username; // Update the global profile object with the fetched username
+    // Optionally, you might want to update the UI here to reflect the new profile information
+}).catch(error => {
+    console.error('Error fetching profile:', error);
+});
 
   function renderRoute() {
     // Get element where page content will be displayed

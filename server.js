@@ -175,6 +175,15 @@ app.post('/login', async (req, res) => {
     }
 });
 
+app.get('/logout', (req, res) => {
+    // Deletes the session associated with the request
+    sessionManager.deleteSession(req);
+    // Clear the session cookie from the client
+    res.clearCookie('cpen322-session');
+    // Redirect the user to the login page
+    res.redirect('/login');
+});
+
 app.use((err, req, res, next) => {
     if (err instanceof SessionManager.Error) {
         if (req.headers.accept === 'application/json') {
