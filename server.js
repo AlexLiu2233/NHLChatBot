@@ -1,96 +1,23 @@
-// NPM ws module
-const WebSocket = require('ws');
-
-// WebSocket server that listens on a different port
-const broker = new WebSocket.Server({ port: 8000 });
-
-const Database = require('./Database.js')
-const db = new Database('mongodb://127.0.0.1:27017', 'cpen322-messenger');
-
-const messageBlockSize = 10;
-
-const SessionManager = require('./SessionManager.js')
-const sessionManager = new SessionManager();
-
-const protectRoute = sessionManager.middleware;
-
-const crypto = require('crypto');
-
-// WebSocket functionality to act as "message broker"
-broker.on('connection', function connection(ws) {
-	ws.binaryType = 'arraybuffer'; // on the client side
-	ws.on('message', function incoming(message) {
-		if (message instanceof Buffer) {
-			message = message.toString();
-		}
-	
-		try {
-			const parsedMessage = JSON.parse(message);
-	
-			// Broadcast the message to all connected clients
-			broker.clients.forEach(function each(client) {
-				if (client !== ws && client.readyState === WebSocket.OPEN) {
-					client.send(message);
-				}
-			});
-	
-			// Initialize messages array for the room if it doesn't exist
-			if (!messages[parsedMessage.roomId]) {
-				messages[parsedMessage.roomId] = [];
-			}
-	
-			// Add the new message to the room's messages array
-			messages[parsedMessage.roomId].push(parsedMessage);
-	
-			// Check if the messages array has reached the messageBlockSize
-			if (messages[parsedMessage.roomId].length === messageBlockSize) {
-				// Create a new conversation object
-				const newConversation = {
-					room_id: parsedMessage.roomId,
-					timestamp: Date.now(),
-					messages: messages[parsedMessage.roomId]
-				};
-	
-				// Add the new conversation to the database
-				db.addConversation(newConversation).then(() => {
-					// Reset the messages array for the room
-					messages[parsedMessage.roomId] = [];
-				}).catch(err => {
-					console.error('Error saving conversation to database:', err);
-				});
-			}
-		} catch (e) {
-			console.error("Error parsing message", e);
-		}
-	});
-});
-
+const express = require('express');
 const path = require('path');
 const fs = require('fs');
-const express = require('express');
-
+const WebSocket = require('ws');
+const crypto = require('crypto');
+const Database = require('./Database.js');
+const SessionManager = require('./SessionManager.js');
+const sessionManager = new SessionManager();
 const app = express();
-app.use(express.json());
-
+const db = new Database('mongodb://127.0.0.1:27017', 'cpen322-messenger');
+const broker = new WebSocket.Server({ port: 8000 });
+const messageBlockSize = 10;
+const protectRoute = sessionManager.middleware;
+const clientApp = path.join(__dirname, 'client');
+let messages = {};
 const cpen322 = require('./cpen322-tester.js');
-
-function logRequest(req, res, next) {
-	console.log(`${new Date()}  ${req.ip} : ${req.method} ${req.path}`);
-	next();
-}
 
 // Express Server
 const host = 'localhost';
 const port = 3000;
-const clientApp = path.join(__dirname, 'client');
-
-let chatrooms = [
-	{ id: "room1", name: "Chat Room 1", image: "image1.png" },
-	{ id: "room2", name: "Chat Room 2", image: "image2.png" }
-	// add as many rooms as needed
-];
-
-let messages = {};
 
 // Call getRooms from the Database instance and initialize messages
 db.getRooms().then(rooms => {
@@ -101,22 +28,12 @@ db.getRooms().then(rooms => {
 	console.error('Error initializing rooms:', err);
 });
 
-function generateUniqueId() {
-	return Math.random().toString(36).substr(2, 9); // Simple unique ID generator
-}
-
-
+app.use(express.json());
 app.use(express.urlencoded({ extended: true })) // to parse application/x-www-form-urlencoded
-app.use(logRequest);							// logging for debug
+app.use(logRequest);	
 
-// serve static files (client-side)
-app.use('/', express.static(clientApp, { extensions: ['html'] }));
-app.listen(port, () => {
-	console.log(`${new Date()}  App Started. Listening on ${host}:${port}, serving ${clientApp}`);
-});
-
-// Place this before protectRoute applications to ensure the login page is accessible
-app.use('/', express.static(clientApp, { extensions: ['html'] }));
+// Static files accessible without authentication
+app.use(express.static(clientApp, { extensions: ['html'] }));
 
 // Login route definition
 app.post('/login', async (req, res) => {
@@ -260,6 +177,65 @@ app.use((err, req, res, next) => {
         res.status(500).send("Internal Server Error");
     }
 });
+
+app.listen(port, () => {
+	console.log(`${new Date()}  App Started. Listening on ${host}:${port}, serving ${clientApp}`);
+});
+
+// WebSocket functionality to act as "message broker"
+broker.on('connection', function connection(ws) {
+	ws.binaryType = 'arraybuffer'; // on the client side
+	ws.on('message', function incoming(message) {
+		if (message instanceof Buffer) {
+			message = message.toString();
+		}
+	
+		try {
+			const parsedMessage = JSON.parse(message);
+	
+			// Broadcast the message to all connected clients
+			broker.clients.forEach(function each(client) {
+				if (client !== ws && client.readyState === WebSocket.OPEN) {
+					client.send(message);
+				}
+			});
+	
+			// Initialize messages array for the room if it doesn't exist
+			if (!messages[parsedMessage.roomId]) {
+				messages[parsedMessage.roomId] = [];
+			}
+	
+			// Add the new message to the room's messages array
+			messages[parsedMessage.roomId].push(parsedMessage);
+	
+			// Check if the messages array has reached the messageBlockSize
+			if (messages[parsedMessage.roomId].length === messageBlockSize) {
+				// Create a new conversation object
+				const newConversation = {
+					room_id: parsedMessage.roomId,
+					timestamp: Date.now(),
+					messages: messages[parsedMessage.roomId]
+				};
+	
+				// Add the new conversation to the database
+				db.addConversation(newConversation).then(() => {
+					// Reset the messages array for the room
+					messages[parsedMessage.roomId] = [];
+				}).catch(err => {
+					console.error('Error saving conversation to database:', err);
+				});
+			}
+		} catch (e) {
+			console.error("Error parsing message", e);
+		}
+	});
+});
+
+function logRequest(req, res, next) {
+	console.log(`${new Date()}  ${req.ip} : ${req.method} ${req.path}`);
+	next();
+}
+
 
 async function isCorrectPassword(password, saltedHash) {
     const salt = saltedHash.substring(0, 20);
