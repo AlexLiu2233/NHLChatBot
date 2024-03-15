@@ -183,52 +183,47 @@ app.listen(port, () => {
 });
 
 // WebSocket functionality to act as "message broker"
-broker.on('connection', function connection(ws) {
-	ws.binaryType = 'arraybuffer'; // on the client side
-	ws.on('message', function incoming(message) {
-		if (message instanceof Buffer) {
-			message = message.toString();
-		}
-	
-		try {
-			const parsedMessage = JSON.parse(message);
-	
-			// Broadcast the message to all connected clients
-			broker.clients.forEach(function each(client) {
-				if (client !== ws && client.readyState === WebSocket.OPEN) {
-					client.send(message);
-				}
-			});
-	
-			// Initialize messages array for the room if it doesn't exist
-			if (!messages[parsedMessage.roomId]) {
-				messages[parsedMessage.roomId] = [];
-			}
-	
-			// Add the new message to the room's messages array
-			messages[parsedMessage.roomId].push(parsedMessage);
-	
-			// Check if the messages array has reached the messageBlockSize
-			if (messages[parsedMessage.roomId].length === messageBlockSize) {
-				// Create a new conversation object
-				const newConversation = {
-					room_id: parsedMessage.roomId,
-					timestamp: Date.now(),
-					messages: messages[parsedMessage.roomId]
-				};
-	
-				// Add the new conversation to the database
-				db.addConversation(newConversation).then(() => {
-					// Reset the messages array for the room
-					messages[parsedMessage.roomId] = [];
-				}).catch(err => {
-					console.error('Error saving conversation to database:', err);
-				});
-			}
-		} catch (e) {
-			console.error("Error parsing message", e);
-		}
-	});
+// Middleware to protect WebSocket connections
+broker.on('connection', (ws, req) => {
+    try {
+        const cookieString = req.headers.cookie;
+        const cookies = cookieString.split(';').reduce((acc, cookie) => {
+            const [key, value] = cookie.split('=').map(c => c.trim());
+            acc[key] = value;
+            return acc;
+        }, {});
+
+        const sessionToken = cookies['cpen322-session'];
+        if (!sessionManager.getUsername(sessionToken)) {
+            console.log('Invalid session token. Closing WebSocket connection.');
+            ws.close(); // Close connection if session is invalid
+            return;
+        }
+
+        ws.username = sessionManager.getUsername(sessionToken); // Store username in WebSocket object
+    } catch (error) {
+        console.error('Error during WebSocket connection:', error);
+        ws.close();
+    }
+    
+    ws.on('message', (message) => {
+        let parsedMessage;
+        try {
+            parsedMessage = JSON.parse(message);
+            // Overwrite username with the one from session
+            parsedMessage.username = ws.username;
+            const forwardMessage = JSON.stringify(parsedMessage);
+            
+            // Broadcast the message to all connected clients
+            broker.clients.forEach((client) => {
+                if (client !== ws && client.readyState === WebSocket.OPEN) {
+                    client.send(forwardMessage);
+                }
+            });
+        } catch (e) {
+            console.error("Error parsing message", e);
+        }
+    });
 });
 
 function logRequest(req, res, next) {
