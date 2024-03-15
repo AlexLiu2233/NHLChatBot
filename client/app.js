@@ -299,10 +299,14 @@ class ChatView {
   addMessageToDOM(message) {
     const messageElement = document.createElement('div');
     messageElement.className = message.username === profile.username ? 'message my-message' : 'message';
-    messageElement.innerHTML = `<span class="message-user">${message.username}</span>: <span class="message-text">${message.text}</span>`;
+
+    // Sanitize the message text by escaping HTML special characters
+    const sanitizedText = message.text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+
+    messageElement.innerHTML = `<span class="message-user">${message.username}</span>: <span class="message-text">${sanitizedText}</span>`;
     this.chatElem.appendChild(messageElement);
     this.chatElem.scrollTop = this.chatElem.scrollHeight; // Scroll to the bottom
-  }
+}
 
 
 }

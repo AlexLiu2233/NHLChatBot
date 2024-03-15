@@ -225,21 +225,25 @@ broker.on('connection', (ws, req) => {
         ws.close();
     }
     
-    ws.on('message', (message) => {
+	ws.on('message', (message) => {
         let parsedMessage;
         try {
             parsedMessage = JSON.parse(message);
-            // Overwrite username with the one from session
+            
+            // Sanitize the message text by escaping HTML special characters
+            parsedMessage.text = parsedMessage.text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+
+            // Overwrite username with the one from session, ensure message safety
             parsedMessage.username = ws.username;
             const forwardMessage = JSON.stringify(parsedMessage);
             
-            // Broadcast the message to all connected clients
+            // Broadcast the sanitized message to all connected clients
             broker.clients.forEach((client) => {
                 if (client !== ws && client.readyState === WebSocket.OPEN) {
                     client.send(forwardMessage);
                 }
             });
-        } catch (e) {
+        }  catch (e) {
             console.error("Error parsing message", e);
         }
     });
