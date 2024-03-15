@@ -60,7 +60,7 @@ app.post('/login', async (req, res) => {
 });
 
 
-app.get('/chat', (req, res) => {
+app.get('/chat', protectRoute, (req, res) => {
 	// Fetch chat rooms from the database
 	db.getRooms().then((rooms) => {
 		if (rooms) {
@@ -83,7 +83,7 @@ app.get('/chat', (req, res) => {
 });
 
 // POST endpoint for creating a new chatroom
-app.post('/chat', (req, res) => {
+app.post('/chat', protectRoute, (req, res) => {
 	var result = req.body;
 		if (!result["name"]) {
 			res.status(400).send("data does not have a name field");
@@ -102,7 +102,7 @@ app.post('/chat', (req, res) => {
 		}
   });
 
-app.get('/chat/:room_id', (req, res) => {
+app.get('/chat/:room_id', protectRoute, (req, res) => {
 	const roomId = req.params.room_id; // Get the room ID from the request parameters
 	db.getRoom(roomId).then(room => {
 		if (room) {
@@ -115,7 +115,7 @@ app.get('/chat/:room_id', (req, res) => {
 	});
 });
 
-app.get('/chat/:room_id/messages', (req, res) => {
+app.get('/chat/:room_id/messages', protectRoute, (req, res) => {
     const roomId = req.params.room_id;
     const before = req.query.before ? parseInt(req.query.before, 10) : Date.now();
 
