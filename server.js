@@ -32,9 +32,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true })) // to parse application/x-www-form-urlencoded
 app.use(logRequest);	
 
-// Static files accessible without authentication
-app.use(express.static(clientApp, { extensions: ['html'] }));
-
 // Login route definition
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
@@ -183,6 +180,10 @@ app.get('/logout', (req, res) => {
     // Redirect the user to the login page
     res.redirect('/login');
 });
+
+
+// Static files accessible without authentication
+app.use(express.static(clientApp, { extensions: ['html'] }));
 
 app.use((err, req, res, next) => {
     if (err instanceof SessionManager.Error) {
