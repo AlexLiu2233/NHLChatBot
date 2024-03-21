@@ -179,7 +179,7 @@ class LobbyView {
         Service.addRoom({ name: roomName, image: roomImage })
           .then(newRoom => {
             // Upon successful creation, add the room to the lobby and redraw the list
-            this.lobby.addRoom(newRoom.id, newRoom.name, newRoom.image);
+            this.lobby.addRoom(newRoom._id, newRoom.name, newRoom.image);
             this.redrawList();
             this.inputElem.value = ''; // Clear the input field
           })
@@ -478,15 +478,9 @@ function main() {
   // Instantiate Lobby and call refreshLobby once inside main function
   refreshLobby();
 
-  cpen322.export('app.js', {
-    renderRoute, 
-    lobbyView, 
+  cpen322.export(main, { 
     chatView, 
-    profileView, 
     lobby, 
-    refreshLobby, 
-    socket, 
-    makeConversationLoader, 
   });
 }
 
