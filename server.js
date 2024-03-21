@@ -118,15 +118,15 @@ app.post('/chat', protectRoute, (req, res) => {
 		} else {
 			tmp_id = Math.random() + "";
 			var tmp_room = {
-				"_id": tmp_id,
 				"name": result["name"],
 				"image": result["image"],
 			};
 			messages[tmp_id] = [];
 			db.addRoom(tmp_room)
-				.then((tmp_room) => {
-					res.status(200).send(JSON.stringify(tmp_room));
-				});
+                .then((insertedRoom) => {
+                    messages[insertedRoom._id.toString()] = [];
+                    res.status(200).send(JSON.stringify(insertedRoom));
+            });
 		}
   });
 

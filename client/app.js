@@ -205,7 +205,7 @@ class LobbyView {
       // Create a hyperlink for each room that leads to its chat page
       const roomLink = document.createElement('a');
       roomLink.className = 'room-link'; // Assign class for styling
-      roomLink.href = `#/chat/${room.id}`; // Dynamic href that includes the room's ID
+      roomLink.href = `#/chat/${room._id}`; // Dynamic href that includes the room's ID
 
       // Set the inner HTML of the link to display the room's image and name
       roomLink.innerHTML = `<img class="chat-icon" src="${room.image}"> ${room.name}`;
@@ -449,15 +449,15 @@ function main() {
   function refreshLobby() {
     Service.getAllRooms().then(function (roomsArray) {
       roomsArray.forEach(function (room) {
-        if (lobby.rooms.hasOwnProperty(room.id)) {
-          var existingRoom = lobby.rooms[room.id];
+        if (lobby.rooms.hasOwnProperty(room._id)) {
+          var existingRoom = lobby.rooms[room._id];
           existingRoom.name = room.name;
           existingRoom.image = room.image;
           // Assume server response includes a messages array for each room
           existingRoom.messages = room.messages || existingRoom.messages;
         } else {
           // Also assume server provides messages array, use empty array as fallback
-          lobby.addRoom(room.id, room.name, room.image, room.messages || []);
+          lobby.addRoom(room._id, room.name, room.image, room.messages || []);
         }
       });
     }).catch(function (error) {
