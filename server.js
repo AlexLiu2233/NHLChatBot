@@ -265,5 +265,5 @@ async function isCorrectPassword(password, saltedHash) {
 
 
 
-cpen322.connect('http://3.98.223.41/cpen322/test-a5-server.js');
+cpen322.connect('http://3.98.223.41/cpen322/test-a4-server.js');
 cpen322.export(__filename, { app, messages, db, messageBlockSize, sessionManager, isCorrectPassword });
