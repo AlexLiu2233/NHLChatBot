@@ -19,9 +19,31 @@ const cpen322 = require('./cpen322-tester.js');
 const host = 'localhost';
 const port = 3000;
 
-const { LLModel, createCompletion, DEFAULT_DIRECTORY, DEFAULT_LIBRARIES_DIRECTORY, loadModel } = require('./gpt4all/gpt4all-bindings/typescript/src/gpt4all.js');
+// AI
+let globalModel = null;
 
+const gptpath = require('path');
+const modelPath = gptpath.join('C:', 'Users', 'liujp', '.cache', 'gpt4all');
+const gpt4allPath = gptpath.join(modelPath, 'gpt4all-bindings', 'typescript', 'src', 'gpt4all.js');
+const { LLModel, createCompletion, DEFAULT_DIRECTORY, DEFAULT_LIBRARIES_DIRECTORY, loadModel } = require(gpt4allPath);
 
+// Function to load the GPT-4 model
+async function loadGPTModel() {
+    try {
+        console.log('Loading GPT-4 model...');
+        globalModel = await loadModel('Nous-Hermes-2-Mistral-7B-DPO.Q4_0.gguf', {
+            model_path: modelPath,
+            device: 'gpu',
+            verbose: true
+        });
+        console.log('GPT-4 model loaded successfully.');
+    } catch (error) {
+        console.error('Failed to load GPT-4 model:', error);
+    }
+}
+
+// Load the model at server startup
+loadGPTModel();
 
 // Call getRooms from the Database instance and initialize messages
 db.getRooms().then(rooms => {
@@ -44,7 +66,7 @@ app.post('/api/generate-text', async (req, res) => {
     }
 
     try {
-        const model = await loadModel( 'Nous-Hermes-2-Mistral-7B-DPO.Q4_0', { verbose: true, device: 'gpu' });
+        const model = await loadModel( 'Nous-Hermes-2-Mistral-7B-DPO.Q4_0.gguf', { verbose: true, device: 'gpu' });
         const completion = await createCompletion(model, prompt, { verbose: true });
         res.json({ message: completion.message });
     } catch (error) {
