@@ -65,7 +65,7 @@ app.get('/chat/:room_id/messages', protectRoute, (req, res) => {
             if (conversation) {
                 res.json(conversation);
             } else {
-                res.status(404).send('No conversation found');
+                res.json({ messages: [] }); // empty
             }
         })
         .catch(err => {

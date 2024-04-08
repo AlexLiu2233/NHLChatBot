@@ -74,11 +74,17 @@ Service.getLastConversation = function (roomId, before) {
     xhr.open("GET", url);
     xhr.onload = function () {
       if (xhr.status === 200) {
-        resolve(JSON.parse(xhr.responseText));
-      } else {
+        resolve(JSON.parse(xhr.responseText)); 
+      }
+      else if (xhr.status === 404) {
+          resolve({ messages: [] });
+        }
+      else if (xhr.status === 500){
         reject(new Error('Failed to load conversation: ' + xhr.statusText));
+        console.log()
       }
     };
+
     xhr.onerror = function () {
       reject(new Error('Network error'));
     };
@@ -116,7 +122,10 @@ function* makeConversationLoader(room) {
     });
 
     // Yield the conversation promise itself. The caller must handle the promise resolution.
-    yield conversationPromise;
+    const conversation = yield conversationPromise;
+    if (!conversation || conversation.messages.length === 0) {
+        room.canLoadConversation = true; // Allow further attempts
+    }
   }
 }
 
