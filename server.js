@@ -19,6 +19,10 @@ const cpen322 = require('./cpen322-tester.js');
 const host = 'localhost';
 const port = 3000;
 
+const { LLModel, createCompletion, DEFAULT_DIRECTORY, DEFAULT_LIBRARIES_DIRECTORY, loadModel } = require('./gpt4all/gpt4all-bindings/typescript/src/gpt4all.js');
+
+
+
 // Call getRooms from the Database instance and initialize messages
 db.getRooms().then(rooms => {
 	rooms.forEach(room => {
@@ -31,6 +35,24 @@ db.getRooms().then(rooms => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })) // to parse application/x-www-form-urlencoded
 app.use(logRequest);	
+
+// GPT4 API
+app.post('/api/generate-text', async (req, res) => {
+    const prompt = req.body.prompt;
+    if (!prompt) {
+        return res.status(400).send({ error: 'Prompt is required' });
+    }
+
+    try {
+        const model = await loadModel( 'Nous-Hermes-2-Mistral-7B-DPO.Q4_0', { verbose: true, device: 'gpu' });
+        const completion = await createCompletion(model, prompt, { verbose: true });
+        res.json({ message: completion.message });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send({ error: 'Error generating text' });
+    }
+});
+
 
 // Login route definition
 app.post('/login', async (req, res) => {
