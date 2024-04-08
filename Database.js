@@ -78,7 +78,7 @@ Database.prototype.getLastConversation = function (room_id, before = Date.now())
                 }
             })
     );
-};
+}; 
 
 Database.prototype.addConversation = function (conversation) {
     return this.connected.then(db =>

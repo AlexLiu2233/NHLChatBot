@@ -28,13 +28,13 @@ Service.getAllRooms = function () {
 
 Service.getProfile = function () {
   return fetch(`${this.origin}/profile`)
-      .then(response => {
-          if (!response.ok) {
-              throw new Error('Failed to fetch profile');
-          }
-          return response.json();
-      })
-      .catch(error => Promise.reject(error));
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Failed to fetch profile');
+      }
+      return response.json();
+    })
+    .catch(error => Promise.reject(error));
 };
 
 Service.addRoom = function (data) {
@@ -66,11 +66,11 @@ Service.getLastConversation = function (roomId, before) {
   return new Promise((resolve, reject) => {
     var xhr = new XMLHttpRequest();
     var url = `${this.origin}/chat/${roomId}/messages`;
-
     if (before) {
       url += `?before=${before}`;
     }
 
+    console.log(url);
     xhr.open("GET", url);
     xhr.onload = function () {
       if (xhr.status === 200) {
@@ -95,7 +95,8 @@ function* makeConversationLoader(room) {
     // Wrap the asynchronous fetch in a promise that the generator will yield.
     // This allows the caller to wait for the promise to resolve before continuing.
     const conversationPromise = new Promise((resolve, reject) => {
-      Service.getLastConversation(room.id, lastConversationTimestamp)
+      console.log("Calling getLastConversation with room ID:", room._id);
+      Service.getLastConversation(room._id, lastConversationTimestamp)
         .then(conversation => {
           if (!conversation) {
             // If no conversation is returned, stop trying to load more
@@ -266,6 +267,14 @@ class ChatView {
         event.preventDefault(); // Prevent newline for Enter alone
       }
     });
+
+    this.chatElem.addEventListener('wheel', (event) => {
+      console.log('ChatView wheel event triggered');
+      console.log(`Scroll Top: ${this.chatElem.scrollTop}, deltaY: ${event.deltaY}, canLoadConversation: ${this.room.canLoadConversation}`);
+      if (event.deltaY < 0 && this.chatElem.scrollTop <= 0 && this.room.canLoadConversation) {
+        this.room.getLastConversation.next();
+      }
+    });
   }
 
   sendMessage() {
@@ -275,7 +284,7 @@ class ChatView {
 
       // Send message to server {roomId, username, text} (Task 4)
       const message = { roomId: this.room.id, username: profile.username, text: text };
-      this.socket.send(JSON.stringify(message)); 
+      this.socket.send(JSON.stringify(message));
 
       this.inputElem.value = '';
     }
@@ -293,6 +302,17 @@ class ChatView {
     this.room.onNewMessage = (message) => {
       this.addMessageToDOM(message);
     };
+
+    // Attach an onFetchConversation callback to the room
+    this.room.onFetchConversation = (conversation) => {
+      const scrollHeightBefore = this.chatElem.scrollHeight;
+      conversation.messages.forEach(message => {
+        const messageElement = this.createMessageElement(message);
+        this.chatElem.insertBefore(messageElement, this.chatElem.firstChild);
+      });
+      const scrollHeightAfter = this.chatElem.scrollHeight;
+      this.chatElem.scrollTop = scrollHeightAfter - scrollHeightBefore;
+    };
   }
 
   // Helper method to add a message to the DOM, in part generated
@@ -306,7 +326,15 @@ class ChatView {
     messageElement.innerHTML = `<span class="message-user">${message.username}</span>: <span class="message-text">${sanitizedText}</span>`;
     this.chatElem.appendChild(messageElement);
     this.chatElem.scrollTop = this.chatElem.scrollHeight; // Scroll to the bottom
-}
+  }
+
+  createMessageElement(message) {
+    const messageElement = document.createElement('div');
+    messageElement.className = message.username === profile.username ? 'message my-message' : 'message';
+    const sanitizedText = message.text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+    messageElement.innerHTML = `<span class="message-user">${message.username}</span>: <span class="message-text">${sanitizedText}</span>`;
+    return messageElement;
+  }
 
 
 }
@@ -416,9 +444,9 @@ function main() {
   Service.getProfile().then(data => {
     profile.username = data.username; // Update the global profile object with the fetched username
     // Optionally, you might want to update the UI here to reflect the new profile information
-}).catch(error => {
+  }).catch(error => {
     console.error('Error fetching profile:', error);
-});
+  });
 
   function renderRoute() {
     // Get element where page content will be displayed
@@ -478,9 +506,9 @@ function main() {
   // Instantiate Lobby and call refreshLobby once inside main function
   refreshLobby();
 
-  cpen322.export(main, { 
-    chatView, 
-    lobby, 
+  cpen322.export(main, {
+    chatView,
+    lobby,
   });
 }
 
