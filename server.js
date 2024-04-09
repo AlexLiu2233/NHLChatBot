@@ -14,36 +14,11 @@ const protectRoute = sessionManager.middleware;
 const clientApp = path.join(__dirname, 'client');
 let messages = {};
 const cpen322 = require('./cpen322-tester.js');
+const axios = require('axios'); // Add this at the top with other require statements
 
 // Express Server
 const host = 'localhost';
 const port = 3000;
-
-// AI
-let globalModel = null;
-
-const gptpath = require('path');
-const modelPath = gptpath.join('C:', 'Users', 'liujp', '.cache', 'gpt4all');
-const gpt4allPath = gptpath.join(modelPath, 'gpt4all-bindings', 'typescript', 'src', 'gpt4all.js');
-const { LLModel, createCompletion, DEFAULT_DIRECTORY, DEFAULT_LIBRARIES_DIRECTORY, loadModel } = require(gpt4allPath);
-
-// Function to load the GPT-4 model
-async function loadGPTModel() {
-    try {
-        console.log('Loading GPT-4 model...');
-        globalModel = await loadModel('Nous-Hermes-2-Mistral-7B-DPO.Q4_0.gguf', {
-            model_path: modelPath,
-            device: 'gpu',
-            verbose: true
-        });
-        console.log('GPT-4 model loaded successfully.');
-    } catch (error) {
-        console.error('Failed to load GPT-4 model:', error);
-    }
-}
-
-// Load the model at server startup
-loadGPTModel();
 
 // Call getRooms from the Database instance and initialize messages
 db.getRooms().then(rooms => {
@@ -58,23 +33,43 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true })) // to parse application/x-www-form-urlencoded
 app.use(logRequest);	
 
-// GPT4 API
-app.post('/api/generate-text', async (req, res) => {
-    const prompt = req.body.prompt;
-    if (!prompt) {
-        return res.status(400).send({ error: 'Prompt is required' });
-    }
+const generateText = async (prompt, model = "gpt4all-j-v1.3-groovy") => {
+    const apiBase = "http://localhost:4891/v1";
 
     try {
-        const model = await loadModel( 'Nous-Hermes-2-Mistral-7B-DPO.Q4_0.gguf', { verbose: true, device: 'gpu' });
-        const completion = await createCompletion(model, prompt, { verbose: true });
-        res.json({ message: completion.message });
+        const response = await axios.post(`${apiBase}/completions`, {
+            model: model,
+            prompt: prompt,
+            max_tokens: 50,
+            temperature: 0.28,
+            top_p: 0.95,
+            n: 1,
+            echo: true,
+            stream: false
+        });
+
+        return response.data.choices[0].text;
     } catch (error) {
-        console.error(error);
-        res.status(500).send({ error: 'Error generating text' });
+        console.error(`Error generating text: ${error}`);
+        return null;
+    }
+};
+
+// Modify the /api/generate-text route handler
+app.post('/api/generate-text', async (req, res) => {
+    const { prompt } = req.body;
+
+    if (!prompt) {
+        return res.status(400).json({ error: 'Prompt is required.' });
+    }
+
+    const generatedText = await generateText(prompt);
+    if (generatedText) {
+        res.json({ generatedText });
+    } else {
+        res.status(500).json({ error: 'Failed to generate text.' });
     }
 });
-
 
 // Login route definition
 app.post('/login', async (req, res) => {

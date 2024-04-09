@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\CMakeFiles\70b699bb783d559b514beb6e39cb29e9\ShaderOpMult.hpp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\CMakeFiles\70b699bb783d559b514beb6e39cb29e9\ShaderLogisticRegression.hpp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp-mainline\kompute\src\shaders\glsl\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\llama.cpp-mainline\kompute\src\shaders\glsl\ShaderOpMult.hpp">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\llama.cpp-mainline\kompute\src\shaders\glsl\ShaderLogisticRegression.hpp">
+      <Filter>Header Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{B2AF40A8-2CF0-3F3C-98BC-7275DA49AF22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{54BA5DFB-39FA-3931-BC37-D8C61915B9AF}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,10 @@
+^C:\USERS\LIUJP\ONEDRIVE\DOCUMENTS\ALEX\SCHOOL\2024\CPEN322\ASSIGNMENT\PROJECT-RIGHT-WEASEL\BUILD\CMAKEFILES\_CMAKELTOTEST-CXX\BIN\CMAKEFILES\797C74E34ABB89B386D0D20EFE23CAE3\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/CMakeFiles/_CMakeLTOTest-CXX/src -BC:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/CMakeFiles/_CMakeLTOTest-CXX/bin --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/CMakeFiles/_CMakeLTOTest-CXX/bin/lto-test.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

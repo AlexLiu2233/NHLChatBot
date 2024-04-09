@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/fmt-subbuild/CMakeFiles/fmt-populate"
+		},
+		{
+			"file" : "C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/fmt-subbuild/CMakeFiles/ee5ca61669ea0910b8c957dbc7e179f9/fmt-populate.rule"
+		},
+		{
+			"file" : "C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/fmt-subbuild/CMakeFiles/8ff013a221735f638a3b75b46ced95ce/fmt-populate-complete.rule"
+		},
+		{
+			"file" : "C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/fmt-subbuild/CMakeFiles/9d819174b7446cec0060e36a5d9476f4/fmt-populate-build.rule"
+		},
+		{
+			"file" : "C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/fmt-subbuild/CMakeFiles/9d819174b7446cec0060e36a5d9476f4/fmt-populate-configure.rule"
+		},
+		{
+			"file" : "C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/fmt-subbuild/CMakeFiles/9d819174b7446cec0060e36a5d9476f4/fmt-populate-download.rule"
+		},
+		{
+			"file" : "C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/fmt-subbuild/CMakeFiles/9d819174b7446cec0060e36a5d9476f4/fmt-populate-install.rule"
+		},
+		{
+			"file" : "C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/fmt-subbuild/CMakeFiles/9d819174b7446cec0060e36a5d9476f4/fmt-populate-mkdir.rule"
+		},
+		{
+			"file" : "C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/fmt-subbuild/CMakeFiles/9d819174b7446cec0060e36a5d9476f4/fmt-populate-patch.rule"
+		},
+		{
+			"file" : "C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/fmt-subbuild/CMakeFiles/9d819174b7446cec0060e36a5d9476f4/fmt-populate-test.rule"
+		},
+		{
+			"file" : "C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/fmt-subbuild/CMakeFiles/9d819174b7446cec0060e36a5d9476f4/fmt-populate-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"fmt-populate"
+		],
+		"name" : "fmt-populate"
+	}
+}

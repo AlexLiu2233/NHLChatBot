@@ -1,0 +1,290 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x86</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|win32">
+      <Configuration>Debug</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|win32">
+      <Configuration>Release</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|win32">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|win32">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{E2E6F308-BF00-3DB5-B6E5-B0141E7A10FE}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
+    <Platform>win32</Platform>
+    <ProjectName>kp_logger</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|win32'">C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\llama.cpp-mainline\kompute\src\logger\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|win32'">kp_logger.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|win32'">kp_logger</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|win32'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|win32'">C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\llama.cpp-mainline\kompute\src\logger\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|win32'">kp_logger.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|win32'">kp_logger</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|win32'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|win32'">C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\llama.cpp-mainline\kompute\src\logger\MinSizeRel\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|win32'">kp_logger.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|win32'">kp_logger</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|win32'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|win32'">C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\llama.cpp-mainline\kompute\src\logger\RelWithDebInfo\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|win32'">kp_logger.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|win32'">kp_logger</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|win32'">.lib</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build;C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp-mainline\kompute\src\include;C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\_deps\fmt-src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp14</LanguageStandard>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;VULKAN_HPP_DISPATCH_LOADER_DYNAMIC=1;KOMPUTE_OPT_LOG_LEVEL;KOMPUTE_OPT_DISABLE_VK_DEBUG_LAYERS;KOMPUTE_OPT_USE_BUILT_IN_SPDLOG;KOMPUTE_OPT_USE_BUILT_IN_FMT;KOMPUTE_OPT_USE_BUILT_IN_VULKAN_HEADER;KOMPUTE_OPT_BUILT_IN_VULKAN_HEADER_TAG;KOMPUTE_DISABLE_VK_DEBUG_LAYERS=1;KOMPUTE_LOG_LEVEL_TRACE=0;KOMPUTE_LOG_LEVEL_DEBUG=1;KOMPUTE_LOG_LEVEL_INFO=2;KOMPUTE_LOG_LEVEL_WARN=3;KOMPUTE_LOG_LEVEL_ERROR=4;KOMPUTE_LOG_LEVEL_CRITICAL=5;KOMPUTE_LOG_LEVEL_OFF=6;FMT_SHARED;CMAKE_INTDIR="Debug"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;VULKAN_HPP_DISPATCH_LOADER_DYNAMIC=1;KOMPUTE_OPT_LOG_LEVEL;KOMPUTE_OPT_DISABLE_VK_DEBUG_LAYERS;KOMPUTE_OPT_USE_BUILT_IN_SPDLOG;KOMPUTE_OPT_USE_BUILT_IN_FMT;KOMPUTE_OPT_USE_BUILT_IN_VULKAN_HEADER;KOMPUTE_OPT_BUILT_IN_VULKAN_HEADER_TAG;KOMPUTE_DISABLE_VK_DEBUG_LAYERS=1;KOMPUTE_LOG_LEVEL_TRACE=0;KOMPUTE_LOG_LEVEL_DEBUG=1;KOMPUTE_LOG_LEVEL_INFO=2;KOMPUTE_LOG_LEVEL_WARN=3;KOMPUTE_LOG_LEVEL_ERROR=4;KOMPUTE_LOG_LEVEL_CRITICAL=5;KOMPUTE_LOG_LEVEL_OFF=6;FMT_SHARED;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build;C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp-mainline\kompute\src\include;C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\_deps\fmt-src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build;C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp-mainline\kompute\src\include;C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\_deps\fmt-src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build;C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp-mainline\kompute\src\include;C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\_deps\fmt-src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp14</LanguageStandard>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;VULKAN_HPP_DISPATCH_LOADER_DYNAMIC=1;KOMPUTE_OPT_LOG_LEVEL;KOMPUTE_OPT_DISABLE_VK_DEBUG_LAYERS;KOMPUTE_OPT_USE_BUILT_IN_SPDLOG;KOMPUTE_OPT_USE_BUILT_IN_FMT;KOMPUTE_OPT_USE_BUILT_IN_VULKAN_HEADER;KOMPUTE_OPT_BUILT_IN_VULKAN_HEADER_TAG;KOMPUTE_DISABLE_VK_DEBUG_LAYERS=1;KOMPUTE_LOG_LEVEL_TRACE=0;KOMPUTE_LOG_LEVEL_DEBUG=1;KOMPUTE_LOG_LEVEL_INFO=2;KOMPUTE_LOG_LEVEL_WARN=3;KOMPUTE_LOG_LEVEL_ERROR=4;KOMPUTE_LOG_LEVEL_CRITICAL=5;KOMPUTE_LOG_LEVEL_OFF=6;FMT_SHARED;CMAKE_INTDIR="Release"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;VULKAN_HPP_DISPATCH_LOADER_DYNAMIC=1;KOMPUTE_OPT_LOG_LEVEL;KOMPUTE_OPT_DISABLE_VK_DEBUG_LAYERS;KOMPUTE_OPT_USE_BUILT_IN_SPDLOG;KOMPUTE_OPT_USE_BUILT_IN_FMT;KOMPUTE_OPT_USE_BUILT_IN_VULKAN_HEADER;KOMPUTE_OPT_BUILT_IN_VULKAN_HEADER_TAG;KOMPUTE_DISABLE_VK_DEBUG_LAYERS=1;KOMPUTE_LOG_LEVEL_TRACE=0;KOMPUTE_LOG_LEVEL_DEBUG=1;KOMPUTE_LOG_LEVEL_INFO=2;KOMPUTE_LOG_LEVEL_WARN=3;KOMPUTE_LOG_LEVEL_ERROR=4;KOMPUTE_LOG_LEVEL_CRITICAL=5;KOMPUTE_LOG_LEVEL_OFF=6;FMT_SHARED;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build;C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp-mainline\kompute\src\include;C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\_deps\fmt-src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build;C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp-mainline\kompute\src\include;C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\_deps\fmt-src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build;C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp-mainline\kompute\src\include;C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\_deps\fmt-src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp14</LanguageStandard>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;VULKAN_HPP_DISPATCH_LOADER_DYNAMIC=1;KOMPUTE_OPT_LOG_LEVEL;KOMPUTE_OPT_DISABLE_VK_DEBUG_LAYERS;KOMPUTE_OPT_USE_BUILT_IN_SPDLOG;KOMPUTE_OPT_USE_BUILT_IN_FMT;KOMPUTE_OPT_USE_BUILT_IN_VULKAN_HEADER;KOMPUTE_OPT_BUILT_IN_VULKAN_HEADER_TAG;KOMPUTE_DISABLE_VK_DEBUG_LAYERS=1;KOMPUTE_LOG_LEVEL_TRACE=0;KOMPUTE_LOG_LEVEL_DEBUG=1;KOMPUTE_LOG_LEVEL_INFO=2;KOMPUTE_LOG_LEVEL_WARN=3;KOMPUTE_LOG_LEVEL_ERROR=4;KOMPUTE_LOG_LEVEL_CRITICAL=5;KOMPUTE_LOG_LEVEL_OFF=6;FMT_SHARED;CMAKE_INTDIR="MinSizeRel"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;VULKAN_HPP_DISPATCH_LOADER_DYNAMIC=1;KOMPUTE_OPT_LOG_LEVEL;KOMPUTE_OPT_DISABLE_VK_DEBUG_LAYERS;KOMPUTE_OPT_USE_BUILT_IN_SPDLOG;KOMPUTE_OPT_USE_BUILT_IN_FMT;KOMPUTE_OPT_USE_BUILT_IN_VULKAN_HEADER;KOMPUTE_OPT_BUILT_IN_VULKAN_HEADER_TAG;KOMPUTE_DISABLE_VK_DEBUG_LAYERS=1;KOMPUTE_LOG_LEVEL_TRACE=0;KOMPUTE_LOG_LEVEL_DEBUG=1;KOMPUTE_LOG_LEVEL_INFO=2;KOMPUTE_LOG_LEVEL_WARN=3;KOMPUTE_LOG_LEVEL_ERROR=4;KOMPUTE_LOG_LEVEL_CRITICAL=5;KOMPUTE_LOG_LEVEL_OFF=6;FMT_SHARED;CMAKE_INTDIR=\"MinSizeRel\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build;C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp-mainline\kompute\src\include;C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\_deps\fmt-src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build;C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp-mainline\kompute\src\include;C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\_deps\fmt-src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build;C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp-mainline\kompute\src\include;C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\_deps\fmt-src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp14</LanguageStandard>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;VULKAN_HPP_DISPATCH_LOADER_DYNAMIC=1;KOMPUTE_OPT_LOG_LEVEL;KOMPUTE_OPT_DISABLE_VK_DEBUG_LAYERS;KOMPUTE_OPT_USE_BUILT_IN_SPDLOG;KOMPUTE_OPT_USE_BUILT_IN_FMT;KOMPUTE_OPT_USE_BUILT_IN_VULKAN_HEADER;KOMPUTE_OPT_BUILT_IN_VULKAN_HEADER_TAG;KOMPUTE_DISABLE_VK_DEBUG_LAYERS=1;KOMPUTE_LOG_LEVEL_TRACE=0;KOMPUTE_LOG_LEVEL_DEBUG=1;KOMPUTE_LOG_LEVEL_INFO=2;KOMPUTE_LOG_LEVEL_WARN=3;KOMPUTE_LOG_LEVEL_ERROR=4;KOMPUTE_LOG_LEVEL_CRITICAL=5;KOMPUTE_LOG_LEVEL_OFF=6;FMT_SHARED;CMAKE_INTDIR="RelWithDebInfo"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;VULKAN_HPP_DISPATCH_LOADER_DYNAMIC=1;KOMPUTE_OPT_LOG_LEVEL;KOMPUTE_OPT_DISABLE_VK_DEBUG_LAYERS;KOMPUTE_OPT_USE_BUILT_IN_SPDLOG;KOMPUTE_OPT_USE_BUILT_IN_FMT;KOMPUTE_OPT_USE_BUILT_IN_VULKAN_HEADER;KOMPUTE_OPT_BUILT_IN_VULKAN_HEADER_TAG;KOMPUTE_DISABLE_VK_DEBUG_LAYERS=1;KOMPUTE_LOG_LEVEL_TRACE=0;KOMPUTE_LOG_LEVEL_DEBUG=1;KOMPUTE_LOG_LEVEL_INFO=2;KOMPUTE_LOG_LEVEL_WARN=3;KOMPUTE_LOG_LEVEL_ERROR=4;KOMPUTE_LOG_LEVEL_CRITICAL=5;KOMPUTE_LOG_LEVEL_OFF=6;FMT_SHARED;CMAKE_INTDIR=\"RelWithDebInfo\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build;C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp-mainline\kompute\src\include;C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\_deps\fmt-src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build;C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp-mainline\kompute\src\include;C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\_deps\fmt-src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp-mainline\kompute\src\logger\CMakeLists.txt">
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|win32'">Building Custom Rule C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/gpt4all/gpt4all-backend/llama.cpp-mainline/kompute/src/logger/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|win32'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/gpt4all/gpt4all-backend -BC:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build --check-stamp-file C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/llama.cpp-mainline/kompute/src/logger/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|win32'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|win32'">C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\llama.cpp-mainline\kompute\src\logger\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|win32'">Building Custom Rule C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/gpt4all/gpt4all-backend/llama.cpp-mainline/kompute/src/logger/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|win32'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/gpt4all/gpt4all-backend -BC:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build --check-stamp-file C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/llama.cpp-mainline/kompute/src/logger/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|win32'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|win32'">C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\llama.cpp-mainline\kompute\src\logger\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|win32'">Building Custom Rule C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/gpt4all/gpt4all-backend/llama.cpp-mainline/kompute/src/logger/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|win32'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/gpt4all/gpt4all-backend -BC:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build --check-stamp-file C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/llama.cpp-mainline/kompute/src/logger/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|win32'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|win32'">C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\llama.cpp-mainline\kompute\src\logger\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|win32'">Building Custom Rule C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/gpt4all/gpt4all-backend/llama.cpp-mainline/kompute/src/logger/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|win32'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/gpt4all/gpt4all-backend -BC:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build --check-stamp-file C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/llama.cpp-mainline/kompute/src/logger/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|win32'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|win32'">C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\llama.cpp-mainline\kompute\src\logger\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp-mainline\kompute\src\logger\Logger.cpp" />
+    <ClInclude Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp-mainline\kompute\src\include\kompute\logger\Logger.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\ZERO_CHECK.vcxproj">
+      <Project>{1F792EAB-7658-36DC-96B5-6F72F24FA921}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\_deps\fmt-build\fmt.vcxproj">
+      <Project>{BA3F136B-9FE3-3591-8727-1F722FA02D09}</Project>
+      <Name>fmt</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

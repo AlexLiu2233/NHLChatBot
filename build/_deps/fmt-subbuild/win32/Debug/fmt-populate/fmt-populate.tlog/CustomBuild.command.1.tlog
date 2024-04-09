@@ -1,0 +1,150 @@
+^C:\USERS\LIUJP\ONEDRIVE\DOCUMENTS\ALEX\SCHOOL\2024\CPEN322\ASSIGNMENT\PROJECT-RIGHT-WEASEL\BUILD\_DEPS\FMT-SUBBUILD\CMAKEFILES\9D819174B7446CEC0060E36A5D9476F4\FMT-POPULATE-MKDIR.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -Dcfgdir=/Debug -P C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/fmt-subbuild/fmt-populate-prefix/tmp/fmt-populate-mkdirs.cmake
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/fmt-subbuild/fmt-populate-prefix/src/fmt-populate-stamp/Debug/fmt-populate-mkdir
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\LIUJP\ONEDRIVE\DOCUMENTS\ALEX\SCHOOL\2024\CPEN322\ASSIGNMENT\PROJECT-RIGHT-WEASEL\BUILD\_DEPS\FMT-SUBBUILD\CMAKEFILES\9D819174B7446CEC0060E36A5D9476F4\FMT-POPULATE-DOWNLOAD.RULE
+setlocal
+cd C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\_deps
+if %errorlevel% neq 0 goto :cmEnd
+C:
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -P C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/fmt-subbuild/fmt-populate-prefix/tmp/fmt-populate-gitclone.cmake
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/fmt-subbuild/fmt-populate-prefix/src/fmt-populate-stamp/Debug/fmt-populate-download
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\LIUJP\ONEDRIVE\DOCUMENTS\ALEX\SCHOOL\2024\CPEN322\ASSIGNMENT\PROJECT-RIGHT-WEASEL\BUILD\_DEPS\FMT-SUBBUILD\CMAKEFILES\9D819174B7446CEC0060E36A5D9476F4\FMT-POPULATE-UPDATE.RULE
+setlocal
+cd C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\_deps\fmt-src
+if %errorlevel% neq 0 goto :cmEnd
+C:
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -Dcan_fetch=YES -P C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/fmt-subbuild/fmt-populate-prefix/tmp/fmt-populate-gitupdate.cmake
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\LIUJP\ONEDRIVE\DOCUMENTS\ALEX\SCHOOL\2024\CPEN322\ASSIGNMENT\PROJECT-RIGHT-WEASEL\BUILD\_DEPS\FMT-SUBBUILD\CMAKEFILES\9D819174B7446CEC0060E36A5D9476F4\FMT-POPULATE-PATCH.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/fmt-subbuild/fmt-populate-prefix/src/fmt-populate-stamp/Debug/fmt-populate-patch
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\LIUJP\ONEDRIVE\DOCUMENTS\ALEX\SCHOOL\2024\CPEN322\ASSIGNMENT\PROJECT-RIGHT-WEASEL\BUILD\_DEPS\FMT-SUBBUILD\CMAKEFILES\9D819174B7446CEC0060E36A5D9476F4\FMT-POPULATE-CONFIGURE.RULE
+setlocal
+cd C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\_deps\fmt-build
+if %errorlevel% neq 0 goto :cmEnd
+C:
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/fmt-subbuild/fmt-populate-prefix/src/fmt-populate-stamp/Debug/fmt-populate-configure
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\LIUJP\ONEDRIVE\DOCUMENTS\ALEX\SCHOOL\2024\CPEN322\ASSIGNMENT\PROJECT-RIGHT-WEASEL\BUILD\_DEPS\FMT-SUBBUILD\CMAKEFILES\9D819174B7446CEC0060E36A5D9476F4\FMT-POPULATE-BUILD.RULE
+setlocal
+cd C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\_deps\fmt-build
+if %errorlevel% neq 0 goto :cmEnd
+C:
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/fmt-subbuild/fmt-populate-prefix/src/fmt-populate-stamp/Debug/fmt-populate-build
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\LIUJP\ONEDRIVE\DOCUMENTS\ALEX\SCHOOL\2024\CPEN322\ASSIGNMENT\PROJECT-RIGHT-WEASEL\BUILD\_DEPS\FMT-SUBBUILD\CMAKEFILES\9D819174B7446CEC0060E36A5D9476F4\FMT-POPULATE-INSTALL.RULE
+setlocal
+cd C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\_deps\fmt-build
+if %errorlevel% neq 0 goto :cmEnd
+C:
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/fmt-subbuild/fmt-populate-prefix/src/fmt-populate-stamp/Debug/fmt-populate-install
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\LIUJP\ONEDRIVE\DOCUMENTS\ALEX\SCHOOL\2024\CPEN322\ASSIGNMENT\PROJECT-RIGHT-WEASEL\BUILD\_DEPS\FMT-SUBBUILD\CMAKEFILES\9D819174B7446CEC0060E36A5D9476F4\FMT-POPULATE-TEST.RULE
+setlocal
+cd C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\_deps\fmt-build
+if %errorlevel% neq 0 goto :cmEnd
+C:
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/fmt-subbuild/fmt-populate-prefix/src/fmt-populate-stamp/Debug/fmt-populate-test
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\LIUJP\ONEDRIVE\DOCUMENTS\ALEX\SCHOOL\2024\CPEN322\ASSIGNMENT\PROJECT-RIGHT-WEASEL\BUILD\_DEPS\FMT-SUBBUILD\CMAKEFILES\8FF013A221735F638A3B75B46CED95CE\FMT-POPULATE-COMPLETE.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/fmt-subbuild/CMakeFiles/Debug
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/fmt-subbuild/CMakeFiles/Debug/fmt-populate-complete
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/fmt-subbuild/fmt-populate-prefix/src/fmt-populate-stamp/Debug/fmt-populate-done
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\LIUJP\ONEDRIVE\DOCUMENTS\ALEX\SCHOOL\2024\CPEN322\ASSIGNMENT\PROJECT-RIGHT-WEASEL\BUILD\_DEPS\FMT-SUBBUILD\CMAKEFILES\EE5CA61669EA0910B8C957DBC7E179F9\FMT-POPULATE.RULE
+setlocal
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\LIUJP\ONEDRIVE\DOCUMENTS\ALEX\SCHOOL\2024\CPEN322\ASSIGNMENT\PROJECT-RIGHT-WEASEL\BUILD\_DEPS\FMT-SUBBUILD\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/fmt-subbuild -BC:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/fmt-subbuild --check-stamp-file C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/fmt-subbuild/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
