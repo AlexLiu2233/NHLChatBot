@@ -272,6 +272,7 @@ broker.on('connection', (ws, req) => {
         let parsedMessage;
         try {
             parsedMessage = JSON.parse(message);
+            console.log("Parsed Message: ", parsedMessage)
             
             // Sanitize the message text by escaping HTML special characters
             parsedMessage.text = parsedMessage.text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
