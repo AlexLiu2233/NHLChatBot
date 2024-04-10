@@ -292,7 +292,7 @@ class ChatView {
       this.room.addMessage(profile.username, text);
 
       // Send message to server {roomId, username, text} (Task 4)
-      const message = { roomId: this.room.id, username: profile.username, text: text };
+      const message = { roomId: this.room._id, username: profile.username, text: text };
       this.socket.send(JSON.stringify(message));
 
       this.inputElem.value = '';
@@ -437,6 +437,7 @@ function main() {
   socket.addEventListener('message', function (event) {
     // handle incoming message
     const data = JSON.parse(event.data);
+    console.log("Client received - generated text: ", data)
     const room = lobby.getRoom(data.roomId);
     if (room) {
       room.addMessage(data.username, data.text);

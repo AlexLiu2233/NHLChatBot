@@ -50,7 +50,7 @@ const generateText = async (prompt, model = "mistral-7b-openorca.gguf2.Q4_0") =>
 
     try {
         const response = await axios.post(`${apiBase}/completions`, requestData);
-        console.log(`Received response: ${JSON.stringify(response.data)}`);
+        console.log("generateText: ",response.data.choices[0].text)
         return response.data.choices[0].text;
     } catch (error) {
         console.error(`Error in request: ${error}`);
@@ -61,6 +61,7 @@ const generateText = async (prompt, model = "mistral-7b-openorca.gguf2.Q4_0") =>
 // Modify the /api/generate-text route handler
 app.post('/api/generate-text', async (req, res) => {
     const { prompt } = req.body;
+    const roomId = req.params.room_id;
 
     if (!prompt) {
         return res.status(400).json({ error: 'Prompt is required.' });
@@ -68,7 +69,8 @@ app.post('/api/generate-text', async (req, res) => {
 
     const generatedText = await generateText(prompt);
     if (generatedText) {
-        res.json({ generatedText });
+        console.log("From Server - generated text: ", generatedText)
+        res.json({ generatedText , id: roomId});
     } else {
         res.status(500).json({ error: 'Failed to generate text.' });
     }
@@ -287,7 +289,7 @@ broker.on('connection', (ws, req) => {
                 const aiMessage = {
                     username: "AI", // Customize the AI username as needed
                     text: aiResponse,
-                    roomId: parsedMessage.roomId, // Ensure AI message is in the correct room
+                    roomId: parsedMessage.roomId
                 };
     
                 // Convert AI message to JSON string for broadcasting
