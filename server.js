@@ -33,24 +33,27 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true })) // to parse application/x-www-form-urlencoded
 app.use(logRequest);	
 
-const generateText = async (prompt, model = "gpt4all-j-v1.3-groovy") => {
+const generateText = async (prompt, model = "mistral-7b-openorca.gguf2.Q4_0") => {
     const apiBase = "http://localhost:4891/v1";
+    const requestData = {
+        model: model,
+        prompt: prompt,
+        max_tokens: 50,
+        temperature: 0.28,
+        top_p: 0.95,
+        n: 1,
+        echo: true,
+        stream: false
+    };
+
+    console.log(`Sending request: ${JSON.stringify(requestData)}`);
 
     try {
-        const response = await axios.post(`${apiBase}/completions`, {
-            model: model,
-            prompt: prompt,
-            max_tokens: 50,
-            temperature: 0.28,
-            top_p: 0.95,
-            n: 1,
-            echo: true,
-            stream: false
-        });
-
+        const response = await axios.post(`${apiBase}/completions`, requestData);
+        console.log(`Received response: ${JSON.stringify(response.data)}`);
         return response.data.choices[0].text;
     } catch (error) {
-        console.error(`Error generating text: ${error}`);
+        console.error(`Error in request: ${error}`);
         return null;
     }
 };
@@ -265,26 +268,47 @@ broker.on('connection', (ws, req) => {
         ws.close();
     }
     
-	ws.on('message', (message) => {
+	ws.on('message', async (message) => {
         let parsedMessage;
         try {
             parsedMessage = JSON.parse(message);
             
             // Sanitize the message text by escaping HTML special characters
             parsedMessage.text = parsedMessage.text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
-
-            // Overwrite username with the one from session, ensure message safety
-            parsedMessage.username = ws.username;
-            const forwardMessage = JSON.stringify(parsedMessage);
-            
-            // Broadcast the sanitized message to all connected clients
-            broker.clients.forEach((client) => {
-                if (client !== ws && client.readyState === WebSocket.OPEN) {
-                    client.send(forwardMessage);
-                }
-            });
-        }  catch (e) {
-            console.error("Error parsing message", e);
+            parsedMessage.username = ws.username; // Overwrite username with the one from session, ensure message safety
+    
+            // Check if the sanitized message starts with '#AI'
+            if (parsedMessage.text.startsWith('#AI')) {
+                const aiPrompt = parsedMessage.text.slice(3); // Remove '#AI' prefix
+                const aiResponse = await generateText(aiPrompt); // Generate AI response
+    
+                // Prepare the AI response as a new message
+                const aiMessage = {
+                    username: "AI", // Customize the AI username as needed
+                    text: aiResponse,
+                    roomId: parsedMessage.roomId, // Ensure AI message is in the correct room
+                };
+    
+                // Convert AI message to JSON string for broadcasting
+                const forwardAIMessage = JSON.stringify(aiMessage);
+    
+                // Broadcast AI message to all connected clients
+                broker.clients.forEach((client) => {
+                    if (client.readyState === WebSocket.OPEN) {
+                        client.send(forwardAIMessage);
+                    }
+                });
+            } else {
+                // If not an AI prompt, broadcast the original sanitized message
+                const forwardMessage = JSON.stringify(parsedMessage);
+                broker.clients.forEach((client) => {
+                    if (client !== ws && client.readyState === WebSocket.OPEN) {
+                        client.send(forwardMessage);
+                    }
+                });
+            }
+        } catch (e) {
+            console.error("Error parsing or handling message", e);
         }
     });
 });
