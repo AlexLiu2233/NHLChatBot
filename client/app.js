@@ -236,18 +236,16 @@ class LobbyView {
       // Generate a 'unique' ID using the current timestamp and a random number
       const id = Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
 
-      Service.addRoom({ name: `Themed Room: ${nationality}, ${teams}, ${timePeriod}`, image: '/path/to/image.png' })
+      Service.addRoom({ name: `Themed Room: ${nationality}, ${teams}, ${timePeriod}`, image: 'client/assets/NHL.png' })
       .then(newRoom => {
         this.lobby.addRoom(newRoom._id, newRoom.name, newRoom.image, []);
         // Now create a ChatView for this room
         const newRoomChatView = new ChatView(this.socket);
         newRoomChatView.setRoom(new Room(newRoom._id, newRoom.name, newRoom.image)); // Assuming you have a constructor in Room class to handle this
-        // Store the ChatView instance for later use
-        this.lobby.chatViews[newRoom._id] = newRoomChatView;
-          const roomID = newRoom._id; // This would be dynamically obtained in your actual code
+          const roomID = newRoom._id; 
 
           const baseKeywords = [nationality, teams, timePeriod];
-          const additionalKeywords = ["speed", "goalie", "defense", "attack", "champion", "rookie"];
+          const additionalKeywords = ["forward", "goalie", "defense", "champion", "rookie"];
           const numberOfCalls = 3; // As an example
 
           for (let i = 0; i < numberOfCalls; i++) {
@@ -270,19 +268,14 @@ class LobbyView {
                   text: `Generated... ${data.playerName}`
                 };
 
-                console.log("Received From Server", aiMessage)
-
                 // Send the message if the WebSocket is ready
                 if (this.socket && this.socket.readyState === WebSocket.OPEN) {
                   this.socket.send(JSON.stringify(aiMessage));
+
+                  newRoomChatView.addMessageToDOM(aiMessage)
                 }
 
-                const roomChatView = this.lobby.chatViews[roomID];
-                console.log(roomChatView)
-                if (roomChatView) {
-                    // If there is a ChatView, use it to display the message
-                    roomChatView.addMessageToDOM(aiMessage);
-                  }
+                
               })
               .catch(error => console.error('Error generating player name:', error));
           }
