@@ -74,12 +74,12 @@ Service.getLastConversation = function (roomId, before) {
     xhr.open("GET", url);
     xhr.onload = function () {
       if (xhr.status === 200) {
-        resolve(JSON.parse(xhr.responseText)); 
+        resolve(JSON.parse(xhr.responseText));
       }
       else if (xhr.status === 404) {
-          resolve({ messages: [] });
-        }
-      else if (xhr.status === 500){
+        resolve({ messages: [] });
+      }
+      else if (xhr.status === 500) {
         reject(new Error('Failed to load conversation: ' + xhr.statusText));
         console.log()
       }
@@ -124,7 +124,7 @@ function* makeConversationLoader(room) {
     // Yield the conversation promise itself. The caller must handle the promise resolution.
     const conversation = yield conversationPromise;
     if (!conversation || conversation.messages.length === 0) {
-        room.canLoadConversation = true; // Allow further attempts
+      room.canLoadConversation = true; // Allow further attempts
     }
   }
 }
@@ -207,24 +207,24 @@ class LobbyView {
     this.playerKeywordsInput = this.elem.querySelector('#player-keywords');
 
     this.generatePlayerBtn.addEventListener('click', () => {
-    const keywords = this.playerKeywordsInput.value; // Get keywords from input
-    fetch(`${Service.origin}/api/generate-player`, {
+      const keywords = this.playerKeywordsInput.value; // Get keywords from input
+      fetch(`${Service.origin}/api/generate-player`, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({ keywords }) // Pass keywords in the body of the request
-    })
-    .then(response => response.json())
-    .then(data => {
-        // Handle the generated player name and display the card
-        // For simplicity, using console.log to show the name; you can replace this with your display logic
-        console.log(`Generated NHL Player: ${data.playerName}`);
-    })
-    .catch(error => {
-        console.error('Error generating NHL player name:', error);
+      })
+        .then(response => response.json())
+        .then(data => {
+          // Handle the generated player name and display the card
+          // For simplicity, using console.log to show the name; you can replace this with your display logic
+          console.log(`Generated NHL Player: ${data.playerName}`);
+        })
+        .catch(error => {
+          console.error('Error generating NHL player name:', error);
+        });
     });
-});
 
   }
 
@@ -285,10 +285,15 @@ class ChatView {
               <div class="page-control">
                   <textarea placeholder="Write your message here..."></textarea>
                   <button>Send</button>
+                  <input id="player-keywords" type="text" placeholder="Enter keywords (e.g., position, team)"></input>
+                  <button id="generate-player-btn">Generate Random NHL Player</button>
               </div>
           </div>
       </div>
   </div>`);
+
+    this.generatePlayerBtn = this.elem.querySelector('#generate-player-btn');
+    this.playerKeywordsInput = this.elem.querySelector('#player-keywords');
 
     this.titleElem = this.elem.querySelector('.room-name'); // h4 element for the room name
     this.chatElem = this.elem.querySelector('.message-list'); // div.message-list container
@@ -310,6 +315,38 @@ class ChatView {
       if (event.deltaY < 0 && this.chatElem.scrollTop <= 0 && this.room.canLoadConversation) {
         this.room.getLastConversation.next();
       }
+    });
+
+    this.generatePlayerBtn.addEventListener('click', () => {
+      const keywords = this.playerKeywordsInput.value; // Get keywords from input
+      fetch(`${Service.origin}/api/generate-player`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ keywords }) // Pass keywords in the body of the request
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log(`Generated NHL Player: ${data.playerName}`);
+
+          // Now send this as a message in the chatroom from "AI"
+          if (this.room && this.socket && this.socket.readyState === WebSocket.OPEN) {
+            const aiMessage = {
+              roomId: this.room._id,
+              username: "AI", // Username as "AI"
+              text: `Generated NHL Player: ${data.playerName}`
+            };
+            this.socket.send(JSON.stringify(aiMessage));
+
+            // Optionally, you can also directly add this message to the DOM
+            // if you want it to appear immediately without waiting for a round trip to the server
+            this.addMessageToDOM(aiMessage);
+          }
+        })
+        .catch(error => {
+          console.error('Error generating NHL player name:', error);
+        });
     });
   }
 
