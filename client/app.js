@@ -144,28 +144,29 @@ function createDOM(htmlString) {
 async function fetchNHLPlayerStats(playerId, season = 19801981) {
   const statsURL = `https://statsapi.web.nhl.com/api/v1/people/${playerId}/stats?stats=statsSingleSeason&season=${season}`;
   try {
-      const response = await fetch(statsURL);
-      const data = await response.json();
-      
-      // Assuming you want to log or use the stats similarly to the Gretzky sample
-      if (data.stats && data.stats.length > 0) {
-          const stats = data.stats[0].splits[0].stat; // Access the stats object
-          console.log(`Stats for season ${season}:`, stats);
-          return stats; // Return the stats object for further use
-      } else {
-          console.log('No stats found for the given player and season.');
-          return null;
-      }
-  } catch (error) {
-      console.error('Failed to fetch NHL player stats:', error);
+    const response = await fetch(statsURL);
+    const data = await response.json();
+
+    // Assuming you want to log or use the stats similarly to the Gretzky sample
+    if (data.stats && data.stats.length > 0) {
+      const stats = data.stats[0].splits[0].stat; // Access the stats object
+      console.log(`Stats for season ${season}:`, stats);
+      return stats; // Return the stats object for further use
+    } else {
+      console.log('No stats found for the given player and season.');
       return null;
+    }
+  } catch (error) {
+    console.error('Failed to fetch NHL player stats:', error);
+    return null;
   }
 }
 
 
 // Define the LobbyView class
 class LobbyView {
-  constructor(lobby) {
+  constructor(lobby, socket) {
+    this.socket = socket
     this.elem = createDOM(
       '<div class="view" id="app-view">' +
       '<ul class="menu" id="app-menu">' +
@@ -175,14 +176,15 @@ class LobbyView {
       '<div id="page-view">' +
       '<div class="content">' +
       '<ul class="room-list">' +
-      // Correctly place the text for rooms outside the <img> tags
       '<li class="room"><a class="room-link" href="#/chat"><img class="chat-icon" src="/assets/everyone-icon.png"> Everyone in CPEN400A</a></li>' +
       '<li class="room"><a class="room-link" href="#/chat"><img class="chat-icon" src="/assets/bibimbap.jpg"> Foodies only</a></li>' +
       '<li class="room"><a class="room-link" href="#/chat"><img class="chat-icon" src="/assets/minecraft.jpg"> Gamers unite</a></li>' +
       '<li class="room"><a class="room-link" href="#/chat"><img class="chat-icon" src="/assets/canucks.png"> Canucks fans</a></li>' +
       '</ul>' +
-      '<input id="player-keywords" type="text" placeholder="Enter keywords (e.g., position, team)"></input>' +
-      '<button id="generate-player-btn">Generate Random NHL Player</button>' +
+      '<input id="nationality-input" type="text" placeholder="Nationality"></input>' +
+      '<input id="teams-input" type="text" placeholder="Team(s)"></input>' +
+      '<input id="time-period-input" type="text" placeholder="Time Period"></input>' +
+      '<button id="create-themed-room-btn">Create Themed Room using AI</button>' +
       '<div class="page-control">' +
       '<input class="page-control-input" type="text" placeholder="Room Title"></input>' +
       '<button class="page-control-button">Create Room</button>' +
@@ -224,28 +226,83 @@ class LobbyView {
       }
     });
 
-    // AI Gen Button Listener
-    this.generatePlayerBtn = this.elem.querySelector('#generate-player-btn');
-    this.playerKeywordsInput = this.elem.querySelector('#player-keywords');
+    // Add event listener for the new "Create Themed Room using AI" button
+    const createThemedRoomBtn = this.elem.querySelector('#create-themed-room-btn');
+    createThemedRoomBtn.addEventListener('click', () => {
+      const nationality = this.elem.querySelector('#nationality-input').value;
+      const teams = this.elem.querySelector('#teams-input').value;
+      const timePeriod = this.elem.querySelector('#time-period-input').value;
 
-    this.generatePlayerBtn.addEventListener('click', () => {
-      const playerName = this.playerKeywordsInput.value; // User inputs player name
-      console.log("The Playername is: ", playerName)
-      // Call fetchPlayerStats with the inputted playerName
-      fetchPlayerStats(playerName)
-          .then(statsData => {
-              // Assuming statsData contains the stats, and you want to display them
-              console.log(statsData); // Log or use stats data as needed
-              
-              // If your stats data structure differs, adjust the following line accordingly
-              // This assumes statsData follows the structure where stats are directly accessible
-              // For example, this might need adjustment based on the actual structure of statsData
-              this.displayPlayerStats(statsData.stats[0].splits[0].stat); // Display stats
-          })
-          .catch(error => {
-              console.error('Error fetching player stats:', error);
-          });
-  });
+      // Generate a 'unique' ID using the current timestamp and a random number
+      const id = Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
+
+      Service.addRoom({ name: `Themed Room: ${nationality}, ${teams}, ${timePeriod}`, image: '/path/to/image.png' })
+      .then(newRoom => {
+        this.lobby.addRoom(newRoom._id, newRoom.name, newRoom.image, []);
+        // Now create a ChatView for this room
+        const newRoomChatView = new ChatView(this.socket);
+        newRoomChatView.setRoom(new Room(newRoom._id, newRoom.name, newRoom.image)); // Assuming you have a constructor in Room class to handle this
+        // Store the ChatView instance for later use
+        this.lobby.chatViews[newRoom._id] = newRoomChatView;
+          const roomID = newRoom._id; // This would be dynamically obtained in your actual code
+
+          const baseKeywords = [nationality, teams, timePeriod];
+          const additionalKeywords = ["speed", "goalie", "defense", "attack", "champion", "rookie"];
+          const numberOfCalls = 3; // As an example
+
+          for (let i = 0; i < numberOfCalls; i++) {
+            let keywordsForThisCall = [...baseKeywords];
+            let randomAdditionalKeyword = additionalKeywords[Math.floor(Math.random() * additionalKeywords.length)];
+            keywordsForThisCall.push(randomAdditionalKeyword);
+
+            // Simulating API call for player generation
+            fetch(`${Service.origin}/api/generate-player`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ keywords: keywordsForThisCall.join(', ') })
+            })
+              .then(response => response.json())
+              .then(data => {
+                // Construct the message object to send through the WebSocket
+                const aiMessage = {
+                  roomId: roomID, // Use the ID of the newly created room
+                  username: "AI", // Indicating the source of the message
+                  text: `Generated... ${data.playerName}`
+                };
+
+                console.log("Received From Server", aiMessage)
+
+                // Send the message if the WebSocket is ready
+                if (this.socket && this.socket.readyState === WebSocket.OPEN) {
+                  this.socket.send(JSON.stringify(aiMessage));
+                }
+
+                const roomChatView = this.lobby.chatViews[roomID];
+                console.log(roomChatView)
+                if (roomChatView) {
+                    // If there is a ChatView, use it to display the message
+                    roomChatView.addMessageToDOM(aiMessage);
+                  }
+              })
+              .catch(error => console.error('Error generating player name:', error));
+          }
+        })
+        .catch(error => {
+          console.error('Error creating room:', error);
+        });
+    });
+  }
+  addMessageToDOM(message) {
+    console.log("Adding:", message)
+    const messageElement = document.createElement('div');
+    messageElement.className = message.username === profile.username ? 'message my-message' : 'message';
+
+    // Sanitize the message text by escaping HTML special characters
+    const sanitizedText = message.text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+
+    messageElement.innerHTML = `<span class="message-user">${message.username}</span>: <span class="message-text">${sanitizedText}</span>`;
+    this.chatElem.appendChild(messageElement);
+    this.chatElem.scrollTop = this.chatElem.scrollHeight; // Scroll to the bottom
   }
 
   // Code in part generated
@@ -410,6 +467,7 @@ class ChatView {
 
   // Helper method to add a message to the DOM, in part generated
   addMessageToDOM(message) {
+    console.log("Adding:", message)
     const messageElement = document.createElement('div');
     messageElement.className = message.username === profile.username ? 'message my-message' : 'message';
 
@@ -497,6 +555,7 @@ class Room {
 class Lobby {
   constructor() {
     this.rooms = {};
+    this.chatViews = {}
   }
 
   getRoom(roomId) {
@@ -530,7 +589,7 @@ function main() {
 
   // Instantiate view objects
   const lobby = new Lobby(); //new lobby object
-  const lobbyView = new LobbyView(lobby);
+  const lobbyView = new LobbyView(lobby, socket);
   const chatView = new ChatView(socket);
   const profileView = new ProfileView();
 

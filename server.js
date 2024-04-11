@@ -62,13 +62,14 @@ app.post('/api/generate-player', async (req, res) => {
     const { keywords } = req.body;
 
     // Your existing prompt construction
-    const prompt = `Please name a player who played at least ONE game in the National Hockey League and matches these keywords: ${keywords}. Please ensure your response begins with the name.`;
+    const prompt = `Please name a player who played in the National Hockey League and is a good fit for these: ${keywords}. Please ensure your response begins with the name.`;
 
     const generatedText = await generateText(prompt);
     if (generatedText) {
         // Extract the player's name by removing the prompt and taking the first two words
         const playerName = generatedText.replace(prompt, "").trim().split(/\s+/).slice(0, 2).join(' ');
         res.json({ playerName });
+        console.log("Server is returning playerName: ", playerName)
     } else {
         res.status(500).json({ error: 'Failed to generate player name.' });
     }
@@ -283,7 +284,6 @@ broker.on('connection', (ws, req) => {
         let parsedMessage;
         try {
             parsedMessage = JSON.parse(message);
-            console.log("Parsed Message: ", parsedMessage)
             
             // Sanitize the message text by escaping HTML special characters
             parsedMessage.text = parsedMessage.text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
@@ -313,8 +313,10 @@ broker.on('connection', (ws, req) => {
             } else {
                 // If not an AI prompt, broadcast the original sanitized message
                 const forwardMessage = JSON.stringify(parsedMessage);
+                console.log("Forwarding message from Server: ", forwardMessage)
                 broker.clients.forEach((client) => {
                     if (client !== ws && client.readyState === WebSocket.OPEN) {
+                        console.log("Broadcasting to client")
                         client.send(forwardMessage);
                     }
                 });
