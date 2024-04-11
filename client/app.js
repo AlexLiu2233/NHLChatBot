@@ -159,6 +159,7 @@ class LobbyView {
       '<li class="room"><a class="room-link" href="#/chat"><img class="chat-icon" src="/assets/minecraft.jpg"> Gamers unite</a></li>' +
       '<li class="room"><a class="room-link" href="#/chat"><img class="chat-icon" src="/assets/canucks.png"> Canucks fans</a></li>' +
       '</ul>' +
+      '<input id="player-keywords" type="text" placeholder="Enter keywords (e.g., position, team)"></input>' +
       '<button id="generate-player-btn">Generate Random NHL Player</button>' +
       '<div class="page-control">' +
       '<input class="page-control-input" type="text" placeholder="Room Title"></input>' +
@@ -203,11 +204,22 @@ class LobbyView {
 
     // AI Gen Button Listener
     this.generatePlayerBtn = this.elem.querySelector('#generate-player-btn');
+    this.playerKeywordsInput = this.elem.querySelector('#player-keywords');
+
     this.generatePlayerBtn.addEventListener('click', () => {
-    fetch(`${Service.origin}/api/generate-player`)
+    const keywords = this.playerKeywordsInput.value; // Get keywords from input
+    fetch(`${Service.origin}/api/generate-player`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ keywords }) // Pass keywords in the body of the request
+    })
     .then(response => response.json())
     .then(data => {
-        alert(`Generated NHL Player: ${data.playerName}`);
+        // Handle the generated player name and display the card
+        // For simplicity, using console.log to show the name; you can replace this with your display logic
+        console.log(`Generated NHL Player: ${data.playerName}`);
     })
     .catch(error => {
         console.error('Error generating NHL player name:', error);

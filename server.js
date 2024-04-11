@@ -58,21 +58,19 @@ const generateText = async (prompt, model = "Nous-Hermes-2-Mistral-7B-DPO.Q4_0")
     }
 };
 
-// Modify the /api/generate-text route handler
-app.post('/api/generate-text', async (req, res) => {
-    const { prompt } = req.body;
-    const roomId = req.params.room_id;
+app.post('/api/generate-player', async (req, res) => {
+    const { keywords } = req.body;
 
-    if (!prompt) {
-        return res.status(400).json({ error: 'Prompt is required.' });
-    }
+    // Constructing a dynamic prompt based on the input keywords
+    const prompt = `Please name a player who played at least ONE game in the National Hockey League and matches these keywords: ${keywords}.`;
 
     const generatedText = await generateText(prompt);
     if (generatedText) {
-        console.log("From Server - generated text: ", generatedText)
-        res.json({ generatedText , id: roomId});
+        console.log("From Server - generated player name: ", generatedText)
+        // Assuming the generatedText is the player's name
+        res.json({ playerName: generatedText.trim() });
     } else {
-        res.status(500).json({ error: 'Failed to generate text.' });
+        res.status(500).json({ error: 'Failed to generate player name.' });
     }
 });
 
@@ -155,7 +153,7 @@ app.get('/chat', protectRoute, (req, res) => {
 });
 
 app.get('/api/generate-player', async (req, res) => {
-    const prompt = "Generate a random NHL player name.";
+    const prompt = "Randomly select the name of a player who has played at least one game in the National Hockey League (NHL) during the last 30 years";
     const playerName = await generateText(prompt);
     if (playerName) {
         res.json({ playerName });
