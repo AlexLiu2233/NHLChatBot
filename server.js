@@ -61,18 +61,19 @@ const generateText = async (prompt, model = "Nous-Hermes-2-Mistral-7B-DPO.Q4_0")
 app.post('/api/generate-player', async (req, res) => {
     const { keywords } = req.body;
 
-    // Constructing a dynamic prompt based on the input keywords
+    // Your existing prompt construction
     const prompt = `Please name a player who played at least ONE game in the National Hockey League and matches these keywords: ${keywords}.`;
 
     const generatedText = await generateText(prompt);
     if (generatedText) {
-        console.log("From Server - generated player name: ", generatedText)
-        // Assuming the generatedText is the player's name
-        res.json({ playerName: generatedText.trim() });
+        // Extract the player's name by removing the prompt and taking the first two words
+        const playerName = generatedText.replace(prompt, "").trim().split(/\s+/).slice(0, 2).join(' ');
+        res.json({ playerName });
     } else {
         res.status(500).json({ error: 'Failed to generate player name.' });
     }
 });
+
 
 // Login route definition
 app.post('/login', async (req, res) => {

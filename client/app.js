@@ -335,7 +335,7 @@ class ChatView {
             const aiMessage = {
               roomId: this.room._id,
               username: "AI", // Username as "AI"
-              text: `Generated NHL Player: ${data.playerName}`
+              text: `Generated... ${data.playerName}`
             };
             this.socket.send(JSON.stringify(aiMessage));
 
