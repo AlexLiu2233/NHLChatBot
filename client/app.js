@@ -141,6 +141,28 @@ function createDOM(htmlString) {
   return template.content.firstChild;
 }
 
+async function fetchNHLPlayerStats(playerId, season = 19801981) {
+  const statsURL = `https://statsapi.web.nhl.com/api/v1/people/${playerId}/stats?stats=statsSingleSeason&season=${season}`;
+  try {
+      const response = await fetch(statsURL);
+      const data = await response.json();
+      
+      // Assuming you want to log or use the stats similarly to the Gretzky sample
+      if (data.stats && data.stats.length > 0) {
+          const stats = data.stats[0].splits[0].stat; // Access the stats object
+          console.log(`Stats for season ${season}:`, stats);
+          return stats; // Return the stats object for further use
+      } else {
+          console.log('No stats found for the given player and season.');
+          return null;
+      }
+  } catch (error) {
+      console.error('Failed to fetch NHL player stats:', error);
+      return null;
+  }
+}
+
+
 // Define the LobbyView class
 class LobbyView {
   constructor(lobby) {
@@ -207,25 +229,23 @@ class LobbyView {
     this.playerKeywordsInput = this.elem.querySelector('#player-keywords');
 
     this.generatePlayerBtn.addEventListener('click', () => {
-      const keywords = this.playerKeywordsInput.value; // Get keywords from input
-      fetch(`${Service.origin}/api/generate-player`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ keywords }) // Pass keywords in the body of the request
-      })
-        .then(response => response.json())
-        .then(data => {
-          // Handle the generated player name and display the card
-          // For simplicity, using console.log to show the name; you can replace this with your display logic
-          console.log(`Generated NHL Player: ${data.playerName}`);
-        })
-        .catch(error => {
-          console.error('Error generating NHL player name:', error);
-        });
-    });
-
+      const playerName = this.playerKeywordsInput.value; // User inputs player name
+      console.log("The Playername is: ", playerName)
+      // Call fetchPlayerStats with the inputted playerName
+      fetchPlayerStats(playerName)
+          .then(statsData => {
+              // Assuming statsData contains the stats, and you want to display them
+              console.log(statsData); // Log or use stats data as needed
+              
+              // If your stats data structure differs, adjust the following line accordingly
+              // This assumes statsData follows the structure where stats are directly accessible
+              // For example, this might need adjustment based on the actual structure of statsData
+              this.displayPlayerStats(statsData.stats[0].splits[0].stat); // Display stats
+          })
+          .catch(error => {
+              console.error('Error fetching player stats:', error);
+          });
+  });
   }
 
   // Code in part generated
