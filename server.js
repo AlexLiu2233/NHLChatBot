@@ -62,7 +62,7 @@ app.post('/api/generate-player', async (req, res) => {
     const { keywords } = req.body;
 
     // Your existing prompt construction
-    const prompt = `Please name a player who played at least ONE game in the National Hockey League and matches these keywords: ${keywords}.`;
+    const prompt = `Please name a player who played at least ONE game in the National Hockey League and matches these keywords: ${keywords}. Please ensure your response begins with the name.`;
 
     const generatedText = await generateText(prompt);
     if (generatedText) {

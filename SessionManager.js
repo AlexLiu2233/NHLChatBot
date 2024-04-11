@@ -46,7 +46,6 @@ function SessionManager() {
 			next(new SessionError('No cookie header found'));
 			return;
 		}
-		console.log("The Cookie Header is equal to: " + cookieHeader)
 		// Parse the cookie header to find the 'cpen322-session' cookie
 		const cookies = cookieHeader.split(';').reduce((acc, cookie) => {
 			const [key, value] = cookie.trim().split('=');
@@ -55,14 +54,12 @@ function SessionManager() {
 		}, {});
 
 		const token = cookies['cpen322-session'];
-		console.log(`Attempting to validate session: ${token}`);
 		if (!token || !sessions[token]) {
 			console.log(`Invalid or missing session: ${token}`);
 			next(new SessionError('Invalid session token'));
 			return;
 		}
 
-		console.log(`Session validated: ${token}`, sessions[token]);
 		request.username = sessions[token].username;
 		request.session = token;
 		next();
