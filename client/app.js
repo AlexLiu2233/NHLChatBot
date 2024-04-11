@@ -159,6 +159,7 @@ class LobbyView {
       '<li class="room"><a class="room-link" href="#/chat"><img class="chat-icon" src="/assets/minecraft.jpg"> Gamers unite</a></li>' +
       '<li class="room"><a class="room-link" href="#/chat"><img class="chat-icon" src="/assets/canucks.png"> Canucks fans</a></li>' +
       '</ul>' +
+      '<button id="generate-player-btn">Generate Random NHL Player</button>' +
       '<div class="page-control">' +
       '<input class="page-control-input" type="text" placeholder="Room Title"></input>' +
       '<button class="page-control-button">Create Room</button>' +
@@ -199,6 +200,20 @@ class LobbyView {
           });
       }
     });
+
+    // AI Gen Button Listener
+    this.generatePlayerBtn = this.elem.querySelector('#generate-player-btn');
+    this.generatePlayerBtn.addEventListener('click', () => {
+    fetch(`${Service.origin}/api/generate-player`)
+    .then(response => response.json())
+    .then(data => {
+        alert(`Generated NHL Player: ${data.playerName}`);
+    })
+    .catch(error => {
+        console.error('Error generating NHL player name:', error);
+    });
+});
+
   }
 
   // Code in part generated

@@ -33,7 +33,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true })) // to parse application/x-www-form-urlencoded
 app.use(logRequest);	
 
-const generateText = async (prompt, model = "mistral-7b-openorca.gguf2.Q4_0") => {
+const generateText = async (prompt, model = "Nous-Hermes-2-Mistral-7B-DPO.Q4_0") => {
     const apiBase = "http://localhost:4891/v1";
     const requestData = {
         model: model,
@@ -152,6 +152,16 @@ app.get('/chat', protectRoute, (req, res) => {
 		console.error(err);
 		res.status(500).send('Error fetching chat rooms');
 	});
+});
+
+app.get('/api/generate-player', async (req, res) => {
+    const prompt = "Generate a random NHL player name.";
+    const playerName = await generateText(prompt);
+    if (playerName) {
+        res.json({ playerName });
+    } else {
+        res.status(500).json({ error: 'Failed to generate player name.' });
+    }
 });
 
 // POST endpoint for creating a new chatroom
