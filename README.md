@@ -14,3 +14,7 @@ Go to settings and click "enable API Server"
     ** You are able to pass in KeyWords (ie Nationality, Team(s), etc)
     ** The AI will randomly generate players based on those keywords
 5. Note the AI acts the same as any other user (has username "AI")
+
+# NHLChatBot
+Chatroom based Web-Application with GPT4 integration
+
