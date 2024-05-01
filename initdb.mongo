@@ -1,29 +1,17 @@
 conn = new Mongo();
 db = conn.getDB("cpen322-messenger");
 db.dropDatabase();
-imgHost = '/';
+imgHost = '/images/';
 
 result = db.chatrooms.insert([
-	{
-		_id: 'room-1',
-		name: 'Everyone in CPEN322',
-	    image: imgHost+'assets/everyone-icon.png'
-	},
-	{
-		_id: 'room-2',
-		name: 'Foodies only',
-	    image: imgHost+'assets/bibimbap.jpg'
-	},
-	{
-		_id: 'room-3',
-		name: 'Gamers unite',
-	    image: imgHost+'assets/minecraft.jpg'
-	},
-	{
-		_id: 'room-4',
-		name: 'Canucks Fans',
-	    image: imgHost+'assets/canucks.png'
-	}
+{ _id: 'Ducks', name: 'Paint It Orange', image: imgHost+'ducks.png' },
+{ _id: 'Coyotes', name: 'Hockey the Hard Way', image: imgHost+'coyotes.png' },
+{ _id: 'Flames', name: 'Fire it Up', image: imgHost+'flames.png' },
+{ _id: 'Oilers', name: 'Fueling the Fire', image: imgHost+'oilers.png' },
+{ _id: 'Kings', name: 'We Are All Kings', image: imgHost+'kings.png' },
+{ _id: 'Sharks', name: 'This Is Sharks Territory', image: imgHost+'sharks.png' },
+{ _id: 'Kraken', name: 'Release the Kraken', image: imgHost+'kraken.png' },
+{ _id: 'Canucks', name: 'We Are All Canucks', image: imgHost+'canucks.png' }
 ]);
 
 print(result);
