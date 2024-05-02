@@ -33,6 +33,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true })) // to parse application/x-www-form-urlencoded
 app.use(logRequest);	
 
+// Static middleware for images directory
+app.use('/images', express.static(path.join(__dirname, 'images')));
+
 const generateText = async (prompt, model = "Nous-Hermes-2-Mistral-7B-DPO.Q4_0") => {
     const apiBase = "http://localhost:4891/v1";
     const requestData = {
