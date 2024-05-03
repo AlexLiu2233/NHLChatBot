@@ -2,14 +2,31 @@ conn = new Mongo();
 db = conn.getDB("cpen322-messenger");
 
 result = db.users.insertMany([
-	{
-		username: 'alice',
-		password: '1htYvJoddV8mLxq3h7C26/RH2NPMeTDxHIxWn49M/G0wxqh/7Y3cM+kB1Wdjr4I='
-	},
-	{
-		username: 'bob',
-		password: 'MIYB5u3dFYipaBtCYd9fyhhanQkuW4RkoRTUDLYtwd/IjQvYBgMHL+eoZi3Rzhw='
-	}
+    {
+        username: 'Anaheim Ducks',
+        password: 'ab70be958fa48643f92bJx1MC4ud7J43wpTEtx/Q2nvUNy1rDq7DiJ8lTlV5xk8='
+    },
+    {
+        username: 'Calgary Flames',
+        password: '9dfff6a53533a58eed7aNLtXwG690VA8P9BVxznp6ape7lxtySYz5tCXGXbleJs='
+    },
+    {
+        username: 'Los Angeles Kings',
+        password: 'eadd6ec9f687f55e5187PIaV3Wiy3s6AAsvmO2kuXBzMwHz8U2uWDeXcR0pis6I='
+    },
+    {
+        username: 'San Jose Sharks',
+        password: 'a582382a5af63debe3078bxpL9rr+XEtigbBsYAvaXwKY0CTQaEEdUSG2Pcuwqk='
+    },
+    {
+        username: 'Seattle Kraken',
+        password: '2f63aafb880d7b4bab8fBTNAvA8UsyTxSN/fY9i2WInjYnqOdKBvSjEWOQ1xv4U='
+    },
+    {
+        username: 'Vegas Golden Knights',
+        password: '5b0abdb117e6d44c7650RTJm6StSGCAUJhSKmSs+Ex1o8kqTuoW49Lx9C2dNT30='
+    },
 ]);
+
 
 print(result);
