@@ -26,6 +26,10 @@ result = db.users.insertMany([
         username: 'Vegas Golden Knights',
         password: '5b0abdb117e6d44c7650RTJm6StSGCAUJhSKmSs+Ex1o8kqTuoW49Lx9C2dNT30='
     },
+	{
+		username: 'Vancouver Canucks',
+		password: '28e5f32122fd9364d132j8YK90NoYMpXizdonWNA/EqU3sfFEF99ETRO9ECt2PE='
+	}
 ]);
 
 
