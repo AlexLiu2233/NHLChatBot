@@ -446,6 +446,12 @@ class ChatView {
       this.addMessageToDOM(message);
     };
 
+    // Console log to debug the image URL before setting it
+    console.log("Background Image URL:", room.image); // Log the image URL to be set
+
+    // Console log to see the style before setting the new background image
+    console.log("Element Style Before:", this.chatElem.style.backgroundImage);
+
     // Attach an onFetchConversation callback to the room
     this.room.onFetchConversation = (conversation) => {
       const scrollHeightBefore = this.chatElem.scrollHeight;
@@ -456,6 +462,18 @@ class ChatView {
       const scrollHeightAfter = this.chatElem.scrollHeight;
       this.chatElem.scrollTop = scrollHeightAfter - scrollHeightBefore;
     };
+    //TODO 
+    
+    // Set the background image for the chat area
+    if (room.image) {
+      this.chatElem.style.backgroundImage = `url('${room.image}')`;
+      this.chatElem.style.backgroundSize = 'cover'; // Ensure the background covers the chat area
+
+      // Console log to check the style after setting the new background image
+      console.log("Element Style After:", this.chatElem.style.backgroundImage);
+    } else {
+        console.log("No image found for the room"); // Log when no image is available
+    }
   }
 
   // Helper method to add a message to the DOM, in part generated
