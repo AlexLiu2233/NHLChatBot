@@ -464,15 +464,14 @@ class ChatView {
     };
     //TODO 
     
-    // Set the background image for the chat area
+    // Set the background image for the content area dynamically
+    const contentElem = this.elem.querySelector('.content'); // Select the content element
+    console.log("DEBUG: contentElem is: ", contentElem)
     if (room.image) {
-      this.chatElem.style.backgroundImage = `url('${room.image}')`;
-      this.chatElem.style.backgroundSize = 'cover'; // Ensure the background covers the chat area
-
-      // Console log to check the style after setting the new background image
-      console.log("Element Style After:", this.chatElem.style.backgroundImage);
+        contentElem.style.backgroundImage = `url('${room.image}')`;
+        contentElem.style.backgroundSize = 'cover';
     } else {
-        console.log("No image found for the room"); // Log when no image is available
+        contentElem.style.backgroundImage = 'none';
     }
   }
 
