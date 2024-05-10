@@ -168,18 +168,32 @@ img.chat-icon {
 }
 
 .page-control {
-    background-color: #f4f4f8;
-    padding: 10px;
+    position: absolute; /* or fixed, if needed */
+    bottom: 20px; /* Adjust as required */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+    padding: 15px;
     border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    transition: background-color 0.3s, transform 0.3s; /* Added transform to transition for smoothness */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    color: #ffffff; /* White text color */
+  }
 
-    /* Hover effect for background and slight scale */
-    &:hover {
-        background-color: #e4e4e8; /* Slightly darker on hover */
-        transform: scale(1.02); /* Slightly larger on hover */
-    }
-}
+  .page-control h4.room-name {
+    font-size: 24px; /* Larger font for the motto */
+    margin-bottom: 10px;
+    text-transform: uppercase; /* Uppercase text */
+    color: #ffcc00; /* Bright color for the motto */
+  }
+
+  .page-control textarea, .page-control input[type="text"] {
+    width: 90%; /* Responsive width */
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+  }
 
 .page-control-input {
     border: none;
@@ -189,19 +203,20 @@ img.chat-icon {
     box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
 }
 
-.page-control-button {
-    background-color: #0056b3;
-    color: white;
+page-control button {
+    background-color: #ffcc00;
     border: none;
-    border-radius: 20px;
-    padding: 8px 20px;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin-top: 10px;
     cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.page-control-button:hover {
-    background-color: #004494;
-}
+    color: #000000;
+    transition: background-color 0.3s ease;
+  }
+  
+  .page-control button:hover {
+    background-color: #ffaa00; /* Lighter shade on hover */
+  }
 
 .message-list {
     padding-bottom: 80px;
