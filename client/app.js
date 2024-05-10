@@ -479,7 +479,7 @@ class ChatView {
   addMessageToDOM(message) {
     console.log("Adding:", message)
     const messageElement = document.createElement('div');
-    messageElement.className = message.username === profile.username ? 'message my-message' : 'message';
+    messageElement.className = message.username === profile.username ? 'message my-message' : 'message their-message';
 
     // Sanitize the message text by escaping HTML special characters
     const sanitizedText = message.text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');

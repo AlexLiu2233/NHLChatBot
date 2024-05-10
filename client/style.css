@@ -1,7 +1,30 @@
-/* Default width*/
 #app-view {
-    width: 100%;
+    position: fixed; /* Fixed position to cover the full screen and stay in place during scrolling */
+    top: 0;
+    left: 0;
+    width: 100%; /* Full width of the viewport */
+    height: 100vh; /* Full height of the viewport */
+    overflow: auto; /* Adds scrolling to the div if content overflows */
+    box-sizing: border-box; /* Includes padding and borders in width/height calculations */
 }
+
+#page-view {
+    width: 100%; /* Full width of its container */
+    height: 100%; /* Full height of its container */
+    position: relative; /* Establishes a positioning context for inner content */
+}
+
+.content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-image: url('/images/coyotes.png'); /* Example path, adjust as necessary */
+    background-size: cover;
+    background-position: center;
+    box-sizing: border-box;
+}
+
 
 /* When the document body width is >= 1024px */
 @media (min-width: 1024px) {
@@ -145,4 +168,71 @@ div.page-control {
     justify-content: center;
     align-items: center;
 }
+
+.menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #333; /* Dark background for the navbar */
+    color: #fff;
+    z-index: 1000; /* Ensures the menu stays on top */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Adds shadow for depth */
+}
+
+.menu-item {
+    display: inline-block; /* Align items in a row */
+    padding: 10px 20px; /* Padding for touch targets */
+}
+
+.menu-link {
+    color: #fff; /* White text color */
+    text-decoration: none; /* No underline */
+    font-weight: bold; /* Bold font for better readability */
+}
+
+.menu-link:hover, .menu-link:focus {
+    background-color: #555; /* Darker background on hover/focus */
+}
+
+/* You might need to add some JavaScript or server-side rendering logic to dynamically add 'active' class to the current page link */
+.menu-link.active {
+    background-color: #ff6700; /* Highlight color for the active menu item */
+    color: #000; /* Text color change if needed */
+}
+
+.room-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.room {
+    background-color: #f9f9f9; /* Light background for the card */
+    border: 1px solid #ccc; /* Border to define the edges */
+    border-radius: 8px; /* Rounded corners for modern look */
+    margin: 10px; /* Margin around cards */
+    padding: 10px; /* Padding inside cards */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+    transition: transform 0.2s; /* Smooth transition for hover effect */
+}
+
+.room:hover {
+    transform: scale(1.05); /* Slightly enlarge card on hover */
+}
+
+.room-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit; /* Use the text color of the parent */
+}
+
+.chat-icon {
+    width: 50px; /* Set a fixed width for icons */
+    height: auto; /* Maintain aspect ratio */
+    margin-right: 10px; /* Space between icon and text */
+}
+
+
 
