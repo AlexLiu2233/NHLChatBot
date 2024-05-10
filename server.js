@@ -58,12 +58,14 @@ app.post('/api/generate-player', async (req, res) => {
     const { keywords } = req.body;
     const prompt = `Please name a player who played in the National Hockey League and is a good fit for these: ${keywords}. Please ensure your response begins with the name.`;
 
-    const generatedText = await generateText(prompt);
+    const generatedResponse = await generateText(prompt);
 
-    if (typeof generatedText === 'string') {
-        // Adjust parsing based on your actual GPT4All output structure
+    if (generatedResponse && generatedResponse.content) {
+        const generatedText = generatedResponse.content;
+
+        // Extract the player's name by trimming the string and splitting it at spaces
         const playerName = generatedText.trim().split(/\s+/).slice(0, 2).join(' ');
-
+        console.log("The playerName is: ", playerName)
         // If a valid player name is found, respond with it
         if (playerName) {
             res.json({ playerName });
@@ -72,11 +74,12 @@ app.post('/api/generate-player', async (req, res) => {
             res.status(404).json({ error: 'No valid player name found in generated response.' });
         }
     } else {
-        // If the response isn't a string or there's another issue, handle the error
-        console.error('Error with generated response:', generatedText);
+        // Handle cases where the generated response is not valid or content is missing
+        console.error('Error with generated response:', generatedResponse);
         res.status(500).json({ error: 'Failed to generate a valid player name. Please try again later.' });
     }
 });
+
 
 
 
