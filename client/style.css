@@ -51,17 +51,16 @@
 }
 
 .message {
-    background-color: #f0f0f0; /* Color for other users */
-    text-align: left; /*align*/
-    float: left;
-    clear: both;
+    max-width: 60%;
+    margin: 10px 0;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: #f1f1f1;
 }
 
 .my-message {
-    background-color: #d1e7dd; /* Color for the current application user */
-    text-align: right; /*align*/
-    float: right;
-    clear: both;
+    margin-left: auto;
+    background: #dcf8c6;
 }
 
 
@@ -161,12 +160,19 @@ img.chat-icon {
     vertical-align: middle;
 }
 
-div.page-control {
-    background-color: rgb(49, 69, 196);
+.page-control {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgb(49, 69, 196);
     color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    padding: 10px;
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.message-list {
+    padding-bottom: 80px;
 }
 
 .menu {
@@ -208,13 +214,11 @@ div.page-control {
 }
 
 .room {
-    background-color: #f9f9f9; /* Light background for the card */
-    border: 1px solid #ccc; /* Border to define the edges */
-    border-radius: 8px; /* Rounded corners for modern look */
-    margin: 10px; /* Margin around cards */
-    padding: 10px; /* Padding inside cards */
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow for depth */
-    transition: transform 0.2s; /* Smooth transition for hover effect */
+    padding: 15px;
+    margin: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .room:hover {
@@ -225,13 +229,22 @@ div.page-control {
     display: flex;
     align-items: center;
     text-decoration: none;
-    color: inherit; /* Use the text color of the parent */
+    color: inherit;
+    padding: 10px;
+    border-radius: 6px;
+    transition: background-color 0.3s;
+}
+
+.room-link:hover {
+    background-color: #f1f1f1;
 }
 
 .chat-icon {
-    width: 50px; /* Set a fixed width for icons */
-    height: auto; /* Maintain aspect ratio */
-    margin-right: 10px; /* Space between icon and text */
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 
