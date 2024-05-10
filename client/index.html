@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>CPEN322 Project</title>
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
   <div class="view" id="app-view">
     <ul class="menu" id="app-menu">
@@ -23,38 +21,16 @@
       </li>
     </ul>    
     <div id="page-view">
+      <!-- The content below will be dynamically populated by app.js -->
       <div class="content">
-        <ul class="room-list">
-          <li class="room">
-            <a class="room-link" href="/chat">
-              <img class="chat-icon" src="/assets/everyone-icon.png">Everyone in CPEN400A</img>
-            </a>
-          </li>
-          <li class="room">
-            <a class="room-link" href="/chat">
-              <img class="chat-icon" src="/assets/bibimbap.jpg">Foodies only</img>
-            </a>
-          </li>
-          <li class="room">
-            <a class="room-link" href="/chat">
-              <img class="chat-icon" src="/assets/minecraft.jpg">Gamers unite</img>
-            </a>
-          </li>
-          <li class="room">
-            <a class="room-link" href="/chat">
-              <img class="chat-icon" src="/assets/canucks.png">Canucks fans</img>
-            </a>
-          </li>
-        </ul>
-        <div class="page-control">
-          <input class="page-control-input" type="text" placeholder="Room Title"></input>
-          <button class="page-control-button">Create Room</button>
-        </div>
+        <!-- Placeholder for dynamic room list -->
+        <ul class="room-list"></ul>
       </div>
+      <!-- Placeholder for page control elements -->
+      <div class="page-control"></div>
     </div>
   </div>
   <script src="http://3.98.223.41/cpen322/test-a4.js" type="text/javascript"></script>
   <script src="app.js"></script>
 </body>
-
 </html>

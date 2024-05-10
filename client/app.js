@@ -339,7 +339,6 @@ class ChatView {
       </ul>
       <div id="page-view">
           <div class="content">
-              <h4 class="room-name">Example Room Name</h4>
               <div class="message-list">
                   <!-- Message from another user -->
                   <div class="message">
@@ -353,6 +352,7 @@ class ChatView {
                   </div>
               </div>
               <div class="page-control">
+                  <h4 class="room-name">Example Room Name</h4>
                   <textarea placeholder="Write your message here..."></textarea>
                   <button>Send</button>
                   <input id="player-keywords" type="text" placeholder="Enter keywords (e.g., position, team)"></input>

@@ -42,6 +42,13 @@
     }
 }
 
+/* Responsive typography for .room-name */
+@media (max-width: 768px) {
+    .room-name {
+        font-size: 20px; /* Slightly smaller font for smaller screens */
+    }
+}
+
 .message, .my-message {
     padding: 10px;
     margin-bottom: 10px;
@@ -161,14 +168,39 @@ img.chat-icon {
 }
 
 .page-control {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgb(49, 69, 196);
-    color: white;
+    background-color: #f4f4f8;
     padding: 10px;
-    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: background-color 0.3s, transform 0.3s; /* Added transform to transition for smoothness */
+
+    /* Hover effect for background and slight scale */
+    &:hover {
+        background-color: #e4e4e8; /* Slightly darker on hover */
+        transform: scale(1.02); /* Slightly larger on hover */
+    }
+}
+
+.page-control-input {
+    border: none;
+    border-radius: 20px;
+    padding: 8px 15px;
+    width: 80%;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.page-control-button {
+    background-color: #0056b3;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.page-control-button:hover {
+    background-color: #004494;
 }
 
 .message-list {
@@ -219,6 +251,22 @@ img.chat-icon {
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.room-name {
+    font-size: 24px;
+    color: #333;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    text-align: center;
+    margin-bottom: 20px;
+    cursor: pointer;
+    transition: color 0.3s, text-shadow 0.3s; /* Smooth transition for color and text-shadow */
+
+    /* Hover effect for color and text-shadow */
+    &:hover {
+        color: #555; /* Darker grey on hover */
+        text-shadow: 2px 2px 3px rgba(0,0,0,0.2); /* More prominent shadow on hover */
+    }
 }
 
 .room:hover {
