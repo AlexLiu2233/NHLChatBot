@@ -6,6 +6,7 @@ const crypto = require('crypto');
 const Database = require('./Database.js');
 const SessionManager = require('./SessionManager.js');
 const sessionManager = new SessionManager();
+const { createCompletion, loadModel } = require('gpt4all');
 const app = express();
 const db = new Database('mongodb://127.0.0.1:27017', 'cpen322-messenger');
 const broker = new WebSocket.Server({ port: 8000 });
@@ -19,6 +20,12 @@ const axios = require('axios'); // Add this at the top with other require statem
 // Express Server
 const host = 'localhost';
 const port = 3000;
+
+// Load the GPT4All model
+const modelPromise = loadModel("Nous-Hermes-2-Mistral-7B-DPO.Q4_0.gguf", {
+    verbose: true,
+    device: "gpu" // or 'cpu', depending on your setup
+});
 
 // Call getRooms from the Database instance and initialize messages
 db.getRooms().then(rooms => {
@@ -36,47 +43,41 @@ app.use(logRequest);
 // Static middleware for images directory
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
-const generateText = async (prompt, model = "Nous-Hermes-2-Mistral-7B-DPO.Q4_0") => {
-    const apiBase = "http://localhost:4891/v1";
-    const requestData = {
-        model: model,
-        prompt: prompt,
-        max_tokens: 50,
-        temperature: 0.28,
-        top_p: 0.95,
-        n: 1,
-        echo: true,
-        stream: false
-    };
-
-    console.log(`Sending request: ${JSON.stringify(requestData)}`);
-
+async function generateText(prompt) {
     try {
-        const response = await axios.post(`${apiBase}/completions`, requestData);
-        console.log("generateText: ",response.data.choices[0].text)
-        return response.data.choices[0].text;
+        const model = await modelPromise; // Ensure the model is loaded
+        const response = await createCompletion(model, prompt);
+        return response.choices[0].message; // Adjust according to the actual response structure
     } catch (error) {
-        console.error(`Error in request: ${error}`);
-        return null;
+        console.error('Error in generating text with GPT4All:', error);
+        return null; // Handle errors appropriately
     }
-};
+}
 
 app.post('/api/generate-player', async (req, res) => {
     const { keywords } = req.body;
-
-    // Your existing prompt construction
     const prompt = `Please name a player who played in the National Hockey League and is a good fit for these: ${keywords}. Please ensure your response begins with the name.`;
 
     const generatedText = await generateText(prompt);
-    if (generatedText) {
-        // Extract the player's name by removing the prompt and taking the first two words
-        const playerName = generatedText.replace(prompt, "").trim().split(/\s+/).slice(0, 2).join(' ');
-        res.json({ playerName });
-        console.log("Server is returning playerName: ", playerName)
+
+    if (typeof generatedText === 'string') {
+        // Adjust parsing based on your actual GPT4All output structure
+        const playerName = generatedText.trim().split(/\s+/).slice(0, 2).join(' ');
+
+        // If a valid player name is found, respond with it
+        if (playerName) {
+            res.json({ playerName });
+        } else {
+            // Handle cases where the model returns no name
+            res.status(404).json({ error: 'No valid player name found in generated response.' });
+        }
     } else {
-        res.status(500).json({ error: 'Failed to generate player name.' });
+        // If the response isn't a string or there's another issue, handle the error
+        console.error('Error with generated response:', generatedText);
+        res.status(500).json({ error: 'Failed to generate a valid player name. Please try again later.' });
     }
 });
+
 
 
 // Login route definition
