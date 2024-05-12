@@ -291,39 +291,37 @@ broker.on('connection', (ws, req) => {
         let parsedMessage;
         try {
             parsedMessage = JSON.parse(message);
-            
-            // Sanitize the message text by escaping HTML special characters
+            // Sanitize the message text
             parsedMessage.text = parsedMessage.text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
-            parsedMessage.username = ws.username; // Overwrite username with the one from session, ensure message safety
+            parsedMessage.username = ws.username; // Safety
     
-            // Check if the sanitized message starts with '#AI'
             if (parsedMessage.text.startsWith('#AI')) {
-                const aiPrompt = parsedMessage.text.slice(3); // Remove '#AI' prefix
-                const aiResponse = await generateText(aiPrompt); // Generate AI response
+                const aiPrompt = parsedMessage.text.slice(3).trim();
+                const aiResponse = await generateText(aiPrompt);
     
-                // Prepare the AI response as a new message
+                // Ensure the aiResponse is valid and extract 'content'
+                if (!aiResponse || typeof aiResponse.content !== 'string') {
+                    console.log("AI response was empty or content is not a string:", aiResponse);
+                    return;
+                }
+    
                 const aiMessage = {
-                    username: "AI", // Customize the AI username as needed
-                    text: aiResponse,
+                    username: "AI",
+                    text: aiResponse.content,  // Use the 'content' for the message text
                     roomId: parsedMessage.roomId
                 };
     
-                // Convert AI message to JSON string for broadcasting
                 const forwardAIMessage = JSON.stringify(aiMessage);
-    
-                // Broadcast AI message to all connected clients
-                broker.clients.forEach((client) => {
+                broker.clients.forEach(client => {
                     if (client.readyState === WebSocket.OPEN) {
                         client.send(forwardAIMessage);
                     }
                 });
             } else {
-                // If not an AI prompt, broadcast the original sanitized message
+                // Forward non-AI messages
                 const forwardMessage = JSON.stringify(parsedMessage);
-                console.log("Forwarding message from Server: ", forwardMessage)
-                broker.clients.forEach((client) => {
+                broker.clients.forEach(client => {
                     if (client !== ws && client.readyState === WebSocket.OPEN) {
-                        console.log("Broadcasting to client")
                         client.send(forwardMessage);
                     }
                 });
