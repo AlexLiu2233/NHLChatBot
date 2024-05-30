@@ -14,7 +14,6 @@ const messageBlockSize = 10;
 const protectRoute = sessionManager.middleware;
 const clientApp = path.join(__dirname, 'client');
 let messages = {};
-const cpen322 = require('./cpen322-tester.js');
 const axios = require('axios'); // Add this at the top with other require statements
 
 // Express Server
@@ -22,7 +21,7 @@ const host = 'localhost';
 const port = 3000;
 
 // Load the GPT4All model
-const modelPromise = loadModel("Nous-Hermes-2-Mistral-7B-DPO.Q4_0.gguf", {
+const modelPromise = loadModel("mistral-7b-openorca.gguf2.Q4_0.gguf", {
     verbose: true,
     device: "gpu" // or 'cpu', depending on your setup
 });
@@ -344,8 +343,3 @@ async function isCorrectPassword(password, saltedHash) {
     const hash = crypto.createHash('sha256').update(password + salt).digest('base64');
     return originalHash === hash;
 }
-
-
-
-cpen322.connect('http://3.98.223.41/cpen322/test-a4-server.js');
-cpen322.export(__filename, { app, messages, db, messageBlockSize, sessionManager, isCorrectPassword });

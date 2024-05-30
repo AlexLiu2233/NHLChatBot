@@ -668,11 +668,6 @@ function main() {
 
   // Instantiate Lobby and call refreshLobby once inside main function
   refreshLobby();
-
-  cpen322.export(main, {
-    chatView,
-    lobby,
-  });
 }
 
 // Add the main function as the event handler for the window's load event
