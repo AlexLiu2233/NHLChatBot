@@ -40,7 +40,7 @@ app.use(express.urlencoded({ extended: true })); // to parse application/x-www-f
 app.use(logRequest);
 
 // Static middleware for images directory
-app.use('/images', express.static(path.join(__dirname, 'images')));
+app.use('/images', express.static(path.join(__dirname, '../client/assets')));
 
 async function generateText(prompt) {
     try {
@@ -135,63 +135,46 @@ app.get('/chat/:room_id', protectRoute, (req, res) => {
 });
 
 app.get('/chat', protectRoute, (req, res) => {
-    // Fetch chat rooms from the database
-    db.getRooms().then((rooms) => {
-        if (rooms) {
-            var tmp = [];
-            for (var i = 0; i < rooms.length; i++) {
-                var tmproom = { // obj with room info + messages, init from MongoDB
-                    "_id": rooms[i]._id,
-                    "name": rooms[i].name,
-                    "image": rooms[i].image,
-                    "messages": messages[rooms[i]._id]
-                };
-                tmp.push(tmproom);
-            }
-            res.json(tmp);
-        }
+    db.getRooms().then(rooms => {
+        const roomList = rooms.map(room => ({
+            _id: room._id,
+            name: room.name,
+            image: `/images/${room.image}`, // Ensure image paths are correct
+            messages: messages[room._id.toString()] || []
+        }));
+        res.json(roomList);
     }).catch(err => {
         console.error(err);
         res.status(500).send('Error fetching chat rooms');
     });
 });
 
-app.get('/api/generate-player', async (req, res) => {
-    const prompt = "Randomly select the name of a player who has played at least one game in the National Hockey League (NHL) during the last 30 years";
-    const playerName = await generateText(prompt);
-    if (playerName) {
-        res.json({ playerName });
-    } else {
-        res.status(500).json({ error: 'Failed to generate player name.' });
-    }
-});
-
 // POST endpoint for creating a new chatroom
 app.post('/chat', protectRoute, (req, res) => {
-    var result = req.body;
-    if (!result["name"]) {
+    const result = req.body;
+    if (!result.name) {
         res.status(400).send("data does not have a name field");
     } else {
-        tmp_id = Math.random() + "";
-        var tmp_room = {
-            "name": result["name"],
-            "image": result["image"],
+        const tmp_room = {
+            name: result.name,
+            image: result.image
         };
-        messages[tmp_id] = [];
         db.addRoom(tmp_room)
-            .then((insertedRoom) => {
+            .then(insertedRoom => {
                 messages[insertedRoom._id.toString()] = [];
-                res.status(200).send(JSON.stringify(insertedRoom));
+                res.status(200).json(insertedRoom);
+            })
+            .catch(err => {
+                console.error(err);
+                res.status(500).send('Error adding room');
             });
     }
 });
 
 app.get('/profile', protectRoute, (req, res) => {
-    // Assuming the session middleware adds a username to the request object
     if (req.username) {
         res.json({ username: req.username });
     } else {
-        // This case should ideally never happen due to the protectRoute middleware
         res.status(404).send('User not found');
     }
 });
@@ -206,11 +189,8 @@ app.get(['/index', '/index.html', '/'], protectRoute, (req, res) => {
 });
 
 app.get('/logout', (req, res) => {
-    // Deletes the session associated with the request
     sessionManager.deleteSession(req);
-    // Clear the session cookie from the client
     res.clearCookie('cpen322-session');
-    // Redirect the user to the login page
     res.redirect('/login');
 });
 
@@ -262,7 +242,7 @@ broker.on('connection', (ws, req) => {
         console.error('Error during WebSocket connection:', error);
         ws.close();
     }
-    
+
     ws.on('message', async (message) => {
         let parsedMessage;
         try {
@@ -270,23 +250,22 @@ broker.on('connection', (ws, req) => {
             // Sanitize the message text
             parsedMessage.text = parsedMessage.text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
             parsedMessage.username = ws.username; // Safety
-    
+
             if (parsedMessage.text.startsWith('#AI')) {
                 const aiPrompt = parsedMessage.text.slice(3).trim();
                 const aiResponse = await generateText(aiPrompt);
-    
-                // Ensure the aiResponse is valid and extract 'content'
+
                 if (!aiResponse || typeof aiResponse.content !== 'string') {
                     console.log("AI response was empty or content is not a string:", aiResponse);
                     return;
                 }
-    
+
                 const aiMessage = {
                     username: "AI",
-                    text: aiResponse.content,  // Use the 'content' for the message text
+                    text: aiResponse.content,
                     roomId: parsedMessage.roomId
                 };
-    
+
                 const forwardAIMessage = JSON.stringify(aiMessage);
                 broker.clients.forEach(client => {
                     if (client.readyState === WebSocket.OPEN) {
