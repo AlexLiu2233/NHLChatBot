@@ -4,23 +4,23 @@
 	"description": "Backend server for the NHL ChatBot application",
 	"main": "backend/server.js",
 	"scripts": {
-	  "start": "node backend/server.js",
-	  "start-dev": "nodemon backend/server.js"
+		"start": "node backend/server.js",
+		"start-dev": "nodemon backend/server.js"
 	},
 	"dependencies": {
-	  "express": "^4.18.2",
-	  "mongodb": "^5.9.2",
-	  "gpt4all": "^4.0.0",
-	  "ws": "^8.16.0"
+		"axios": "^1.7.2",
+		"express": "^4.18.2",
+		"gpt4all": "^4.0.0",
+		"mongodb": "^5.9.2",
+		"ws": "^8.16.0"
 	},
 	"devDependencies": {
-	  "@types/node": "^20.12.11",
-	  "nodemon": "^3.0.3"
+		"@types/node": "^20.12.11",
+		"nodemon": "^3.0.3"
 	},
 	"engines": {
-	  "node": ">=14.0.0"
+		"node": ">=14.0.0"
 	},
 	"author": "",
 	"license": "ISC"
-  }
-  
+}

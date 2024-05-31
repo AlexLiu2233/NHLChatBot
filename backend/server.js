@@ -12,7 +12,7 @@ const db = new Database('mongodb://127.0.0.1:27017', 'cpen322-messenger');
 const broker = new WebSocket.Server({ port: 8000 });
 const messageBlockSize = 10;
 const protectRoute = sessionManager.middleware;
-const clientApp = path.join(__dirname, 'client');
+const clientApp = path.join(__dirname, '../client/build');
 let messages = {};
 const axios = require('axios'); // Add this at the top with other require statements
 
@@ -28,16 +28,16 @@ const modelPromise = loadModel("mistral-7b-openorca.gguf2.Q4_0.gguf", {
 
 // Call getRooms from the Database instance and initialize messages
 db.getRooms().then(rooms => {
-	rooms.forEach(room => {
-		messages[room._id.toString()] = []; // Initialize an empty array for each room using the _id field
-	});
+    rooms.forEach(room => {
+        messages[room._id.toString()] = []; // Initialize an empty array for each room using the _id field
+    });
 }).catch(err => {
-	console.error('Error initializing rooms:', err);
+    console.error('Error initializing rooms:', err);
 });
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true })) // to parse application/x-www-form-urlencoded
-app.use(logRequest);	
+app.use(express.urlencoded({ extended: true })); // to parse application/x-www-form-urlencoded
+app.use(logRequest);
 
 // Static middleware for images directory
 app.use('/images', express.static(path.join(__dirname, 'images')));
@@ -78,9 +78,6 @@ app.post('/api/generate-player', async (req, res) => {
         res.status(500).json({ error: 'Failed to generate a valid player name. Please try again later.' });
     }
 });
-
-
-
 
 // Login route definition
 app.post('/login', async (req, res) => {
@@ -124,40 +121,39 @@ app.get('/chat/:room_id/messages', protectRoute, (req, res) => {
         });
 });
 
-
 app.get('/chat/:room_id', protectRoute, (req, res) => {
-	const roomId = req.params.room_id; // Get the room ID from the request parameters
-	db.getRoom(roomId).then(room => {
-		if (room) {
-			res.json(room);
-		} else {
-			res.status(404).send(`Room ${roomId} was not found`);
-		}
-	}).catch(err => {
-		res.status(500).send(`Error fetching room: ${err}`);
-	});
+    const roomId = req.params.room_id; // Get the room ID from the request parameters
+    db.getRoom(roomId).then(room => {
+        if (room) {
+            res.json(room);
+        } else {
+            res.status(404).send(`Room ${roomId} was not found`);
+        }
+    }).catch(err => {
+        res.status(500).send(`Error fetching room: ${err}`);
+    });
 });
 
 app.get('/chat', protectRoute, (req, res) => {
-	// Fetch chat rooms from the database
-	db.getRooms().then((rooms) => {
-		if (rooms) {
-			var tmp = [];
-			for (var i = 0; i < rooms.length; i++) {
-				var tmproom = { // obj with room info + messages, init from MongoDB
-					"_id": rooms[i]._id,
-					"name": rooms[i].name,
-					"image": rooms[i].image,
-					"messages": messages[rooms[i]._id]
-				};
-				tmp.push(tmproom);
-			}
-			res.json(tmp);
-		}
-	}).catch(err => {
-		console.error(err);
-		res.status(500).send('Error fetching chat rooms');
-	});
+    // Fetch chat rooms from the database
+    db.getRooms().then((rooms) => {
+        if (rooms) {
+            var tmp = [];
+            for (var i = 0; i < rooms.length; i++) {
+                var tmproom = { // obj with room info + messages, init from MongoDB
+                    "_id": rooms[i]._id,
+                    "name": rooms[i].name,
+                    "image": rooms[i].image,
+                    "messages": messages[rooms[i]._id]
+                };
+                tmp.push(tmproom);
+            }
+            res.json(tmp);
+        }
+    }).catch(err => {
+        console.error(err);
+        res.status(500).send('Error fetching chat rooms');
+    });
 });
 
 app.get('/api/generate-player', async (req, res) => {
@@ -172,23 +168,23 @@ app.get('/api/generate-player', async (req, res) => {
 
 // POST endpoint for creating a new chatroom
 app.post('/chat', protectRoute, (req, res) => {
-	var result = req.body;
-		if (!result["name"]) {
-			res.status(400).send("data does not have a name field");
-		} else {
-			tmp_id = Math.random() + "";
-			var tmp_room = {
-				"name": result["name"],
-				"image": result["image"],
-			};
-			messages[tmp_id] = [];
-			db.addRoom(tmp_room)
-                .then((insertedRoom) => {
-                    messages[insertedRoom._id.toString()] = [];
-                    res.status(200).send(JSON.stringify(insertedRoom));
+    var result = req.body;
+    if (!result["name"]) {
+        res.status(400).send("data does not have a name field");
+    } else {
+        tmp_id = Math.random() + "";
+        var tmp_room = {
+            "name": result["name"],
+            "image": result["image"],
+        };
+        messages[tmp_id] = [];
+        db.addRoom(tmp_room)
+            .then((insertedRoom) => {
+                messages[insertedRoom._id.toString()] = [];
+                res.status(200).send(JSON.stringify(insertedRoom));
             });
-		}
-  });
+    }
+});
 
 app.get('/profile', protectRoute, (req, res) => {
     // Assuming the session middleware adds a username to the request object
@@ -209,29 +205,6 @@ app.get(['/index', '/index.html', '/'], protectRoute, (req, res) => {
     res.sendFile(path.join(clientApp, 'index.html'));
 });
 
-app.post('/login', async (req, res) => {
-    const { username, password } = req.body;
-
-    try {
-        const user = await db.getUser(username);
-        if (!user) {
-            return res.redirect('/login'); // User not found
-        }
-        
-        // Ensure isCorrectPassword is awaited if it's async
-        const passwordMatches = await isCorrectPassword(password, user.password);
-        if (passwordMatches) {
-            sessionManager.createSession(res, username);
-            return res.redirect('/'); // Authentication successful
-        } else {
-            return res.redirect('/login'); // Authentication failed
-        }
-    } catch (err) {
-        console.error(err);
-        res.status(500).send('Internal Server Error on /login POST');
-    }
-});
-
 app.get('/logout', (req, res) => {
     // Deletes the session associated with the request
     sessionManager.deleteSession(req);
@@ -241,9 +214,13 @@ app.get('/logout', (req, res) => {
     res.redirect('/login');
 });
 
-
-// Static files accessible without authentication
+// Serve static files from the React app build directory
 app.use(express.static(clientApp, { extensions: ['html'] }));
+
+// Catch-all route to serve React app
+app.get('*', (req, res) => {
+    res.sendFile(path.join(clientApp, 'index.html'));
+});
 
 app.use((err, req, res, next) => {
     if (err instanceof SessionManager.Error) {
@@ -259,7 +236,7 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(port, () => {
-	console.log(`${new Date()}  App Started. Listening on ${host}:${port}, serving ${clientApp}`);
+    console.log(`${new Date()}  App Started. Listening on ${host}:${port}, serving ${clientApp}`);
 });
 
 // WebSocket functionality to act as "message broker"
@@ -286,7 +263,7 @@ broker.on('connection', (ws, req) => {
         ws.close();
     }
     
-	ws.on('message', async (message) => {
+    ws.on('message', async (message) => {
         let parsedMessage;
         try {
             parsedMessage = JSON.parse(message);
@@ -332,10 +309,9 @@ broker.on('connection', (ws, req) => {
 });
 
 function logRequest(req, res, next) {
-	console.log(`${new Date()}  ${req.ip} : ${req.method} ${req.path}`);
-	next();
+    console.log(`${new Date()}  ${req.ip} : ${req.method} ${req.path}`);
+    next();
 }
-
 
 async function isCorrectPassword(password, saltedHash) {
     const salt = saltedHash.substring(0, 20);
