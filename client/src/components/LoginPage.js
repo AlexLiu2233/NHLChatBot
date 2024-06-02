@@ -1,5 +1,5 @@
 import React from 'react';
-import '../assets/style.css'; // Assuming you extract CSS relevant to LoginPage
+import '../style.css'; // Assuming you extract CSS relevant to LoginPage
 
 function LoginPage() {
     return (

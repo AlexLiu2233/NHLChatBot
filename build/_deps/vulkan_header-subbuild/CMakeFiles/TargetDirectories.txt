@@ -1,3 +1,0 @@
-C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/vulkan_header-subbuild/CMakeFiles/vulkan_header-populate.dir
-C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/vulkan_header-subbuild/CMakeFiles/ALL_BUILD.dir
-C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/vulkan_header-subbuild/CMakeFiles/ZERO_CHECK.dir

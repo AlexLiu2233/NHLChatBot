@@ -1,3 +1,0 @@
-C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/llmodel.dir/Debug/llmodel.obj
-C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/llmodel.dir/Debug/llmodel_shared.obj
-C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/llmodel.dir/Debug/llmodel_c.obj

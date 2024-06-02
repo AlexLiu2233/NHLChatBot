@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'; // Import Link for routing
-import '../assets/style.css'; // Correct path to your CSS file
+import '../style.css'; // Correct path to your CSS file
 
 function MainPage() {
     const [rooms, setRooms] = useState([]);

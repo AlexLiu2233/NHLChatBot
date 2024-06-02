@@ -1,2 +1,0 @@
-C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/llamamodel-mainline-default.dir/RelWithDebInfo/llamamodel.obj
-C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/llamamodel-mainline-default.dir/RelWithDebInfo/llmodel_shared.obj

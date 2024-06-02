@@ -1,16 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
+import LoginPage from './LoginPage';
+import MainPage from './MainPage'; // Add this import
 
 const App = () => {
   const [rooms, setRooms] = useState([]);
-
-  useEffect(() => {
-    // Fetch rooms from the backend
-    fetch('/chat')
-      .then(response => response.json())
-      .then(data => setRooms(data))
-      .catch(error => console.error('Error fetching rooms:', error));
-  }, []);
 
   return (
     <Router>
@@ -18,22 +12,16 @@ const App = () => {
         <h1>Chat Application</h1>
         <Switch>
           <Route path="/" exact>
-            <h2>Chat Rooms</h2>
-            <ul>
-              {rooms.map(room => (
-                <li key={room._id}>
-                  <Link to={`/chat/${room._id}`}>
-                    <img src={room.image} alt={room.name} /> {room.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+            <MainPage /> // Route to MainPage
           </Route>
           <Route path="/chat/:roomId">
             <ChatRoom />
           </Route>
           <Route path="/profile">
             <Profile />
+          </Route>
+          <Route path="/login">
+            <LoginPage />
           </Route>
           {/* Add other routes as needed */}
         </Switch>

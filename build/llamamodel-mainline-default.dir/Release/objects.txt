@@ -1,2 +1,0 @@
-C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/llamamodel-mainline-default.dir/Release/llamamodel.obj
-C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/llamamodel-mainline-default.dir/Release/llmodel_shared.obj

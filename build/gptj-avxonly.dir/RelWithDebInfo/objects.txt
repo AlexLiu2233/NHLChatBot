@@ -1,3 +1,0 @@
-C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/gptj-avxonly.dir/RelWithDebInfo/gptj.obj
-C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/gptj-avxonly.dir/RelWithDebInfo/utils.obj
-C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/gptj-avxonly.dir/RelWithDebInfo/llmodel_shared.obj

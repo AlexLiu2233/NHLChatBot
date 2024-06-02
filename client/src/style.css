@@ -1,0 +1,314 @@
+#app-view {
+    position: fixed; /* Fixed position to cover the full screen and stay in place during scrolling */
+    top: 0;
+    left: 0;
+    width: 100%; /* Full width of the viewport */
+    height: 100vh; /* Full height of the viewport */
+    overflow: auto; /* Adds scrolling to the div if content overflows */
+    box-sizing: border-box; /* Includes padding and borders in width/height calculations */
+}
+
+#page-view {
+    width: 100%; /* Full width of its container */
+    height: 100%; /* Full height of its container */
+    position: relative; /* Establishes a positioning context for inner content */
+}
+
+.content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-image: url('../assets/images/coyotes.png'); /* Example path, adjust as necessary */
+    background-size: cover;
+    background-position: center;
+    box-sizing: border-box;
+}
+
+
+/* When the document body width is >= 1024px */
+@media (min-width: 1024px) {
+    #app-view {
+        width: 80%;
+        margin: 0 auto;
+    }
+}
+
+/* When the document body width is >= 768px and < 1024px */
+@media (min-width: 768px) and (max-width: 1023px) {
+    #app-view {
+        width: 90%;
+        margin: 0 auto; 
+    }
+}
+
+/* Responsive typography for .room-name */
+@media (max-width: 768px) {
+    .room-name {
+        font-size: 20px; /* Slightly smaller font for smaller screens */
+    }
+}
+
+.message, .my-message {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    width: fit-content;
+    max-width: 80%;
+}
+
+.message {
+    max-width: 60%;
+    margin: 10px 0;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: #f1f1f1;
+}
+
+.my-message {
+    margin-left: auto;
+    background: #dcf8c6;
+}
+
+
+ul#app-menu {
+    padding: 0%;
+    margin: 0%;
+    list-style: none;
+}
+
+li#app-menu .menu-item {
+    background-color: rgb(49, 69, 196);
+    width: 50%;
+    padding: 0%;
+    margin: 0%;
+    float: left;
+}
+
+/* Ensure the hover effect is on the li elements, not the a elements */
+li#app-menu .menu-item:hover {
+    background-color: rgb(132, 145, 218);
+    color: rgb(254, 255, 145);
+}
+
+/* Remove the hover effect from a.menu-link and apply it to li elements instead */
+a.menu-link {
+    background-color: rgb(49, 69, 196);
+    color: white;
+    display: block;
+    text-decoration: none;
+}
+
+/* Update the li hover for room list */
+ul.room-list {
+    list-style: none;
+    padding: 0%;
+    margin: 0%;
+    background-color: rgb(245, 245, 245);
+}
+
+li.room-list li:hover {
+    background-color: rgb(132, 145, 218);
+    color: rgb(254, 255, 145);
+}
+
+ul.menu {
+    padding: 0%;
+    margin: 0%;
+    list-style: none;
+}
+
+li.menu-item {
+    background-color: rgb(49, 69, 196);
+    width: 50%;
+    padding: 0%;
+    margin: 0%;
+    float: left;
+}
+
+a.menu-link {
+    background-color: rgb(49, 69, 196);
+    color: white;
+    display: block;
+    text-decoration: none;
+}
+
+a.menu-link:hover {
+    background-color: rgb(132, 145, 218);
+    color: rgb(254, 255, 145);
+}
+
+img.menu-icon {
+    width: 1em;
+    height: 1em;
+    filter: invert(100%);
+    vertical-align: middle;
+}
+
+ul.room-list {
+    list-style: none;
+    padding: 0%;
+    margin: 0%;
+    background-color: rgb(245, 245, 245);
+}
+
+a.room-link {
+    text-decoration: none;
+    color: black;
+}
+
+li.room:hover {
+    background-color: rgb(213, 218, 243);
+}
+
+img.chat-icon {
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+}
+
+.page-control {
+    position: absolute; /* or fixed, if needed */
+    bottom: 20px; /* Adjust as required */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    color: #ffffff; /* White text color */
+  }
+
+  .page-control h4.room-name {
+    font-size: 24px; /* Larger font for the motto */
+    margin-bottom: 10px;
+    text-transform: uppercase; /* Uppercase text */
+    color: #ffcc00; /* Bright color for the motto */
+  }
+
+  .page-control textarea, .page-control input[type="text"] {
+    width: 90%; /* Responsive width */
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+  }
+
+.page-control-input {
+    border: none;
+    border-radius: 20px;
+    padding: 8px 15px;
+    width: 80%;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+}
+
+page-control button {
+    background-color: #ffcc00;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin-top: 10px;
+    cursor: pointer;
+    color: #000000;
+    transition: background-color 0.3s ease;
+  }
+  
+  .page-control button:hover {
+    background-color: #ffaa00; /* Lighter shade on hover */
+  }
+
+.message-list {
+    padding-bottom: 80px;
+}
+
+.menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #333; /* Dark background for the navbar */
+    color: #fff;
+    z-index: 1000; /* Ensures the menu stays on top */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Adds shadow for depth */
+}
+
+.menu-item {
+    display: inline-block; /* Align items in a row */
+    padding: 10px 20px; /* Padding for touch targets */
+}
+
+.menu-link {
+    color: #fff; /* White text color */
+    text-decoration: none; /* No underline */
+    font-weight: bold; /* Bold font for better readability */
+}
+
+.menu-link:hover, .menu-link:focus {
+    background-color: #555; /* Darker background on hover/focus */
+}
+
+/* You might need to add some JavaScript or server-side rendering logic to dynamically add 'active' class to the current page link */
+.menu-link.active {
+    background-color: #ff6700; /* Highlight color for the active menu item */
+    color: #000; /* Text color change if needed */
+}
+
+.room-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.room {
+    padding: 15px;
+    margin: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.room-name {
+    font-size: 24px;
+    color: #333;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    text-align: center;
+    margin-bottom: 20px;
+    cursor: pointer;
+    transition: color 0.3s, text-shadow 0.3s; /* Smooth transition for color and text-shadow */
+
+    /* Hover effect for color and text-shadow */
+    &:hover {
+        color: #555; /* Darker grey on hover */
+        text-shadow: 2px 2px 3px rgba(0,0,0,0.2); /* More prominent shadow on hover */
+    }
+}
+
+.room:hover {
+    transform: scale(1.05); /* Slightly enlarge card on hover */
+}
+
+.room-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    padding: 10px;
+    border-radius: 6px;
+    transition: background-color 0.3s;
+}
+
+.room-link:hover {
+    background-color: #f1f1f1;
+}
+
+.chat-icon {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+
+
