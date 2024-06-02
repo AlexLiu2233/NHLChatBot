@@ -1,10 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import LoginPage from './LoginPage';
-import MainPage from './MainPage'; // Add this import
+import MainPage from './MainPage';
+import ChatView from './ChatView';
+import LobbyView from './LobbyView';
+import { Service } from './Service'; // Assuming Service is defined in a separate file
 
 const App = () => {
   const [rooms, setRooms] = useState([]);
+  const [profile, setProfile] = useState({ username: 'Alice' });
+  const socket = new WebSocket('ws://localhost:8000');
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const profileData = await Service.getProfile();
+        setProfile(profileData);
+      } catch (error) {
+        console.error('Error fetching profile:', error);
+      }
+    };
+
+    fetchProfile();
+  }, []);
 
   return (
     <Router>
@@ -12,10 +30,10 @@ const App = () => {
         <h1>Chat Application</h1>
         <Switch>
           <Route path="/" exact>
-            <MainPage /> // Route to MainPage
+            <LobbyView lobby={{ rooms, setRooms }} />
           </Route>
           <Route path="/chat/:roomId">
-            <ChatRoom />
+            <ChatView socket={socket} profile={profile} />
           </Route>
           <Route path="/profile">
             <Profile />
@@ -23,16 +41,10 @@ const App = () => {
           <Route path="/login">
             <LoginPage />
           </Route>
-          {/* Add other routes as needed */}
         </Switch>
       </div>
     </Router>
   );
-};
-
-// Placeholder components for ChatRoom and Profile
-const ChatRoom = () => {
-  return <div>Chat Room</div>;
 };
 
 const Profile = () => {
