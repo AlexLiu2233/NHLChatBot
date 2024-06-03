@@ -1,36 +1,169 @@
+
 conn = new Mongo();
 db = conn.getDB("cpen322-messenger");
 
 result = db.users.insertMany([
+
     {
         username: 'Anaheim Ducks',
-        password: 'ab70be958fa48643f92bJx1MC4ud7J43wpTEtx/Q2nvUNy1rDq7DiJ8lTlV5xk8='
+        password: 'oH+GbvS65dMyiUxtQ5ch4m1zUzHXCIKWhxW5nFzC4eXyZ41kBxVToSJFidzQnoM='
     },
+
     {
         username: 'Calgary Flames',
-        password: '9dfff6a53533a58eed7aNLtXwG690VA8P9BVxznp6ape7lxtySYz5tCXGXbleJs='
+        password: 'r5lDVhCqv/tvXg68SurI5HNyibDGT5R3wGW0GrGtJwjJV21eJ84fH1cmCxLqEls='
     },
+
     {
         username: 'Los Angeles Kings',
-        password: 'eadd6ec9f687f55e5187PIaV3Wiy3s6AAsvmO2kuXBzMwHz8U2uWDeXcR0pis6I='
+        password: 'mAKjCRqxQu/8rWAUkegaVbQSWfwp7v3Tu65CgbzeWZiSNbdEv2eZ1UxDKU4hjV0='
     },
+
     {
         username: 'San Jose Sharks',
-        password: 'a582382a5af63debe3078bxpL9rr+XEtigbBsYAvaXwKY0CTQaEEdUSG2Pcuwqk='
+        password: 'P9QCkDs8AWWdjDNwmXyKqLT1DTuDxCKAumbPfbg/9l1MwQr2UNYgA6k+N0hfX3o='
     },
+
     {
         username: 'Seattle Kraken',
-        password: '2f63aafb880d7b4bab8fBTNAvA8UsyTxSN/fY9i2WInjYnqOdKBvSjEWOQ1xv4U='
+        password: 's5uZZZ3QcKGLM8T4CBsipGeuMXWsppjxMumhLi3DEce4KhdljIOM/0mdAtB5cII='
     },
+
     {
         username: 'Vegas Golden Knights',
-        password: '5b0abdb117e6d44c7650RTJm6StSGCAUJhSKmSs+Ex1o8kqTuoW49Lx9C2dNT30='
+        password: 'Apjl3ECLQ2i8peb4RqT1DmloB68nUl09w4sph5Pli+G17HyCBTpQKtdNHgIfryo='
     },
-	{
-		username: 'Vancouver Canucks',
-		password: '28e5f32122fd9364d132j8YK90NoYMpXizdonWNA/EqU3sfFEF99ETRO9ECt2PE='
-	}
-]);
 
+    {
+        username: 'Vancouver Canucks',
+        password: 'cpEZvVtjW3SJdkloU6x5kuefqo9oQwwgYfoLfffokB3ji61gp2mgHQpHoorPzvc='
+    },
+
+    {
+        username: 'Arizona Coyotes',
+        password: 'IPF1f+arKRa0JfN6cKcICH3V59uZ+osTpEO+E6NXTVgtafoBXFLZ2zI7F5bKwGg='
+    },
+
+    {
+        username: 'Boston Bruins',
+        password: '6b7RQPrqe19EUjxbTJFIdgUxi6xpCd1Kd9VV1rEl6T3VloGRWRxBYrL7sPYGrmc='
+    },
+
+    {
+        username: 'Buffalo Sabres',
+        password: '+LqAqDEhdT89uNdDpNNUJJe6R2WiYVgHJXClVhOt/IPT/uc9s5DecgYGwBvym48='
+    },
+
+    {
+        username: 'Carolina Hurricanes',
+        password: 'lLHIrNWtBrfvbLL/2w6AYvPZSIn1To0aAe4QNX9tO/mt+gUZa/r4+ZmvxwEtEOo='
+    },
+
+    {
+        username: 'Chicago Blackhawks',
+        password: '5Q0fw8xFhZmwcJ1D1ZonX/ytfesnHvIhcqyw+TnbsbxA77AQlsblRBOvJOGoubE='
+    },
+
+    {
+        username: 'Colorado Avalanche',
+        password: '0KxDsYS2CdiFZ+iS55ReLixLOOrSamQPNIjl4iquG3sAEZ1IUWMsxNw4j6GuP/k='
+    },
+
+    {
+        username: 'Columbus Blue Jackets',
+        password: 'NnL6tt5+HoJP76xf9gUqDOBK2NiSGpwbtcOidKmue5tnE4wOeXx+kQBTe4bGh1E='
+    },
+
+    {
+        username: 'Dallas Stars',
+        password: 'DEH782YdfsRHWBsjnPSk31+vj/7NS5+5aXxnKuxkI/vILcPdnm5P6CQgL9rIJi4='
+    },
+
+    {
+        username: 'Detroit Red Wings',
+        password: 'kY58M3kdhDk/8nPo34SiAH8trfCFOs3T7yeRlPdidNI0jJeTmczkkt4nf5aWglU='
+    },
+
+    {
+        username: 'Edmonton Oilers',
+        password: 'dZg8l0qWpuIzmnZc11k+ZLIRe5tMsJYaQRPvyBA0AgQcDjBdQweIgtOYWZ+qqqw='
+    },
+
+    {
+        username: 'Florida Panthers',
+        password: '1h/2YacrLH1wImRq/hP9ZhU0jcpNFTeeIftUrmslUONfRvIVnwQNut5QK0LX65I='
+    },
+
+    {
+        username: 'Minnesota Wild',
+        password: 'i0EOFjtZpQQJc90mOZyGsmXzHzi0xjbSZBVgxQq0JAF5R7eruUKYPj/ffDyjiXc='
+    },
+
+    {
+        username: 'Montreal Canadiens',
+        password: 'SrkT2V2fKO5vkPcleOI4lcaNYTlY5y5V1gH7kx+1eTEJuV15rOKouHayY3zxMOk='
+    },
+
+    {
+        username: 'Nashville Predators',
+        password: 'S+lz9BUEU4cralYuqn/si4jPpkaCChMgkTj6nvWJHLuW01r7o2+emAzoCJb+5Oo='
+    },
+
+    {
+        username: 'New Jersey Devils',
+        password: 'aG362pjUgtObxa8b1yZ/b2O6Q45oCAtOJIrFJNOz9F0uaktpetZrMMxo/+fiv7g='
+    },
+
+    {
+        username: 'New York Islanders',
+        password: 'p4oP16DuWyF/sH15AHvsTE4I9m95gWLBlgTmlgS3+sX/Fvmq95JH+JUK9E9lHpU='
+    },
+
+    {
+        username: 'New York Rangers',
+        password: 'sGlBupT1YxO2ZZI9ld5ZDUnSB/lPKTuVy6zf9GWoJi70YeiVcMh8w2hk6uaZNK4='
+    },
+
+    {
+        username: 'Ottawa Senators',
+        password: 'o007Kjsbr+PHNCIjMW0zlVjXy4mDes1Q66CAGbX/KAmjMCKKyewRo7e4IX6TWSY='
+    },
+
+    {
+        username: 'Philadelphia Flyers',
+        password: 'Saqec7JmEMaXEi5HSVazpDodcgBX1oTiFccGMALRbY3H3RKHBjcTftD5bcjGwcE='
+    },
+
+    {
+        username: 'Pittsburgh Penguins',
+        password: 'Up5UZe69tKYOU4A9m++Z+jfoFliRDy9KBBc537QfI+yVge3R5Yn0EKeWWgxK4a8='
+    },
+
+    {
+        username: 'St. Louis Blues',
+        password: '4Xi2TJzxywh5pJCAPaYNIdszALtVUx2kSGfzplATMUYsH435Iirrb7PG96ruOfY='
+    },
+
+    {
+        username: 'Tampa Bay Lightning',
+        password: 'IrSK6iYd0RsP71Dgo7laDAUNXoppG0dDfNniY4USSLuRQClef7wO2+x0vGXDAVk='
+    },
+
+    {
+        username: 'Toronto Maple Leafs',
+        password: '8fJCPQgneqLIPRCqrGvIP597YvYP9/HPORuSDZDmR2DyaLiX0FjoNcW3cTP06Ss='
+    },
+
+    {
+        username: 'Washington Capitals',
+        password: '5rUdwW9Tb0N/NBpDnh7X8to7aF9MgrT3rjNmS2Eo4tOGambbxuyFlLWuAtts73E='
+    },
+
+    {
+        username: 'Winnipeg Jets',
+        password: 'BfVxetH6Sv/ZYDfN2GVk7yIeuB586M5/4fAlWBaq5r63A3m8ud9hQEz8tC9bgXQ='
+    },
+
+]);
 
 print(result);
