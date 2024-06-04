@@ -1,3 +1,5 @@
+// server.js
+
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
@@ -78,6 +80,58 @@ app.post('/api/generate-player', async (req, res) => {
         res.status(500).json({ error: 'Failed to generate a valid player name. Please try again later.' });
     }
 });
+
+// Endpoint to get initial hints
+app.get('/api/hints', (req, res) => {
+    const hints = {
+        team: "Think of a bird that is fierce and strong.",
+        captain: "His last name starts with the letter 'C'."
+    };
+    res.json(hints);
+});
+
+// Endpoint to validate guess and provide wordle-style hints
+app.post('/api/validate-guess', async (req, res) => {
+    const { username, password } = req.body;
+
+    try {
+        const user = await db.getUser(username);
+        if (!user) {
+            return res.json({ valid: false, message: 'Incorrect team name.' });
+        }
+
+        const isCorrectPassword = (password === user.password);
+        if (!isCorrectPassword) {
+            return res.json({ 
+                valid: false, 
+                message: `Incorrect password.`, 
+                teamHint: getWordleHint(username, user.username),
+                captainHint: getWordleHint(password, user.password) 
+            });
+        }
+
+        return res.json({ valid: true, message: 'Login successful!' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+const getWordleHint = (guess, answer) => {
+    let hint = Array(answer.length).fill('_');
+    let hintColors = Array(answer.length).fill('red');
+
+    for (let i = 0; i < guess.length; i++) {
+        if (guess[i] === answer[i]) {
+            hint[i] = guess[i];
+            hintColors[i] = 'green';
+        } else if (answer.includes(guess[i])) {
+            hint[i] = guess[i];
+            hintColors[i] = 'yellow';
+        }
+    }
+    return { hint, hintColors };
+};
 
 // Login route definition
 app.post('/login', async (req, res) => {

@@ -100,9 +100,7 @@ Database.prototype.addConversation = function (conversation) {
     );
 };
 
-// Add this method to the Database class in your Database.js file
-
-Database.prototype.getUser = async function(username) {
+Database.prototype.getUser = async function (username) {
     const db = await this.connected;
     try {
         const user = await db.collection('users').findOne({ username: username });
