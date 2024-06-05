@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Player } from '@lottiefiles/react-lottie-player';
 import animationData from '../animations/MascotPanda.json'; // Ensure this path is correct
 import '../style.css';
 
 const LoginPage = () => {
+    const history = useHistory(); // Use useHistory hook for navigation
     const [usernameBoxes, setUsernameBoxes] = useState([]);
     const [passwordBoxes, setPasswordBoxes] = useState([]);
     const [message, setMessage] = useState('');
@@ -31,6 +33,8 @@ const LoginPage = () => {
 
         if (usernameGuess === correctUsername && passwordGuess === correctPassword) {
             setMessage('Login successful!');
+            console.log('Login successful! Redirecting to main page...');
+            history.push('/'); // Redirect to the main page
         } else {
             highlightBoxes(correctUsername, usernameBoxes, setUsernameBoxes);
             highlightBoxes(correctPassword, passwordBoxes, setPasswordBoxes);
