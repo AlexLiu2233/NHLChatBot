@@ -1,0 +1,242 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x86</PreferredToolArchitecture>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ResolveNugetPackages>false</ResolveNugetPackages>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|win32">
+      <Configuration>Debug</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|win32">
+      <Configuration>Release</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|win32">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|win32">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{0539DAA9-7B1F-32D9-9E7C-A205FD5F0FD7}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
+    <Platform>win32</Platform>
+    <ProjectName>ALL_BUILD</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|win32'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|win32'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|win32'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|win32'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|win32'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|win32'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|win32'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|win32'">
+    <Midl>
+      <AdditionalIncludeDirectories>C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\CMakeLists.txt">
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|win32'">Building Custom Rule C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/gpt4all/gpt4all-backend/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|win32'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/gpt4all/gpt4all-backend -BC:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build --check-stamp-file C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|win32'">C:\Program Files\CMake\share\cmake-3.29\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckIPOSupported.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckIPOSupported\CMakeLists-C.txt.in;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckIPOSupported\CMakeLists-CXX.txt.in;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckIPOSupported\foo.c;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckIPOSupported\foo.cpp;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckIPOSupported\main.c;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckIPOSupported\main.cpp;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\FindThreads.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\FindVulkan.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\Platform\Windows-Initialize.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\Platform\WindowsPaths.cmake;C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\CMakeFiles\3.29.1\CMakeCCompiler.cmake;C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\CMakeFiles\3.29.1\CMakeCXXCompiler.cmake;C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\CMakeFiles\3.29.1\CMakeRCCompiler.cmake;C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\CMakeFiles\3.29.1\CMakeSystem.cmake;C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|win32'">C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|win32'">Building Custom Rule C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/gpt4all/gpt4all-backend/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|win32'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/gpt4all/gpt4all-backend -BC:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build --check-stamp-file C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|win32'">C:\Program Files\CMake\share\cmake-3.29\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckIPOSupported.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckIPOSupported\CMakeLists-C.txt.in;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckIPOSupported\CMakeLists-CXX.txt.in;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckIPOSupported\foo.c;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckIPOSupported\foo.cpp;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckIPOSupported\main.c;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckIPOSupported\main.cpp;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\FindThreads.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\FindVulkan.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\Platform\Windows-Initialize.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\Platform\WindowsPaths.cmake;C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\CMakeFiles\3.29.1\CMakeCCompiler.cmake;C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\CMakeFiles\3.29.1\CMakeCXXCompiler.cmake;C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\CMakeFiles\3.29.1\CMakeRCCompiler.cmake;C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\CMakeFiles\3.29.1\CMakeSystem.cmake;C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|win32'">C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|win32'">Building Custom Rule C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/gpt4all/gpt4all-backend/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|win32'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/gpt4all/gpt4all-backend -BC:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build --check-stamp-file C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|win32'">C:\Program Files\CMake\share\cmake-3.29\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckIPOSupported.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckIPOSupported\CMakeLists-C.txt.in;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckIPOSupported\CMakeLists-CXX.txt.in;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckIPOSupported\foo.c;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckIPOSupported\foo.cpp;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckIPOSupported\main.c;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckIPOSupported\main.cpp;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\FindThreads.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\FindVulkan.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\Platform\Windows-Initialize.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\Platform\WindowsPaths.cmake;C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\CMakeFiles\3.29.1\CMakeCCompiler.cmake;C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\CMakeFiles\3.29.1\CMakeCXXCompiler.cmake;C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\CMakeFiles\3.29.1\CMakeRCCompiler.cmake;C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\CMakeFiles\3.29.1\CMakeSystem.cmake;C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|win32'">C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|win32'">Building Custom Rule C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/gpt4all/gpt4all-backend/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|win32'">setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/gpt4all/gpt4all-backend -BC:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build --check-stamp-file C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|win32'">C:\Program Files\CMake\share\cmake-3.29\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckIPOSupported.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckIPOSupported\CMakeLists-C.txt.in;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckIPOSupported\CMakeLists-CXX.txt.in;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckIPOSupported\foo.c;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckIPOSupported\foo.cpp;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckIPOSupported\main.c;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckIPOSupported\main.cpp;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckIncludeFile.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\CheckLibraryExists.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\FindPackageMessage.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\FindThreads.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\FindVulkan.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\Platform\Windows-Initialize.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.29\Modules\Platform\WindowsPaths.cmake;C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\CMakeFiles\3.29.1\CMakeCCompiler.cmake;C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\CMakeFiles\3.29.1\CMakeCXXCompiler.cmake;C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\CMakeFiles\3.29.1\CMakeRCCompiler.cmake;C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\CMakeFiles\3.29.1\CMakeSystem.cmake;C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|win32'">C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\ZERO_CHECK.vcxproj">
+      <Project>{1F792EAB-7658-36DC-96B5-6F72F24FA921}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\_deps\fmt-build\fmt.vcxproj">
+      <Project>{BA3F136B-9FE3-3591-8727-1F722FA02D09}</Project>
+      <Name>fmt</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\ggml-mainline-avxonly.vcxproj">
+      <Project>{51756FF7-2CAD-3C61-8306-767A8BC9816F}</Project>
+      <Name>ggml-mainline-avxonly</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\ggml-mainline-default.vcxproj">
+      <Project>{00E03FCC-C715-375E-AC27-4B890301FDE7}</Project>
+      <Name>ggml-mainline-default</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\gptj-avxonly.vcxproj">
+      <Project>{EA874A1B-6214-324B-A83C-BD96A05BC207}</Project>
+      <Name>gptj-avxonly</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\gptj-default.vcxproj">
+      <Project>{AE9EE046-BB13-3813-99B4-48506DB60C2B}</Project>
+      <Name>gptj-default</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\llama.cpp-mainline\kompute\src\kompute.vcxproj">
+      <Project>{CB45E3FD-7F46-33EF-99DE-091053018434}</Project>
+      <Name>kompute</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\llama.cpp-mainline\kompute\src\logger\kp_logger.vcxproj">
+      <Project>{E2E6F308-BF00-3DB5-B6E5-B0141E7A10FE}</Project>
+      <Name>kp_logger</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\llama.cpp-mainline\kompute\src\shaders\glsl\kp_shader.vcxproj">
+      <Project>{2E25F64B-2C54-3FE7-BC76-1556C6192D6B}</Project>
+      <Name>kp_shader</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\llama-mainline-avxonly.vcxproj">
+      <Project>{BBCA883E-EC90-386B-8759-6466DA66908E}</Project>
+      <Name>llama-mainline-avxonly</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\llama-mainline-default.vcxproj">
+      <Project>{0E196471-F470-3769-BF0E-6EC4C4972179}</Project>
+      <Name>llama-mainline-default</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\llamamodel-mainline-avxonly.vcxproj">
+      <Project>{57CF95CF-5FE0-3624-897A-D7D89D7B4E16}</Project>
+      <Name>llamamodel-mainline-avxonly</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\llamamodel-mainline-default.vcxproj">
+      <Project>{A8CFF442-EB70-31F6-9E39-F5A09EA8BDE8}</Project>
+      <Name>llamamodel-mainline-default</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\llmodel.vcxproj">
+      <Project>{5253D552-D705-349C-BE88-16EF47A1BDC5}</Project>
+      <Name>llmodel</Name>
+    </ProjectReference>
+    <ProjectReference Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\llama.cpp-mainline\kompute\xxd.vcxproj">
+      <Project>{F3EE7EBF-6A32-3C90-892D-C73BE2D3C7A2}</Project>
+      <Name>xxd</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

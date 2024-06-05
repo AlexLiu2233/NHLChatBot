@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp-mainline\kompute\src\Algorithm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp-mainline\kompute\src\Manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp-mainline\kompute\src\OpAlgoDispatch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp-mainline\kompute\src\OpMemoryBarrier.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp-mainline\kompute\src\OpTensorCopy.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp-mainline\kompute\src\OpTensorFill.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp-mainline\kompute\src\OpTensorSyncDevice.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp-mainline\kompute\src\OpTensorSyncLocal.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp-mainline\kompute\src\OpBufferSyncDevice.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp-mainline\kompute\src\OpBufferSyncLocal.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp-mainline\kompute\src\Sequence.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp-mainline\kompute\src\Tensor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp-mainline\kompute\src\Core.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp-mainline\kompute\src\include\kompute\Algorithm.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp-mainline\kompute\src\include\kompute\Core.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp-mainline\kompute\src\include\kompute\Kompute.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp-mainline\kompute\src\include\kompute\Manager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp-mainline\kompute\src\include\kompute\Sequence.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp-mainline\kompute\src\include\kompute\Tensor.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp-mainline\kompute\src\include\kompute\operations\OpAlgoDispatch.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp-mainline\kompute\src\include\kompute\operations\OpBase.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp-mainline\kompute\src\include\kompute\operations\OpMemoryBarrier.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp-mainline\kompute\src\include\kompute\operations\OpMult.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp-mainline\kompute\src\include\kompute\operations\OpTensorCopy.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp-mainline\kompute\src\include\kompute\operations\OpTensorFill.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp-mainline\kompute\src\include\kompute\operations\OpTensorSyncDevice.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp-mainline\kompute\src\include\kompute\operations\OpTensorSyncLocal.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp-mainline\kompute\src\include\kompute\operations\OpBufferSyncDevice.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp-mainline\kompute\src\include\kompute\operations\OpBufferSyncLocal.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp-mainline\kompute\src\include\kompute\logger\Logger.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\gpt4all\gpt4all-backend\llama.cpp-mainline\kompute\src\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{54BA5DFB-39FA-3931-BC37-D8C61915B9AF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{1FC391CF-7F77-372A-B784-A52CC73228E0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,1632 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.12"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						2,
+						4,
+						6,
+						7,
+						8,
+						9,
+						10,
+						14,
+						15,
+						16,
+						17,
+						18
+					]
+				},
+				{
+					"build" : "llama.cpp-mainline/kompute",
+					"childIndexes" : 
+					[
+						2,
+						3,
+						4
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-llama.cpp-mainline.kompute-Debug-15ef944a8f6fdbe2caf6.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "llama.cpp-mainline/kompute",
+					"targetIndexes" : 
+					[
+						0,
+						20
+					]
+				},
+				{
+					"build" : "_deps/vulkan_header-build",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-_deps.vulkan_header-build-Debug-27fcda43bd585545d86f.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10.2"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 2,
+					"source" : "C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/vulkan_header-src",
+					"targetIndexes" : 
+					[
+						3,
+						19
+					]
+				},
+				{
+					"build" : "_deps/fmt-build",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-_deps.fmt-build-Debug-337414361da55fcd5910.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 3,
+					"source" : "C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/fmt-src",
+					"targetIndexes" : 
+					[
+						1,
+						5
+					]
+				},
+				{
+					"build" : "llama.cpp-mainline/kompute/src",
+					"childIndexes" : 
+					[
+						5,
+						6,
+						8
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-llama.cpp-mainline.kompute.src-Debug-5e95ce6267630756494b.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 1,
+					"source" : "llama.cpp-mainline/kompute/src",
+					"targetIndexes" : 
+					[
+						11
+					]
+				},
+				{
+					"build" : "llama.cpp-mainline/kompute/src/logger",
+					"jsonFile" : "directory-llama.cpp-mainline.kompute.src.logger-Debug-9ec1072b9bfc7e41f807.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"parentIndex" : 4,
+					"projectIndex" : 1,
+					"source" : "llama.cpp-mainline/kompute/src/logger",
+					"targetIndexes" : 
+					[
+						12
+					]
+				},
+				{
+					"build" : "llama.cpp-mainline/kompute/src/shaders",
+					"childIndexes" : 
+					[
+						7
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-llama.cpp-mainline.kompute.src.shaders-Debug-cb4bcf0ec798755bbbb1.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"parentIndex" : 4,
+					"projectIndex" : 1,
+					"source" : "llama.cpp-mainline/kompute/src/shaders"
+				},
+				{
+					"build" : "llama.cpp-mainline/kompute/src/shaders/glsl",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-llama.cpp-mainline.kompute.src.shaders.glsl-Debug-8c2b49a63d0a53bf91ac.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"parentIndex" : 6,
+					"projectIndex" : 1,
+					"source" : "llama.cpp-mainline/kompute/src/shaders/glsl",
+					"targetIndexes" : 
+					[
+						13
+					]
+				},
+				{
+					"build" : "llama.cpp-mainline/kompute/src/include",
+					"jsonFile" : "directory-llama.cpp-mainline.kompute.src.include-Debug-850c501515822c7eafa3.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"parentIndex" : 4,
+					"projectIndex" : 1,
+					"source" : "llama.cpp-mainline/kompute/src/include"
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1
+					],
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "llmodel",
+					"targetIndexes" : 
+					[
+						2,
+						4,
+						6,
+						7,
+						8,
+						9,
+						10,
+						14,
+						15,
+						16,
+						17,
+						18
+					]
+				},
+				{
+					"childIndexes" : 
+					[
+						2,
+						3
+					],
+					"directoryIndexes" : 
+					[
+						1,
+						4,
+						5,
+						6,
+						7,
+						8
+					],
+					"name" : "kompute",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						0,
+						11,
+						12,
+						13,
+						20
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						2
+					],
+					"name" : "Vulkan-Headers",
+					"parentIndex" : 1,
+					"targetIndexes" : 
+					[
+						3,
+						19
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						3
+					],
+					"name" : "FMT",
+					"parentIndex" : 1,
+					"targetIndexes" : 
+					[
+						1,
+						5
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 1,
+					"id" : "ALL_BUILD::@3ebb4429b8e9910f96f0",
+					"jsonFile" : "target-ALL_BUILD-Debug-91d1f7f90482f28f3e33.json",
+					"name" : "ALL_BUILD",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "ALL_BUILD::@976f4f0bee90b99ecdb6",
+					"jsonFile" : "target-ALL_BUILD-Debug-757e4435faaa34e68a13.json",
+					"name" : "ALL_BUILD",
+					"projectIndex" : 3
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ALL_BUILD::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ALL_BUILD-Debug-26a8c518c4ee1f9db14c.json",
+					"name" : "ALL_BUILD",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "ALL_BUILD::@da31f143cb6d09ba64e6",
+					"jsonFile" : "target-ALL_BUILD-Debug-786844ebb3ce849fa86f.json",
+					"name" : "ALL_BUILD",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ZERO_CHECK::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ZERO_CHECK-Debug-e972fa32d0e847e90462.json",
+					"name" : "ZERO_CHECK",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "fmt::@976f4f0bee90b99ecdb6",
+					"jsonFile" : "target-fmt-Debug-11d567c409a2536d0f75.json",
+					"name" : "fmt",
+					"projectIndex" : 3
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "generated_shaders::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-generated_shaders-Debug-a9ad07758d44092377d6.json",
+					"name" : "generated_shaders",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ggml-mainline-avxonly::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ggml-mainline-avxonly-Debug-6952eea8b7eb86be5b5f.json",
+					"name" : "ggml-mainline-avxonly",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ggml-mainline-default::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ggml-mainline-default-Debug-dd40c5fa2d6de449c567.json",
+					"name" : "ggml-mainline-default",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "gptj-avxonly::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-gptj-avxonly-Debug-fdaa5a5250241d979d38.json",
+					"name" : "gptj-avxonly",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "gptj-default::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-gptj-default-Debug-4c33422e77cc8e1db5ed.json",
+					"name" : "gptj-default",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "kompute::@89e9f8ab2d047f3efdf5",
+					"jsonFile" : "target-kompute-Debug-52dc9aad08180f4f4ed8.json",
+					"name" : "kompute",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "kp_logger::@a8d4c458e60b91c63bef",
+					"jsonFile" : "target-kp_logger-Debug-f18c74f289c49194ab13.json",
+					"name" : "kp_logger",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 7,
+					"id" : "kp_shader::@7d1c7207e497c98f3eef",
+					"jsonFile" : "target-kp_shader-Debug-7981d8c49b13374cb7d2.json",
+					"name" : "kp_shader",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "llama-mainline-avxonly::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-llama-mainline-avxonly-Debug-2a2002b4cdb96124444c.json",
+					"name" : "llama-mainline-avxonly",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "llama-mainline-default::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-llama-mainline-default-Debug-4aa53422d1e2bf119f14.json",
+					"name" : "llama-mainline-default",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "llamamodel-mainline-avxonly::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-llamamodel-mainline-avxonly-Debug-9ece57223fc75c6720bc.json",
+					"name" : "llamamodel-mainline-avxonly",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "llamamodel-mainline-default::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-llamamodel-mainline-default-Debug-4461443eecbe2dbcaee0.json",
+					"name" : "llamamodel-mainline-default",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "llmodel::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-llmodel-Debug-5baf6d5317fa7100861d.json",
+					"name" : "llmodel",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "uninstall::@da31f143cb6d09ba64e6",
+					"jsonFile" : "target-uninstall-Debug-1c11f197d08a919eb50e.json",
+					"name" : "uninstall",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "xxd::@3ebb4429b8e9910f96f0",
+					"jsonFile" : "target-xxd-Debug-09839aed7e012e3ab902.json",
+					"name" : "xxd",
+					"projectIndex" : 1
+				}
+			]
+		},
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Release-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.12"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						2,
+						4,
+						6,
+						7,
+						8,
+						9,
+						10,
+						14,
+						15,
+						16,
+						17,
+						18
+					]
+				},
+				{
+					"build" : "llama.cpp-mainline/kompute",
+					"childIndexes" : 
+					[
+						2,
+						3,
+						4
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-llama.cpp-mainline.kompute-Release-15ef944a8f6fdbe2caf6.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "llama.cpp-mainline/kompute",
+					"targetIndexes" : 
+					[
+						0,
+						20
+					]
+				},
+				{
+					"build" : "_deps/vulkan_header-build",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-_deps.vulkan_header-build-Release-27fcda43bd585545d86f.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10.2"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 2,
+					"source" : "C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/vulkan_header-src",
+					"targetIndexes" : 
+					[
+						3,
+						19
+					]
+				},
+				{
+					"build" : "_deps/fmt-build",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-_deps.fmt-build-Release-374e27ca74d5489a6a97.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 3,
+					"source" : "C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/fmt-src",
+					"targetIndexes" : 
+					[
+						1,
+						5
+					]
+				},
+				{
+					"build" : "llama.cpp-mainline/kompute/src",
+					"childIndexes" : 
+					[
+						5,
+						6,
+						8
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-llama.cpp-mainline.kompute.src-Release-f79798d3c616d675c38b.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 1,
+					"source" : "llama.cpp-mainline/kompute/src",
+					"targetIndexes" : 
+					[
+						11
+					]
+				},
+				{
+					"build" : "llama.cpp-mainline/kompute/src/logger",
+					"jsonFile" : "directory-llama.cpp-mainline.kompute.src.logger-Release-9ec1072b9bfc7e41f807.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"parentIndex" : 4,
+					"projectIndex" : 1,
+					"source" : "llama.cpp-mainline/kompute/src/logger",
+					"targetIndexes" : 
+					[
+						12
+					]
+				},
+				{
+					"build" : "llama.cpp-mainline/kompute/src/shaders",
+					"childIndexes" : 
+					[
+						7
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-llama.cpp-mainline.kompute.src.shaders-Release-cb4bcf0ec798755bbbb1.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"parentIndex" : 4,
+					"projectIndex" : 1,
+					"source" : "llama.cpp-mainline/kompute/src/shaders"
+				},
+				{
+					"build" : "llama.cpp-mainline/kompute/src/shaders/glsl",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-llama.cpp-mainline.kompute.src.shaders.glsl-Release-8c2b49a63d0a53bf91ac.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"parentIndex" : 6,
+					"projectIndex" : 1,
+					"source" : "llama.cpp-mainline/kompute/src/shaders/glsl",
+					"targetIndexes" : 
+					[
+						13
+					]
+				},
+				{
+					"build" : "llama.cpp-mainline/kompute/src/include",
+					"jsonFile" : "directory-llama.cpp-mainline.kompute.src.include-Release-850c501515822c7eafa3.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"parentIndex" : 4,
+					"projectIndex" : 1,
+					"source" : "llama.cpp-mainline/kompute/src/include"
+				}
+			],
+			"name" : "Release",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1
+					],
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "llmodel",
+					"targetIndexes" : 
+					[
+						2,
+						4,
+						6,
+						7,
+						8,
+						9,
+						10,
+						14,
+						15,
+						16,
+						17,
+						18
+					]
+				},
+				{
+					"childIndexes" : 
+					[
+						2,
+						3
+					],
+					"directoryIndexes" : 
+					[
+						1,
+						4,
+						5,
+						6,
+						7,
+						8
+					],
+					"name" : "kompute",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						0,
+						11,
+						12,
+						13,
+						20
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						2
+					],
+					"name" : "Vulkan-Headers",
+					"parentIndex" : 1,
+					"targetIndexes" : 
+					[
+						3,
+						19
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						3
+					],
+					"name" : "FMT",
+					"parentIndex" : 1,
+					"targetIndexes" : 
+					[
+						1,
+						5
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 1,
+					"id" : "ALL_BUILD::@3ebb4429b8e9910f96f0",
+					"jsonFile" : "target-ALL_BUILD-Release-91d1f7f90482f28f3e33.json",
+					"name" : "ALL_BUILD",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "ALL_BUILD::@976f4f0bee90b99ecdb6",
+					"jsonFile" : "target-ALL_BUILD-Release-757e4435faaa34e68a13.json",
+					"name" : "ALL_BUILD",
+					"projectIndex" : 3
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ALL_BUILD::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ALL_BUILD-Release-26a8c518c4ee1f9db14c.json",
+					"name" : "ALL_BUILD",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "ALL_BUILD::@da31f143cb6d09ba64e6",
+					"jsonFile" : "target-ALL_BUILD-Release-786844ebb3ce849fa86f.json",
+					"name" : "ALL_BUILD",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ZERO_CHECK::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ZERO_CHECK-Release-e972fa32d0e847e90462.json",
+					"name" : "ZERO_CHECK",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "fmt::@976f4f0bee90b99ecdb6",
+					"jsonFile" : "target-fmt-Release-4c455f89df89ba34e934.json",
+					"name" : "fmt",
+					"projectIndex" : 3
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "generated_shaders::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-generated_shaders-Release-a9ad07758d44092377d6.json",
+					"name" : "generated_shaders",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ggml-mainline-avxonly::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ggml-mainline-avxonly-Release-8d8ff29fba4d9906be93.json",
+					"name" : "ggml-mainline-avxonly",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ggml-mainline-default::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ggml-mainline-default-Release-7928a32c87d0edfd5237.json",
+					"name" : "ggml-mainline-default",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "gptj-avxonly::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-gptj-avxonly-Release-c20dd43a7d5da70946b5.json",
+					"name" : "gptj-avxonly",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "gptj-default::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-gptj-default-Release-b2d66ad1afc840a4333e.json",
+					"name" : "gptj-default",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "kompute::@89e9f8ab2d047f3efdf5",
+					"jsonFile" : "target-kompute-Release-3a6902e28b116dd90d22.json",
+					"name" : "kompute",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "kp_logger::@a8d4c458e60b91c63bef",
+					"jsonFile" : "target-kp_logger-Release-4da5011eae40fa70ced2.json",
+					"name" : "kp_logger",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 7,
+					"id" : "kp_shader::@7d1c7207e497c98f3eef",
+					"jsonFile" : "target-kp_shader-Release-7981d8c49b13374cb7d2.json",
+					"name" : "kp_shader",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "llama-mainline-avxonly::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-llama-mainline-avxonly-Release-c96f3cd4bceb4a8f2c22.json",
+					"name" : "llama-mainline-avxonly",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "llama-mainline-default::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-llama-mainline-default-Release-6b0b4f62ec7a416c7c5c.json",
+					"name" : "llama-mainline-default",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "llamamodel-mainline-avxonly::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-llamamodel-mainline-avxonly-Release-abebb3a59031ed392ab3.json",
+					"name" : "llamamodel-mainline-avxonly",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "llamamodel-mainline-default::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-llamamodel-mainline-default-Release-fa75e4aa408c3227a292.json",
+					"name" : "llamamodel-mainline-default",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "llmodel::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-llmodel-Release-510de2da9642a1fbfa0f.json",
+					"name" : "llmodel",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "uninstall::@da31f143cb6d09ba64e6",
+					"jsonFile" : "target-uninstall-Release-1c11f197d08a919eb50e.json",
+					"name" : "uninstall",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "xxd::@3ebb4429b8e9910f96f0",
+					"jsonFile" : "target-xxd-Release-b6860d3807c00d24a67c.json",
+					"name" : "xxd",
+					"projectIndex" : 1
+				}
+			]
+		},
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-MinSizeRel-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.12"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						2,
+						4,
+						6,
+						7,
+						8,
+						9,
+						10,
+						14,
+						15,
+						16,
+						17,
+						18
+					]
+				},
+				{
+					"build" : "llama.cpp-mainline/kompute",
+					"childIndexes" : 
+					[
+						2,
+						3,
+						4
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-llama.cpp-mainline.kompute-MinSizeRel-15ef944a8f6fdbe2caf6.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "llama.cpp-mainline/kompute",
+					"targetIndexes" : 
+					[
+						0,
+						20
+					]
+				},
+				{
+					"build" : "_deps/vulkan_header-build",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-_deps.vulkan_header-build-MinSizeRel-27fcda43bd585545d86f.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10.2"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 2,
+					"source" : "C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/vulkan_header-src",
+					"targetIndexes" : 
+					[
+						3,
+						19
+					]
+				},
+				{
+					"build" : "_deps/fmt-build",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-_deps.fmt-build-MinSizeRel-83d26eef6ce5ee2fde2b.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 3,
+					"source" : "C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/fmt-src",
+					"targetIndexes" : 
+					[
+						1,
+						5
+					]
+				},
+				{
+					"build" : "llama.cpp-mainline/kompute/src",
+					"childIndexes" : 
+					[
+						5,
+						6,
+						8
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-llama.cpp-mainline.kompute.src-MinSizeRel-022e5fdb90dc5c21c22b.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 1,
+					"source" : "llama.cpp-mainline/kompute/src",
+					"targetIndexes" : 
+					[
+						11
+					]
+				},
+				{
+					"build" : "llama.cpp-mainline/kompute/src/logger",
+					"jsonFile" : "directory-llama.cpp-mainline.kompute.src.logger-MinSizeRel-9ec1072b9bfc7e41f807.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"parentIndex" : 4,
+					"projectIndex" : 1,
+					"source" : "llama.cpp-mainline/kompute/src/logger",
+					"targetIndexes" : 
+					[
+						12
+					]
+				},
+				{
+					"build" : "llama.cpp-mainline/kompute/src/shaders",
+					"childIndexes" : 
+					[
+						7
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-llama.cpp-mainline.kompute.src.shaders-MinSizeRel-cb4bcf0ec798755bbbb1.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"parentIndex" : 4,
+					"projectIndex" : 1,
+					"source" : "llama.cpp-mainline/kompute/src/shaders"
+				},
+				{
+					"build" : "llama.cpp-mainline/kompute/src/shaders/glsl",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-llama.cpp-mainline.kompute.src.shaders.glsl-MinSizeRel-8c2b49a63d0a53bf91ac.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"parentIndex" : 6,
+					"projectIndex" : 1,
+					"source" : "llama.cpp-mainline/kompute/src/shaders/glsl",
+					"targetIndexes" : 
+					[
+						13
+					]
+				},
+				{
+					"build" : "llama.cpp-mainline/kompute/src/include",
+					"jsonFile" : "directory-llama.cpp-mainline.kompute.src.include-MinSizeRel-850c501515822c7eafa3.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"parentIndex" : 4,
+					"projectIndex" : 1,
+					"source" : "llama.cpp-mainline/kompute/src/include"
+				}
+			],
+			"name" : "MinSizeRel",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1
+					],
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "llmodel",
+					"targetIndexes" : 
+					[
+						2,
+						4,
+						6,
+						7,
+						8,
+						9,
+						10,
+						14,
+						15,
+						16,
+						17,
+						18
+					]
+				},
+				{
+					"childIndexes" : 
+					[
+						2,
+						3
+					],
+					"directoryIndexes" : 
+					[
+						1,
+						4,
+						5,
+						6,
+						7,
+						8
+					],
+					"name" : "kompute",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						0,
+						11,
+						12,
+						13,
+						20
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						2
+					],
+					"name" : "Vulkan-Headers",
+					"parentIndex" : 1,
+					"targetIndexes" : 
+					[
+						3,
+						19
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						3
+					],
+					"name" : "FMT",
+					"parentIndex" : 1,
+					"targetIndexes" : 
+					[
+						1,
+						5
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 1,
+					"id" : "ALL_BUILD::@3ebb4429b8e9910f96f0",
+					"jsonFile" : "target-ALL_BUILD-MinSizeRel-91d1f7f90482f28f3e33.json",
+					"name" : "ALL_BUILD",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "ALL_BUILD::@976f4f0bee90b99ecdb6",
+					"jsonFile" : "target-ALL_BUILD-MinSizeRel-757e4435faaa34e68a13.json",
+					"name" : "ALL_BUILD",
+					"projectIndex" : 3
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ALL_BUILD::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ALL_BUILD-MinSizeRel-26a8c518c4ee1f9db14c.json",
+					"name" : "ALL_BUILD",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "ALL_BUILD::@da31f143cb6d09ba64e6",
+					"jsonFile" : "target-ALL_BUILD-MinSizeRel-786844ebb3ce849fa86f.json",
+					"name" : "ALL_BUILD",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ZERO_CHECK::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ZERO_CHECK-MinSizeRel-e972fa32d0e847e90462.json",
+					"name" : "ZERO_CHECK",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "fmt::@976f4f0bee90b99ecdb6",
+					"jsonFile" : "target-fmt-MinSizeRel-7b78c59eab3e41d951c2.json",
+					"name" : "fmt",
+					"projectIndex" : 3
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "generated_shaders::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-generated_shaders-MinSizeRel-a9ad07758d44092377d6.json",
+					"name" : "generated_shaders",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ggml-mainline-avxonly::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ggml-mainline-avxonly-MinSizeRel-fff90f429c02026ca829.json",
+					"name" : "ggml-mainline-avxonly",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ggml-mainline-default::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ggml-mainline-default-MinSizeRel-03e2a3a40c524b569fb7.json",
+					"name" : "ggml-mainline-default",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "gptj-avxonly::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-gptj-avxonly-MinSizeRel-42e3a41d1b70b558fa16.json",
+					"name" : "gptj-avxonly",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "gptj-default::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-gptj-default-MinSizeRel-c015bf6c45933fcd4073.json",
+					"name" : "gptj-default",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "kompute::@89e9f8ab2d047f3efdf5",
+					"jsonFile" : "target-kompute-MinSizeRel-195925e3348801215804.json",
+					"name" : "kompute",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "kp_logger::@a8d4c458e60b91c63bef",
+					"jsonFile" : "target-kp_logger-MinSizeRel-2016fa8d79d4dfdcff6e.json",
+					"name" : "kp_logger",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 7,
+					"id" : "kp_shader::@7d1c7207e497c98f3eef",
+					"jsonFile" : "target-kp_shader-MinSizeRel-7981d8c49b13374cb7d2.json",
+					"name" : "kp_shader",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "llama-mainline-avxonly::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-llama-mainline-avxonly-MinSizeRel-3bb0b6e20eeb63a76880.json",
+					"name" : "llama-mainline-avxonly",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "llama-mainline-default::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-llama-mainline-default-MinSizeRel-467231c20a1bfad01d94.json",
+					"name" : "llama-mainline-default",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "llamamodel-mainline-avxonly::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-llamamodel-mainline-avxonly-MinSizeRel-d426192e2878df4e38b9.json",
+					"name" : "llamamodel-mainline-avxonly",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "llamamodel-mainline-default::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-llamamodel-mainline-default-MinSizeRel-90693bf39aeec42c653d.json",
+					"name" : "llamamodel-mainline-default",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "llmodel::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-llmodel-MinSizeRel-2a3be0072b540dc094d0.json",
+					"name" : "llmodel",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "uninstall::@da31f143cb6d09ba64e6",
+					"jsonFile" : "target-uninstall-MinSizeRel-1c11f197d08a919eb50e.json",
+					"name" : "uninstall",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "xxd::@3ebb4429b8e9910f96f0",
+					"jsonFile" : "target-xxd-MinSizeRel-a378202e09aa2db5f9d1.json",
+					"name" : "xxd",
+					"projectIndex" : 1
+				}
+			]
+		},
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-RelWithDebInfo-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.12"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						2,
+						4,
+						6,
+						7,
+						8,
+						9,
+						10,
+						14,
+						15,
+						16,
+						17,
+						18
+					]
+				},
+				{
+					"build" : "llama.cpp-mainline/kompute",
+					"childIndexes" : 
+					[
+						2,
+						3,
+						4
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-llama.cpp-mainline.kompute-RelWithDebInfo-15ef944a8f6fdbe2caf6.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "llama.cpp-mainline/kompute",
+					"targetIndexes" : 
+					[
+						0,
+						20
+					]
+				},
+				{
+					"build" : "_deps/vulkan_header-build",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-_deps.vulkan_header-build-RelWithDebInfo-27fcda43bd585545d86f.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10.2"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 2,
+					"source" : "C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/vulkan_header-src",
+					"targetIndexes" : 
+					[
+						3,
+						19
+					]
+				},
+				{
+					"build" : "_deps/fmt-build",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-_deps.fmt-build-RelWithDebInfo-1068e0ce5519347095f4.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.8"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 3,
+					"source" : "C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/fmt-src",
+					"targetIndexes" : 
+					[
+						1,
+						5
+					]
+				},
+				{
+					"build" : "llama.cpp-mainline/kompute/src",
+					"childIndexes" : 
+					[
+						5,
+						6,
+						8
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-llama.cpp-mainline.kompute.src-RelWithDebInfo-2cee5a60a41cee619e2f.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"parentIndex" : 1,
+					"projectIndex" : 1,
+					"source" : "llama.cpp-mainline/kompute/src",
+					"targetIndexes" : 
+					[
+						11
+					]
+				},
+				{
+					"build" : "llama.cpp-mainline/kompute/src/logger",
+					"jsonFile" : "directory-llama.cpp-mainline.kompute.src.logger-RelWithDebInfo-9ec1072b9bfc7e41f807.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"parentIndex" : 4,
+					"projectIndex" : 1,
+					"source" : "llama.cpp-mainline/kompute/src/logger",
+					"targetIndexes" : 
+					[
+						12
+					]
+				},
+				{
+					"build" : "llama.cpp-mainline/kompute/src/shaders",
+					"childIndexes" : 
+					[
+						7
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-llama.cpp-mainline.kompute.src.shaders-RelWithDebInfo-cb4bcf0ec798755bbbb1.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"parentIndex" : 4,
+					"projectIndex" : 1,
+					"source" : "llama.cpp-mainline/kompute/src/shaders"
+				},
+				{
+					"build" : "llama.cpp-mainline/kompute/src/shaders/glsl",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-llama.cpp-mainline.kompute.src.shaders.glsl-RelWithDebInfo-8c2b49a63d0a53bf91ac.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"parentIndex" : 6,
+					"projectIndex" : 1,
+					"source" : "llama.cpp-mainline/kompute/src/shaders/glsl",
+					"targetIndexes" : 
+					[
+						13
+					]
+				},
+				{
+					"build" : "llama.cpp-mainline/kompute/src/include",
+					"jsonFile" : "directory-llama.cpp-mainline.kompute.src.include-RelWithDebInfo-850c501515822c7eafa3.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"parentIndex" : 4,
+					"projectIndex" : 1,
+					"source" : "llama.cpp-mainline/kompute/src/include"
+				}
+			],
+			"name" : "RelWithDebInfo",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1
+					],
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "llmodel",
+					"targetIndexes" : 
+					[
+						2,
+						4,
+						6,
+						7,
+						8,
+						9,
+						10,
+						14,
+						15,
+						16,
+						17,
+						18
+					]
+				},
+				{
+					"childIndexes" : 
+					[
+						2,
+						3
+					],
+					"directoryIndexes" : 
+					[
+						1,
+						4,
+						5,
+						6,
+						7,
+						8
+					],
+					"name" : "kompute",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						0,
+						11,
+						12,
+						13,
+						20
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						2
+					],
+					"name" : "Vulkan-Headers",
+					"parentIndex" : 1,
+					"targetIndexes" : 
+					[
+						3,
+						19
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						3
+					],
+					"name" : "FMT",
+					"parentIndex" : 1,
+					"targetIndexes" : 
+					[
+						1,
+						5
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 1,
+					"id" : "ALL_BUILD::@3ebb4429b8e9910f96f0",
+					"jsonFile" : "target-ALL_BUILD-RelWithDebInfo-91d1f7f90482f28f3e33.json",
+					"name" : "ALL_BUILD",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "ALL_BUILD::@976f4f0bee90b99ecdb6",
+					"jsonFile" : "target-ALL_BUILD-RelWithDebInfo-757e4435faaa34e68a13.json",
+					"name" : "ALL_BUILD",
+					"projectIndex" : 3
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ALL_BUILD::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ALL_BUILD-RelWithDebInfo-26a8c518c4ee1f9db14c.json",
+					"name" : "ALL_BUILD",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "ALL_BUILD::@da31f143cb6d09ba64e6",
+					"jsonFile" : "target-ALL_BUILD-RelWithDebInfo-786844ebb3ce849fa86f.json",
+					"name" : "ALL_BUILD",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ZERO_CHECK::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ZERO_CHECK-RelWithDebInfo-e972fa32d0e847e90462.json",
+					"name" : "ZERO_CHECK",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "fmt::@976f4f0bee90b99ecdb6",
+					"jsonFile" : "target-fmt-RelWithDebInfo-07eeb35708cfbf9e841d.json",
+					"name" : "fmt",
+					"projectIndex" : 3
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "generated_shaders::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-generated_shaders-RelWithDebInfo-a9ad07758d44092377d6.json",
+					"name" : "generated_shaders",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ggml-mainline-avxonly::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ggml-mainline-avxonly-RelWithDebInfo-f899763f75af74509d9f.json",
+					"name" : "ggml-mainline-avxonly",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ggml-mainline-default::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ggml-mainline-default-RelWithDebInfo-3cca1d2174ab7e601083.json",
+					"name" : "ggml-mainline-default",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "gptj-avxonly::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-gptj-avxonly-RelWithDebInfo-5b7301d011ceea473612.json",
+					"name" : "gptj-avxonly",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "gptj-default::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-gptj-default-RelWithDebInfo-d3e0c768eb09d5800f62.json",
+					"name" : "gptj-default",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "kompute::@89e9f8ab2d047f3efdf5",
+					"jsonFile" : "target-kompute-RelWithDebInfo-65f3667b38d979c17640.json",
+					"name" : "kompute",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "kp_logger::@a8d4c458e60b91c63bef",
+					"jsonFile" : "target-kp_logger-RelWithDebInfo-7a2b365f076415209a5d.json",
+					"name" : "kp_logger",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 7,
+					"id" : "kp_shader::@7d1c7207e497c98f3eef",
+					"jsonFile" : "target-kp_shader-RelWithDebInfo-7981d8c49b13374cb7d2.json",
+					"name" : "kp_shader",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "llama-mainline-avxonly::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-llama-mainline-avxonly-RelWithDebInfo-1266b76e9c8773fc3db1.json",
+					"name" : "llama-mainline-avxonly",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "llama-mainline-default::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-llama-mainline-default-RelWithDebInfo-b87d3b12548f63b7aa6e.json",
+					"name" : "llama-mainline-default",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "llamamodel-mainline-avxonly::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-llamamodel-mainline-avxonly-RelWithDebInfo-40abd2a5c5a96e62be51.json",
+					"name" : "llamamodel-mainline-avxonly",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "llamamodel-mainline-default::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-llamamodel-mainline-default-RelWithDebInfo-c02b13c1d36839ce92f4.json",
+					"name" : "llamamodel-mainline-default",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "llmodel::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-llmodel-RelWithDebInfo-6797655404353d30a3e2.json",
+					"name" : "llmodel",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "uninstall::@da31f143cb6d09ba64e6",
+					"jsonFile" : "target-uninstall-RelWithDebInfo-1c11f197d08a919eb50e.json",
+					"name" : "uninstall",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "xxd::@3ebb4429b8e9910f96f0",
+					"jsonFile" : "target-xxd-RelWithDebInfo-7453eb2ccde6de812991.json",
+					"name" : "xxd",
+					"projectIndex" : 1
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build",
+		"source" : "C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/gpt4all/gpt4all-backend"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}

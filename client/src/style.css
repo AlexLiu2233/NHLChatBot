@@ -374,14 +374,19 @@ img.chat-icon {
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-.letter-box.green {
-    background-color: #d4edda;
+.letter-box.correct {
+    background-color: #6aaa64; /* Green for correct position */
 }
 
-.letter-box.yellow {
-    background-color: #fff3cd;
+.letter-box.present {
+    background-color: #c9b458; /* Yellow for present but wrong position */
 }
 
-.letter-box.red {
-    background-color: #f8d7da;
+.letter-box.absent {
+    background-color: #787c7e; /* Gray for not present */
+}
+
+.letter-box.non-editable {
+    background-color: #e0e0e0;
+    pointer-events: none;
 }

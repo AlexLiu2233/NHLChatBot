@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\CMakeFiles\_CMakeLTOTest-C\src\main.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\CMakeFiles\_CMakeLTOTest-C\src\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{1DADB076-A4B4-3DBF-B78A-BB30957F52E8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
