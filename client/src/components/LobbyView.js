@@ -3,9 +3,7 @@ import { Link } from 'react-router-dom';
 import { Service } from './Service';
 import '../style.css';
 
-const LobbyView = ({ lobby }) => {
-  const { rooms, setRooms } = lobby;
-
+const LobbyView = ({ rooms, setRooms }) => {
   useEffect(() => {
     const fetchRooms = async () => {
       try {
@@ -19,7 +17,7 @@ const LobbyView = ({ lobby }) => {
 
     fetchRooms();
   }, [setRooms]);
-
+  
   useEffect(() => {
     console.log("Rooms in LobbyView:", rooms); // Log rooms state
   }, [rooms]);

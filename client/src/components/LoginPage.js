@@ -27,21 +27,17 @@ const LoginPage = () => {
         console.log('Captain Hint (Answer):', correctPassword);
     }, []);
 
+    // In your LoginPage component
     const handleGuess = async (e) => {
         e.preventDefault();
         const usernameGuess = usernameBoxes.map(box => box.letter || ' ').join('').trim().toUpperCase();
         const passwordGuess = passwordBoxes.map(box => box.letter || ' ').join('').trim().toUpperCase();
-
-        // Log the guess attempt
-        console.log('Username Guess:', usernameGuess);
-        console.log('Password Guess:', passwordGuess);
 
         if (usernameGuess === correctUsername && passwordGuess === correctPassword) {
             try {
                 const success = await Service.login(usernameGuess, passwordGuess);
                 if (success) {
                     setMessage('Login successful!');
-                    console.log('Login successful! Redirecting to main page...');
                     history.push('/'); // Redirect to the main page
                 } else {
                     setMessage('Login failed. Please try again.');

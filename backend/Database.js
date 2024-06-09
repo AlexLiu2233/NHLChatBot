@@ -93,7 +93,8 @@ Database.prototype.addConversation = function (conversation) {
 Database.prototype.getUser = async function(username) {
   const db = await this.connected;
   try {
-    const user = await db.collection('users').findOne({ username: username });
+    const user = await db.collection('users').findOne({ username: { $regex: new RegExp(`^${username}$`, 'i') } });
+    console.log("Database getUser result:", user); 
     if (!user) return null;
     return user;
   } catch (error) {

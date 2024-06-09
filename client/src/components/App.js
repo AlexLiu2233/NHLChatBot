@@ -10,64 +10,36 @@ const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        await Service.getProfile();
-        setIsAuthenticated(true);
-      } catch (error) {
-        setIsAuthenticated(false);
-      }
-    };
-
-    checkAuth();
-  }, []);
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      const fetchRooms = async () => {
-        try {
-          const roomsData = await Service.getAllRooms();
-          setRooms(roomsData);
-        } catch (error) {
-          console.error('Error fetching rooms:', error);
+    Service.checkSession()
+      .then((response) => {
+        if (response.ok) {
+          setIsAuthenticated(true); // If session is valid, set isAuthenticated to true
+          Service.getAllRooms()
+            .then(setRooms)
+            .catch(error => console.error('Error fetching rooms:', error));
         }
-      };
-
-      fetchRooms();
-    }
-  }, [isAuthenticated]);
-
-  if (!isAuthenticated) {
-    return (
-      <Router>
-        <Switch>
-          <Route path="/login">
-            <LoginPage />
-          </Route>
-          <Redirect to="/login" />
-        </Switch>
-      </Router>
-    );
-  }
+      })
+      .catch(() => setIsAuthenticated(false));
+  }, []);
 
   return (
     <Router>
       <div>
         <h1>Chat Application</h1>
         <Switch>
+          <Route path="/login">
+            {!isAuthenticated ? <LoginPage setIsAuthenticated={setIsAuthenticated} /> : <Redirect to="/" />}
+          </Route>
           <Route path="/" exact>
-            <LobbyView rooms={rooms} setRooms={setRooms} />
+            {isAuthenticated ? <LobbyView rooms={rooms} setRooms={setRooms} /> : <Redirect to="/login" />}
           </Route>
           <Route path="/chat/:roomId">
-            <ChatView />
+            {isAuthenticated ? <ChatView /> : <Redirect to="/login" />}
           </Route>
           <Route path="/profile">
-            <Profile />
+            {isAuthenticated ? <Profile /> : <Redirect to="/login" />}
           </Route>
-          <Route path="/login">
-            <LoginPage />
-          </Route>
-          <Redirect to="/" />
+          <Redirect to="/login" />
         </Switch>
       </div>
     </Router>

@@ -80,26 +80,29 @@ app.post('/api/generate-player', async (req, res) => {
 
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
+    console.log(`Login attempt for username: '${username}' with password: '${password}'`); // Ensure you log this
 
     try {
         const user = await db.getUser(username);
         if (!user) {
-            return res.status(401).send('User not found'); // User not found
+            console.log('User not found');
+            return res.status(401).send('User not found');
         }
 
         const passwordMatches = await isCorrectPassword(password, user.password);
         if (passwordMatches) {
             sessionManager.createSession(res, username);
-            return res.status(200).send('Authentication successful'); // Authentication successful
+            console.log('Authentication successful');
+            return res.status(200).send('Authentication successful');
         } else {
-            return res.status(401).send('Authentication failed'); // Authentication failed
+            console.log('Authentication failed');
+            return res.status(401).send('Authentication failed');
         }
     } catch (err) {
-        console.error(err);
+        console.error('Error during login:', err);
         res.status(500).send('Internal Server Error on /login POST');
     }
 });
-
 
 app.get('/chat/:room_id/messages', protectRoute, (req, res) => {
     const roomId = req.params.room_id;
@@ -159,6 +162,12 @@ app.get('/profile', protectRoute, (req, res) => {
     } else {
         res.status(404).send('User not found');
     }
+});
+
+// Add this near your other API routes in server.js
+app.get('/check-session', sessionManager.middleware, (req, res) => {
+    // If the middleware does not throw an error, the session is valid
+    res.status(200).json({ message: 'Session is valid' });
 });
 
 // Static middleware for images directory
@@ -263,6 +272,15 @@ function logRequest(req, res, next) {
 async function isCorrectPassword(password, saltedHash) {
     const salt = saltedHash.substring(0, 20);
     const originalHash = saltedHash.substring(20);
-    const hash = crypto.createHash('sha256').update(password + salt).digest('base64');
+
+    // Convert the first letter to uppercase and the rest to lowercase
+    const formattedPassword = password.charAt(0).toUpperCase() + password.slice(1).toLowerCase();
+
+    const hash = crypto.createHash('sha256').update(formattedPassword + salt).digest('base64');
+    console.log(`Formatted password: ${formattedPassword}`);
+    console.log(`Expected hash: ${originalHash}, Generated hash: ${hash}`);
+
     return originalHash === hash;
 }
+
+

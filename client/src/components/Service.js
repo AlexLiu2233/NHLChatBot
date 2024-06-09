@@ -10,7 +10,9 @@ Service.login = async function (username, password) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ username, password }),
+      credentials: 'include', // Important for sessions
     });
+    console.log(`Response status: ${response.status}`); // Log response status
     return response.ok;
   } catch (error) {
     console.error('Error during login:', error);
@@ -21,7 +23,8 @@ Service.login = async function (username, password) {
 Service.getAllRooms = function () {
   return new Promise((resolve, reject) => {
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', this.origin + '/chat');
+    xhr.open('GET', this.origin + '/chat', true);
+    xhr.withCredentials = true; // Ensure cookies are included
     xhr.onload = function () {
       if (xhr.status === 200) {
         try {
@@ -44,7 +47,7 @@ Service.getAllRooms = function () {
 };
 
 Service.getProfile = function () {
-  return fetch(`${this.origin}/profile`)
+  return fetch(`${this.origin}/profile`, { credentials: 'include' })
     .then(response => {
       if (!response.ok) {
         throw new Error('Failed to fetch profile');
@@ -99,6 +102,22 @@ Service.getLastConversation = function (roomId, before) {
     };
     xhr.send();
   });
+};
+
+Service.checkSession = function () {
+  return fetch(`${this.origin}/check-session`, { credentials: 'include' })
+    .then(response => {
+        console.log(`Check session response status: ${response.status}`);
+        return response.text(); // Changed from json to text for debugging
+    })
+    .then(text => {
+        console.log(`Check session response body: ${text}`);
+        return JSON.parse(text); // Manually parse the text to JSON
+    })
+    .catch(error => {
+        console.error('Session check failed:', error);
+        throw error;
+    });
 };
 
 export { Service };
