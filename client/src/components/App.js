@@ -56,7 +56,7 @@ const App = () => {
         <h1>Chat Application</h1>
         <Switch>
           <Route path="/" exact>
-            <LobbyView lobby={{ rooms, setRooms }} />
+            <LobbyView rooms={rooms} setRooms={setRooms} />
           </Route>
           <Route path="/chat/:roomId">
             <ChatView />

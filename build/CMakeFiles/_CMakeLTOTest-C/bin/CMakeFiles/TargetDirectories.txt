@@ -1,0 +1,4 @@
+C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/CMakeFiles/_CMakeLTOTest-C/bin/CMakeFiles/foo.dir
+C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/CMakeFiles/_CMakeLTOTest-C/bin/CMakeFiles/boo.dir
+C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/CMakeFiles/_CMakeLTOTest-C/bin/CMakeFiles/ALL_BUILD.dir
+C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/CMakeFiles/_CMakeLTOTest-C/bin/CMakeFiles/ZERO_CHECK.dir

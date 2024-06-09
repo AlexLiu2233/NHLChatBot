@@ -1,0 +1,48 @@
+{
+	"backtrace" : 0,
+	"backtraceGraph" : 
+	{
+		"commands" : [],
+		"files" : 
+		[
+			"llama.cpp-mainline/kompute/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			}
+		]
+	},
+	"dependencies" : 
+	[
+		{
+			"id" : "kompute::@89e9f8ab2d047f3efdf5"
+		},
+		{
+			"id" : "fmt::@976f4f0bee90b99ecdb6"
+		},
+		{
+			"id" : "kp_logger::@a8d4c458e60b91c63bef"
+		},
+		{
+			"id" : "xxd::@3ebb4429b8e9910f96f0"
+		},
+		{
+			"id" : "ZERO_CHECK::@6890427a1f51a3e7e1df"
+		},
+		{
+			"id" : "kp_shader::@7d1c7207e497c98f3eef"
+		}
+	],
+	"id" : "ALL_BUILD::@3ebb4429b8e9910f96f0",
+	"isGeneratorProvided" : true,
+	"name" : "ALL_BUILD",
+	"paths" : 
+	{
+		"build" : "llama.cpp-mainline/kompute",
+		"source" : "llama.cpp-mainline/kompute"
+	},
+	"sources" : [],
+	"type" : "UTILITY"
+}

@@ -1,0 +1,150 @@
+^C:\USERS\LIUJP\ONEDRIVE\DOCUMENTS\ALEX\SCHOOL\2024\CPEN322\ASSIGNMENT\PROJECT-RIGHT-WEASEL\BUILD\_DEPS\VULKAN_HEADER-SUBBUILD\CMAKEFILES\3F4CDA0FCCAA1248AA773A89D599DEE9\VULKAN_HEADER-POPULATE-MKDIR.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -Dcfgdir=/Debug -P C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/vulkan_header-subbuild/vulkan_header-populate-prefix/tmp/vulkan_header-populate-mkdirs.cmake
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/vulkan_header-subbuild/vulkan_header-populate-prefix/src/vulkan_header-populate-stamp/Debug/vulkan_header-populate-mkdir
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\LIUJP\ONEDRIVE\DOCUMENTS\ALEX\SCHOOL\2024\CPEN322\ASSIGNMENT\PROJECT-RIGHT-WEASEL\BUILD\_DEPS\VULKAN_HEADER-SUBBUILD\CMAKEFILES\3F4CDA0FCCAA1248AA773A89D599DEE9\VULKAN_HEADER-POPULATE-DOWNLOAD.RULE
+setlocal
+cd C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\_deps
+if %errorlevel% neq 0 goto :cmEnd
+C:
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -P C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/vulkan_header-subbuild/vulkan_header-populate-prefix/tmp/vulkan_header-populate-gitclone.cmake
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/vulkan_header-subbuild/vulkan_header-populate-prefix/src/vulkan_header-populate-stamp/Debug/vulkan_header-populate-download
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\LIUJP\ONEDRIVE\DOCUMENTS\ALEX\SCHOOL\2024\CPEN322\ASSIGNMENT\PROJECT-RIGHT-WEASEL\BUILD\_DEPS\VULKAN_HEADER-SUBBUILD\CMAKEFILES\3F4CDA0FCCAA1248AA773A89D599DEE9\VULKAN_HEADER-POPULATE-UPDATE.RULE
+setlocal
+cd C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\_deps\vulkan_header-src
+if %errorlevel% neq 0 goto :cmEnd
+C:
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -Dcan_fetch=YES -P C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/vulkan_header-subbuild/vulkan_header-populate-prefix/tmp/vulkan_header-populate-gitupdate.cmake
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\LIUJP\ONEDRIVE\DOCUMENTS\ALEX\SCHOOL\2024\CPEN322\ASSIGNMENT\PROJECT-RIGHT-WEASEL\BUILD\_DEPS\VULKAN_HEADER-SUBBUILD\CMAKEFILES\3F4CDA0FCCAA1248AA773A89D599DEE9\VULKAN_HEADER-POPULATE-PATCH.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/vulkan_header-subbuild/vulkan_header-populate-prefix/src/vulkan_header-populate-stamp/Debug/vulkan_header-populate-patch
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\LIUJP\ONEDRIVE\DOCUMENTS\ALEX\SCHOOL\2024\CPEN322\ASSIGNMENT\PROJECT-RIGHT-WEASEL\BUILD\_DEPS\VULKAN_HEADER-SUBBUILD\CMAKEFILES\3F4CDA0FCCAA1248AA773A89D599DEE9\VULKAN_HEADER-POPULATE-CONFIGURE.RULE
+setlocal
+cd C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\_deps\vulkan_header-build
+if %errorlevel% neq 0 goto :cmEnd
+C:
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/vulkan_header-subbuild/vulkan_header-populate-prefix/src/vulkan_header-populate-stamp/Debug/vulkan_header-populate-configure
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\LIUJP\ONEDRIVE\DOCUMENTS\ALEX\SCHOOL\2024\CPEN322\ASSIGNMENT\PROJECT-RIGHT-WEASEL\BUILD\_DEPS\VULKAN_HEADER-SUBBUILD\CMAKEFILES\3F4CDA0FCCAA1248AA773A89D599DEE9\VULKAN_HEADER-POPULATE-BUILD.RULE
+setlocal
+cd C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\_deps\vulkan_header-build
+if %errorlevel% neq 0 goto :cmEnd
+C:
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/vulkan_header-subbuild/vulkan_header-populate-prefix/src/vulkan_header-populate-stamp/Debug/vulkan_header-populate-build
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\LIUJP\ONEDRIVE\DOCUMENTS\ALEX\SCHOOL\2024\CPEN322\ASSIGNMENT\PROJECT-RIGHT-WEASEL\BUILD\_DEPS\VULKAN_HEADER-SUBBUILD\CMAKEFILES\3F4CDA0FCCAA1248AA773A89D599DEE9\VULKAN_HEADER-POPULATE-INSTALL.RULE
+setlocal
+cd C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\_deps\vulkan_header-build
+if %errorlevel% neq 0 goto :cmEnd
+C:
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/vulkan_header-subbuild/vulkan_header-populate-prefix/src/vulkan_header-populate-stamp/Debug/vulkan_header-populate-install
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\LIUJP\ONEDRIVE\DOCUMENTS\ALEX\SCHOOL\2024\CPEN322\ASSIGNMENT\PROJECT-RIGHT-WEASEL\BUILD\_DEPS\VULKAN_HEADER-SUBBUILD\CMAKEFILES\3F4CDA0FCCAA1248AA773A89D599DEE9\VULKAN_HEADER-POPULATE-TEST.RULE
+setlocal
+cd C:\Users\liujp\OneDrive\Documents\Alex\School\2024\CPEN322\Assignment\project-right-weasel\build\_deps\vulkan_header-build
+if %errorlevel% neq 0 goto :cmEnd
+C:
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/vulkan_header-subbuild/vulkan_header-populate-prefix/src/vulkan_header-populate-stamp/Debug/vulkan_header-populate-test
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\LIUJP\ONEDRIVE\DOCUMENTS\ALEX\SCHOOL\2024\CPEN322\ASSIGNMENT\PROJECT-RIGHT-WEASEL\BUILD\_DEPS\VULKAN_HEADER-SUBBUILD\CMAKEFILES\D2D575B2E0D1593C29712BE1DC1E8776\VULKAN_HEADER-POPULATE-COMPLETE.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E make_directory C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/vulkan_header-subbuild/CMakeFiles/Debug
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/vulkan_header-subbuild/CMakeFiles/Debug/vulkan_header-populate-complete
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/vulkan_header-subbuild/vulkan_header-populate-prefix/src/vulkan_header-populate-stamp/Debug/vulkan_header-populate-done
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\LIUJP\ONEDRIVE\DOCUMENTS\ALEX\SCHOOL\2024\CPEN322\ASSIGNMENT\PROJECT-RIGHT-WEASEL\BUILD\_DEPS\VULKAN_HEADER-SUBBUILD\CMAKEFILES\2B9B1D36B98ED53DC98D0892FE672037\VULKAN_HEADER-POPULATE.RULE
+setlocal
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\LIUJP\ONEDRIVE\DOCUMENTS\ALEX\SCHOOL\2024\CPEN322\ASSIGNMENT\PROJECT-RIGHT-WEASEL\BUILD\_DEPS\VULKAN_HEADER-SUBBUILD\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/vulkan_header-subbuild -BC:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/vulkan_header-subbuild --check-stamp-file C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/_deps/vulkan_header-subbuild/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
