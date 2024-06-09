@@ -19,12 +19,8 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    background-image: url('../assets/images/coyotes.png'); /* Example path, adjust as necessary */
-    background-size: cover;
-    background-position: center;
     box-sizing: border-box;
 }
-
 
 /* When the document body width is >= 1024px */
 @media (min-width: 1024px) {
@@ -69,7 +65,6 @@
     margin-left: auto;
     background: #dcf8c6;
 }
-
 
 ul#app-menu {
     padding: 0%;
@@ -178,22 +173,22 @@ img.chat-icon {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     text-align: center;
     color: #ffffff; /* White text color */
-  }
+}
 
-  .page-control h4.room-name {
+.page-control h4.room-name {
     font-size: 24px; /* Larger font for the motto */
     margin-bottom: 10px;
     text-transform: uppercase; /* Uppercase text */
     color: #ffcc00; /* Bright color for the motto */
-  }
+}
 
-  .page-control textarea, .page-control input[type="text"] {
+.page-control textarea, .page-control input[type="text"] {
     width: 90%; /* Responsive width */
     padding: 10px;
     margin-top: 10px;
     border: none;
     border-radius: 5px;
-  }
+}
 
 .page-control-input {
     border: none;
@@ -203,7 +198,7 @@ img.chat-icon {
     box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
 }
 
-page-control button {
+.page-control button {
     background-color: #ffcc00;
     border: none;
     border-radius: 5px;
@@ -212,11 +207,11 @@ page-control button {
     cursor: pointer;
     color: #000000;
     transition: background-color 0.3s ease;
-  }
-  
-  .page-control button:hover {
+}
+
+.page-control button:hover {
     background-color: #ffaa00; /* Lighter shade on hover */
-  }
+}
 
 .message-list {
     padding-bottom: 80px;
@@ -276,12 +271,6 @@ page-control button {
     margin-bottom: 20px;
     cursor: pointer;
     transition: color 0.3s, text-shadow 0.3s; /* Smooth transition for color and text-shadow */
-
-    /* Hover effect for color and text-shadow */
-    &:hover {
-        color: #555; /* Darker grey on hover */
-        text-shadow: 2px 2px 3px rgba(0,0,0,0.2); /* More prominent shadow on hover */
-    }
 }
 
 .room:hover {
@@ -310,5 +299,94 @@ page-control button {
     object-fit: cover;
 }
 
+/* New styles for login page */
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: linear-gradient(to bottom, #00c6ff, #0072ff);
+    color: white;
+    text-align: center;
+}
 
+.animation-container {
+    margin-bottom: 20px;
+}
 
+.login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-form input[type="text"],
+.login-form input[type="password"] {
+    width: 80%;
+    padding: 10px;
+    margin: 5px 0;
+    border: none;
+    border-radius: 5px;
+}
+
+.login-form input[type="submit"] {
+    width: 50%;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #ff6700;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-form input[type="submit"]:hover {
+    background-color: #ffaa00;
+}
+
+/* Wordle-style hints */
+.hints {
+    margin-bottom: 10px;
+}
+
+.hints div {
+    margin-bottom: 5px;
+    font-size: 16px;
+}
+
+.input-boxes {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.letter-box {
+    width: 30px;
+    height: 30px;
+    margin: 0 2px;
+    text-align: center;
+    font-size: 18px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.letter-box.correct {
+    background-color: #6aaa64; /* Green for correct position */
+}
+
+.letter-box.present {
+    background-color: #c9b458; /* Yellow for present but wrong position */
+}
+
+.letter-box.absent {
+    background-color: #787c7e; /* Gray for not present */
+}
+
+.letter-box.non-editable {
+    background-color: #e0e0e0;
+    pointer-events: none;
+}

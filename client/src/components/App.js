@@ -1,28 +1,54 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import LoginPage from './LoginPage';
-import MainPage from './MainPage';
 import ChatView from './ChatView';
 import LobbyView from './LobbyView';
-import { Service } from './Service'; // Assuming Service is defined in a separate file
+import { Service } from './Service';
 
 const App = () => {
   const [rooms, setRooms] = useState([]);
-  const [profile, setProfile] = useState({ username: 'Alice' });
-  const socket = new WebSocket('ws://localhost:8000');
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    const fetchProfile = async () => {
+    const checkAuth = async () => {
       try {
-        const profileData = await Service.getProfile();
-        setProfile(profileData);
+        await Service.getProfile();
+        setIsAuthenticated(true);
       } catch (error) {
-        console.error('Error fetching profile:', error);
+        setIsAuthenticated(false);
       }
     };
 
-    fetchProfile();
+    checkAuth();
   }, []);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      const fetchRooms = async () => {
+        try {
+          const roomsData = await Service.getAllRooms();
+          setRooms(roomsData);
+        } catch (error) {
+          console.error('Error fetching rooms:', error);
+        }
+      };
+
+      fetchRooms();
+    }
+  }, [isAuthenticated]);
+
+  if (!isAuthenticated) {
+    return (
+      <Router>
+        <Switch>
+          <Route path="/login">
+            <LoginPage />
+          </Route>
+          <Redirect to="/login" />
+        </Switch>
+      </Router>
+    );
+  }
 
   return (
     <Router>
@@ -33,7 +59,7 @@ const App = () => {
             <LobbyView lobby={{ rooms, setRooms }} />
           </Route>
           <Route path="/chat/:roomId">
-            <ChatView socket={socket} profile={profile} />
+            <ChatView />
           </Route>
           <Route path="/profile">
             <Profile />
@@ -41,6 +67,7 @@ const App = () => {
           <Route path="/login">
             <LoginPage />
           </Route>
+          <Redirect to="/" />
         </Switch>
       </div>
     </Router>

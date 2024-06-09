@@ -39,19 +39,21 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // to parse application/x-www-form-urlencoded
 app.use(logRequest);
 
-// Static middleware for images directory
-app.use('/images', express.static(path.join(__dirname, '../client/assets')));
-
-async function generateText(prompt) {
-    try {
-        const model = await modelPromise; // Ensure the model is loaded
-        const response = await createCompletion(model, prompt);
-        return response.choices[0].message; // Adjust according to the actual response structure
-    } catch (error) {
-        console.error('Error in generating text with GPT4All:', error);
-        return null; // Handle errors appropriately
-    }
-}
+// API Routes
+app.get('/chat', protectRoute, (req, res) => {
+    db.getRooms().then(rooms => {
+        const roomList = rooms.map(room => ({
+            _id: room._id,
+            name: room.name,
+            image: room.image ? `/images/${room.image}` : '/assets/default-room-icon.png',
+            messages: messages[room._id.toString()] || []
+        }));
+        res.json(roomList);
+    }).catch(err => {
+        console.error('Error fetching chat rooms:', err);
+        res.status(500).send('Error fetching chat rooms');
+    });
+});
 
 app.post('/api/generate-player', async (req, res) => {
     const { keywords } = req.body;
@@ -61,47 +63,41 @@ app.post('/api/generate-player', async (req, res) => {
 
     if (generatedResponse && generatedResponse.content) {
         const generatedText = generatedResponse.content;
-
-        // Extract the player's name by trimming the string and splitting it at spaces
         const playerName = generatedText.trim().split(/\s+/).slice(0, 2).join(' ');
         console.log("The playerName is: ", playerName)
-        // If a valid player name is found, respond with it
         if (playerName) {
             res.json({ playerName });
         } else {
-            // Handle cases where the model returns no name
             res.status(404).json({ error: 'No valid player name found in generated response.' });
         }
     } else {
-        // Handle cases where the generated response is not valid or content is missing
         console.error('Error with generated response:', generatedResponse);
         res.status(500).json({ error: 'Failed to generate a valid player name. Please try again later.' });
     }
 });
 
-// Login route definition
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
 
     try {
         const user = await db.getUser(username);
         if (!user) {
-            return res.redirect('/login'); // User not found
+            return res.status(401).send('User not found'); // User not found
         }
-        
-        // Ensure isCorrectPassword is awaited if it's async
+
         const passwordMatches = await isCorrectPassword(password, user.password);
         if (passwordMatches) {
             sessionManager.createSession(res, username);
-            return res.redirect('/'); // Authentication successful
+            return res.status(200).send('Authentication successful'); // Authentication successful
         } else {
-            return res.redirect('/login'); // Authentication failed
+            return res.status(401).send('Authentication failed'); // Authentication failed
         }
     } catch (err) {
         console.error(err);
         res.status(500).send('Internal Server Error on /login POST');
     }
 });
+
 
 app.get('/chat/:room_id/messages', protectRoute, (req, res) => {
     const roomId = req.params.room_id;
@@ -134,22 +130,6 @@ app.get('/chat/:room_id', protectRoute, (req, res) => {
     });
 });
 
-app.get('/chat', protectRoute, (req, res) => {
-    db.getRooms().then(rooms => {
-        const roomList = rooms.map(room => ({
-            _id: room._id,
-            name: room.name,
-            image: `/images/${room.image}`, // Ensure image paths are correct
-            messages: messages[room._id.toString()] || []
-        }));
-        res.json(roomList);
-    }).catch(err => {
-        console.error(err);
-        res.status(500).send('Error fetching chat rooms');
-    });
-});
-
-// POST endpoint for creating a new chatroom
 app.post('/chat', protectRoute, (req, res) => {
     const result = req.body;
     if (!result.name) {
@@ -179,20 +159,8 @@ app.get('/profile', protectRoute, (req, res) => {
     }
 });
 
-// Secure static file serving with session validation
-app.get('/app.js', protectRoute, (req, res) => {
-    res.sendFile(path.join(clientApp, 'app.js'));
-});
-
-app.get(['/index', '/index.html', '/'], protectRoute, (req, res) => {
-    res.sendFile(path.join(clientApp, 'index.html'));
-});
-
-app.get('/logout', (req, res) => {
-    sessionManager.deleteSession(req);
-    res.clearCookie('cpen322-session');
-    res.redirect('/login');
-});
+// Static middleware for images directory
+app.use('/images', express.static(path.join(__dirname, '../client/assets')));
 
 // Serve static files from the React app build directory
 app.use(express.static(clientApp, { extensions: ['html'] }));
@@ -247,7 +215,6 @@ broker.on('connection', (ws, req) => {
         let parsedMessage;
         try {
             parsedMessage = JSON.parse(message);
-            // Sanitize the message text
             parsedMessage.text = parsedMessage.text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
             parsedMessage.username = ws.username; // Safety
 
@@ -273,7 +240,6 @@ broker.on('connection', (ws, req) => {
                     }
                 });
             } else {
-                // Forward non-AI messages
                 const forwardMessage = JSON.stringify(parsedMessage);
                 broker.clients.forEach(client => {
                     if (client !== ws && client.readyState === WebSocket.OPEN) {

@@ -1,23 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Service } from './Service'; // Import Service
+import { Service } from './Service';
 import '../style.css';
 
 const LobbyView = ({ lobby }) => {
-  const [rooms, setRooms] = useState([]);
+  const { rooms, setRooms } = lobby;
 
   useEffect(() => {
     const fetchRooms = async () => {
       try {
         const rooms = await Service.getAllRooms();
         setRooms(rooms);
+        console.log('Fetched rooms:', rooms); // Log the fetched rooms
       } catch (error) {
         console.error('Error fetching rooms:', error);
       }
     };
 
     fetchRooms();
-  }, []);
+  }, [setRooms]);
+
+  useEffect(() => {
+    console.log("Rooms in LobbyView:", rooms); // Log rooms state
+  }, [rooms]);
 
   return (
     <div className="view" id="app-view">

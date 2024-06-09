@@ -2,13 +2,36 @@ const Service = {};
 
 Service.origin = window.location.origin;
 
+Service.login = async function (username, password) {
+  try {
+    const response = await fetch(`${this.origin}/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username, password }),
+    });
+    return response.ok;
+  } catch (error) {
+    console.error('Error during login:', error);
+    return false;
+  }
+};
+
 Service.getAllRooms = function () {
   return new Promise((resolve, reject) => {
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", this.origin + "/chat");
+    xhr.open('GET', this.origin + '/chat');
     xhr.onload = function () {
       if (xhr.status === 200) {
-        resolve(JSON.parse(xhr.responseText));
+        try {
+          const rooms = JSON.parse(xhr.responseText);
+          console.log('Service.getAllRooms response:', rooms); // Log the response
+          resolve(rooms);
+        } catch (error) {
+          console.error('Error parsing JSON:', error);
+          reject(error);
+        }
       } else {
         reject(new Error(xhr.responseText));
       }
@@ -32,12 +55,12 @@ Service.getProfile = function () {
 };
 
 Service.addRoom = function (data) {
-  return fetch(this.origin + "/chat", {
+  return fetch(this.origin + '/chat', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
-    body: JSON.stringify(data)
+    body: JSON.stringify(data),
   })
     .then(response => {
       if (!response.ok) {
@@ -60,7 +83,7 @@ Service.getLastConversation = function (roomId, before) {
       url += `?before=${before}`;
     }
 
-    xhr.open("GET", url);
+    xhr.open('GET', url);
     xhr.onload = function () {
       if (xhr.status === 200) {
         resolve(JSON.parse(xhr.responseText));
