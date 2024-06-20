@@ -5,7 +5,7 @@ import { Player } from '@lottiefiles/react-lottie-player';
 import animationData from '../animations/MascotPanda.json'; // Ensure this path is correct
 import '../style.css';
 
-const LoginPage = () => {
+const LoginPage = ({ setIsAuthenticated }) => {
     const history = useHistory(); // Use useHistory hook for navigation
     const [usernameBoxes, setUsernameBoxes] = useState([]);
     const [passwordBoxes, setPasswordBoxes] = useState([]);
@@ -27,17 +27,19 @@ const LoginPage = () => {
         console.log('Captain Hint (Answer):', correctPassword);
     }, []);
 
-    // In your LoginPage component
     const handleGuess = async (e) => {
         e.preventDefault();
         const usernameGuess = usernameBoxes.map(box => box.letter || ' ').join('').trim().toUpperCase();
         const passwordGuess = passwordBoxes.map(box => box.letter || ' ').join('').trim().toUpperCase();
-
+    
         if (usernameGuess === correctUsername && passwordGuess === correctPassword) {
             try {
                 const success = await Service.login(usernameGuess, passwordGuess);
+                console.log('Login attempt response:', success); // Log the response
                 if (success) {
                     setMessage('Login successful!');
+                    console.log('Login successful, updating isAuthenticated to true');
+                    setIsAuthenticated(true); // Update the authentication state
                     history.push('/'); // Redirect to the main page
                 } else {
                     setMessage('Login failed. Please try again.');

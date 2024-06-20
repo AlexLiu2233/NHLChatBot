@@ -46,24 +46,25 @@ function SessionManager() {
 			next(new SessionError('No cookie header found'));
 			return;
 		}
-		// Parse the cookie header to find the 'cpen322-session' cookie
+	
 		const cookies = cookieHeader.split(';').reduce((acc, cookie) => {
 			const [key, value] = cookie.trim().split('=');
 			acc[key] = value;
 			return acc;
 		}, {});
-
+	
 		const token = cookies['cpen322-session'];
 		if (!token || !sessions[token]) {
 			console.log(`Invalid or missing session: ${token}`);
 			next(new SessionError('Invalid session token'));
 			return;
 		}
-
+	
 		request.username = sessions[token].username;
 		request.session = token;
 		next();
 	};
+	
 
 	// this function is used by the test script.
 	// you can use it if you want.

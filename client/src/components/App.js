@@ -10,13 +10,19 @@ const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
+    console.log("Authentication status changed:", isAuthenticated);
+  }, [isAuthenticated]); // This useEffect will log whenever isAuthenticated changes
+
+  useEffect(() => {
     Service.checkSession()
       .then((response) => {
-        if (response.ok) {
-          setIsAuthenticated(true); // If session is valid, set isAuthenticated to true
+        if (response.message === 'Session is valid') {
+          setIsAuthenticated(true);
           Service.getAllRooms()
             .then(setRooms)
             .catch(error => console.error('Error fetching rooms:', error));
+        } else {
+          setIsAuthenticated(false);
         }
       })
       .catch(() => setIsAuthenticated(false));
