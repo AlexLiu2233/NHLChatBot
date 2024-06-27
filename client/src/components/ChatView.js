@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useParams } from 'react-router-dom';
-import { Service } from './Service'; // Import Service
+import { useParams, useLocation } from 'react-router-dom';
+import { Service } from './Service';
 import '../style.css';
 
 const ChatView = ({ socket, profile }) => {
   const { roomId } = useParams();
+  const location = useLocation();
+  const roomImage = location.state?.image;
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const chatElem = useRef(null);
@@ -23,7 +25,7 @@ const ChatView = ({ socket, profile }) => {
   }, [roomId]);
 
   const sendMessage = () => {
-    if (newMessage.trim()) {
+    if (newMessage.trim() && socket) {
       const message = { roomId, username: profile.username, text: newMessage };
       socket.send(JSON.stringify(message));
       setMessages([...messages, message]);
@@ -32,6 +34,12 @@ const ChatView = ({ socket, profile }) => {
   };
 
   useEffect(() => {
+    console.log('Checking socket in ChatView:', socket); // Log the state of socket on component mount
+    if (!socket) {
+      console.error('Socket is not defined in ChatView when trying to add event listener');
+      return;
+    }
+
     const handleMessage = (event) => {
       const data = JSON.parse(event.data);
       if (data.roomId === roomId) {
@@ -40,9 +48,13 @@ const ChatView = ({ socket, profile }) => {
     };
 
     socket.addEventListener('message', handleMessage);
+    console.log('Event listener added to socket in ChatView'); // Log when listener is added
 
     return () => {
-      socket.removeEventListener('message', handleMessage);
+      if (socket) {
+        console.log('Removing event listener from socket in ChatView'); // Log when listener is removed
+        socket.removeEventListener('message', handleMessage);
+      }
     };
   }, [roomId, socket]);
 
@@ -53,7 +65,7 @@ const ChatView = ({ socket, profile }) => {
   }, [messages]);
 
   return (
-    <div id="app-view">
+    <div id="app-view" style={{ backgroundImage: `url(${roomImage})`, backgroundSize: 'cover' }}>
       <ul id="app-menu">
         <li className="menu-item"><a href="#/">Rooms</a></li>
         <li className="menu-item"><a href="#/profile">Profile</a></li>

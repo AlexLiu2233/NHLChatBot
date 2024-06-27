@@ -17,7 +17,7 @@ const LobbyView = ({ rooms, setRooms }) => {
 
     fetchRooms();
   }, [setRooms]);
-  
+
   useEffect(() => {
     console.log("Rooms in LobbyView:", rooms); // Log rooms state
   }, [rooms]);
@@ -33,7 +33,10 @@ const LobbyView = ({ rooms, setRooms }) => {
           <ul className="room-list">
             {rooms.map((room) => (
               <li key={room._id} className="room">
-                <Link to={`/chat/${room._id}`} className="room-link">
+                <Link to={{
+                  pathname: `/chat/${room._id}`,
+                  state: { image: room.image || '/assets/default-room-icon.png' }
+                }} className="room-link">
                   <img className="chat-icon" src={room.image || '/assets/default-room-icon.png'} alt={room.name} />
                   {room.name}
                 </Link>
