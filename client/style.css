@@ -19,12 +19,12 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    background-image: url('/images/coyotes.png'); /* Example path, adjust as necessary */
-    background-size: cover;
-    background-position: center;
+    background-image: url('/images/coyotes.png'); /* Ensure the path is correct */
+    background-size: cover; /* Cover the entire area */
+    background-position: center center; /* Center the background image */
+    background-repeat: no-repeat; /* Do not repeat the image */
     box-sizing: border-box;
 }
-
 
 /* When the document body width is >= 1024px */
 @media (min-width: 1024px) {
