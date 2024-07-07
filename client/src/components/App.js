@@ -8,10 +8,11 @@ import { Service } from './Service';
 const App = () => {
   const [rooms, setRooms] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [socket, setSocket] = useState(null);  // State to hold the socket
 
   useEffect(() => {
     console.log("Authentication status changed:", isAuthenticated);
-  }, [isAuthenticated]); // This useEffect will log whenever isAuthenticated changes
+  }, [isAuthenticated]); // Log whenever isAuthenticated changes
 
   useEffect(() => {
     Service.checkSession()
@@ -26,6 +27,16 @@ const App = () => {
         }
       })
       .catch(() => setIsAuthenticated(false));
+
+    // Initialize WebSocket connection here
+    const newSocket = new WebSocket('ws://localhost:8000'); 
+    setSocket(newSocket);
+    
+    return () => {
+      if (newSocket) {
+        newSocket.close(); // Clean up the socket when the component unmounts
+      }
+    };
   }, []);
 
   return (
@@ -40,7 +51,7 @@ const App = () => {
             {isAuthenticated ? <LobbyView rooms={rooms} setRooms={setRooms} /> : <Redirect to="/login" />}
           </Route>
           <Route path="/chat/:roomId">
-            {isAuthenticated ? <ChatView /> : <Redirect to="/login" />}
+            {isAuthenticated ? <ChatView socket={socket} /> : <Redirect to="/login" />}
           </Route>
           <Route path="/profile">
             {isAuthenticated ? <Profile /> : <Redirect to="/login" />}

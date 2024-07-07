@@ -1,30 +1,31 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Service } from './Service'; // Import Service
+import { Service } from './Service';
 import { Player } from '@lottiefiles/react-lottie-player';
-import animationData from '../animations/MascotPanda.json'; // Ensure this path is correct
+import animationData from '../animations/MascotPanda.json';
 import '../style.css';
 
 const LoginPage = ({ setIsAuthenticated }) => {
-    const history = useHistory(); // Use useHistory hook for navigation
+    const history = useHistory();
     const [usernameBoxes, setUsernameBoxes] = useState([]);
     const [passwordBoxes, setPasswordBoxes] = useState([]);
     const [message, setMessage] = useState('');
     const [guessCount, setGuessCount] = useState(0);
     const [teamHint, setTeamHint] = useState('Think of a bird that is fierce and strong.');
     const [captainHint, setCaptainHint] = useState('His last name starts with the letter H.');
+    const usernameRefs = useRef([]);
+    const passwordRefs = useRef([]);
 
     const correctUsername = "VANCOUVER CANUCKS";
     const correctPassword = "HUGHES";
 
     useEffect(() => {
-        // Set the initial state of the input boxes based on the length of the correct answers
-        setUsernameBoxes(correctUsername.split('').map(char => ({ letter: '', class: '', editable: char !== ' ' })));
-        setPasswordBoxes(correctPassword.split('').map(char => ({ letter: '', class: '', editable: char !== ' ' })));
-
-        // Display the answers in the console for debugging
-        console.log('Team Hint (Answer):', correctUsername);
-        console.log('Captain Hint (Answer):', correctPassword);
+        setUsernameBoxes(correctUsername.split('').map((char, index) => ({
+            letter: '', class: '', editable: char !== ' ', ref: React.createRef()
+        })));
+        setPasswordBoxes(correctPassword.split('').map((char, index) => ({
+            letter: '', class: '', editable: char !== ' ', ref: React.createRef()
+        })));
     }, []);
 
     const handleGuess = async (e) => {
@@ -35,12 +36,11 @@ const LoginPage = ({ setIsAuthenticated }) => {
         if (usernameGuess === correctUsername && passwordGuess === correctPassword) {
             try {
                 const success = await Service.login(usernameGuess, passwordGuess);
-                console.log('Login attempt response:', success); // Log the response
+                console.log('Login attempt response:', success);
                 if (success) {
                     setMessage('Login successful!');
-                    console.log('Login successful, updating isAuthenticated to true');
-                    setIsAuthenticated(true); // Update the authentication state
-                    history.push('/'); // Redirect to the main page
+                    setIsAuthenticated(true);
+                    history.push('/');
                 } else {
                     setMessage('Login failed. Please try again.');
                 }
@@ -56,20 +56,28 @@ const LoginPage = ({ setIsAuthenticated }) => {
         setGuessCount(guessCount + 1);
     };
 
-    const handleUsernameChange = (index, value) => {
+    const handleUsernameChange = (index, event) => {
+        const value = event.target.value.toUpperCase();
         const updatedUsernameBoxes = [...usernameBoxes];
-        if (updatedUsernameBoxes[index].editable) {
-            updatedUsernameBoxes[index].letter = value.toUpperCase();
+        if (updatedUsernameBoxes[index].editable && value) {
+            updatedUsernameBoxes[index].letter = value;
+            setUsernameBoxes(updatedUsernameBoxes);
+            if (index + 1 < usernameBoxes.length) {
+                usernameRefs.current[index + 1].focus();
+            }
         }
-        setUsernameBoxes(updatedUsernameBoxes);
     };
 
-    const handlePasswordChange = (index, value) => {
+    const handlePasswordChange = (index, event) => {
+        const value = event.target.value.toUpperCase();
         const updatedPasswordBoxes = [...passwordBoxes];
-        if (updatedPasswordBoxes[index].editable) {
-            updatedPasswordBoxes[index].letter = value.toUpperCase();
+        if (updatedPasswordBoxes[index].editable && value) {
+            updatedPasswordBoxes[index].letter = value;
+            setPasswordBoxes(updatedPasswordBoxes);
+            if (index + 1 < passwordBoxes.length) {
+                passwordRefs.current[index + 1].focus();
+            }
         }
-        setPasswordBoxes(updatedPasswordBoxes);
     };
 
     const highlightBoxes = (correctAnswer, currentBoxes, setBoxes) => {
@@ -77,11 +85,11 @@ const LoginPage = ({ setIsAuthenticated }) => {
             const letter = box.letter;
             let boxClass = '';
             if (correctAnswer[index] === letter) {
-                boxClass = 'correct'; // Correct position
+                boxClass = 'correct';
             } else if (correctAnswer.includes(letter)) {
-                boxClass = 'present'; // Present but wrong position
+                boxClass = 'present';
             } else {
-                boxClass = 'absent'; // Not present
+                boxClass = 'absent';
             }
             return { ...box, class: boxClass };
         });
@@ -107,10 +115,11 @@ const LoginPage = ({ setIsAuthenticated }) => {
                     {usernameBoxes.map((box, index) => (
                         <input
                             key={index}
+                            ref={el => usernameRefs.current[index] = el}
                             type="text"
                             maxLength="1"
                             value={box.letter}
-                            onChange={(e) => handleUsernameChange(index, e.target.value)}
+                            onChange={(e) => handleUsernameChange(index, e)}
                             className={`letter-box ${box.class} ${box.editable ? '' : 'non-editable'}`}
                             disabled={!box.editable}
                         />
@@ -120,10 +129,11 @@ const LoginPage = ({ setIsAuthenticated }) => {
                     {passwordBoxes.map((box, index) => (
                         <input
                             key={index}
+                            ref={el => passwordRefs.current[index] = el}
                             type="text"
                             maxLength="1"
                             value={box.letter}
-                            onChange={(e) => handlePasswordChange(index, e.target.value)}
+                            onChange={(e) => handlePasswordChange(index, e)}
                             className={`letter-box ${box.class} ${box.editable ? '' : 'non-editable'}`}
                             disabled={!box.editable}
                         />
