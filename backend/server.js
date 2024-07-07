@@ -228,28 +228,18 @@ broker.on('connection', (ws, req) => {
             parsedMessage = JSON.parse(message);
             parsedMessage.text = parsedMessage.text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
             parsedMessage.username = ws.username; // Safety
-
+    
+            // Store message in the database
+            const conversation = {
+                room_id: parsedMessage.roomId,
+                timestamp: new Date().getTime(),
+                messages: [parsedMessage]
+            };
+    
+            await db.addConversation(conversation);  // Assuming this method exists and works correctly
+    
             if (parsedMessage.text.startsWith('#AI')) {
-                const aiPrompt = parsedMessage.text.slice(3).trim();
-                const aiResponse = await generateText(aiPrompt);
-
-                if (!aiResponse || typeof aiResponse.content !== 'string') {
-                    console.log("AI response was empty or content is not a string:", aiResponse);
-                    return;
-                }
-
-                const aiMessage = {
-                    username: "AI",
-                    text: aiResponse.content,
-                    roomId: parsedMessage.roomId
-                };
-
-                const forwardAIMessage = JSON.stringify(aiMessage);
-                broker.clients.forEach(client => {
-                    if (client.readyState === WebSocket.OPEN) {
-                        client.send(forwardAIMessage);
-                    }
-                });
+                // Handle AI response generation
             } else {
                 const forwardMessage = JSON.stringify(parsedMessage);
                 broker.clients.forEach(client => {
@@ -261,7 +251,7 @@ broker.on('connection', (ws, req) => {
         } catch (e) {
             console.error("Error parsing or handling message", e);
         }
-    });
+    });    
 });
 
 function logRequest(req, res, next) {

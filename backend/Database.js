@@ -70,24 +70,30 @@ Database.prototype.getLastConversation = function (room_id, before = Date.now())
   );
 }; 
 
-Database.prototype.addConversation = function (conversation) {
-  return this.connected.then(db =>
-    new Promise((resolve, reject) => {
-      if (!conversation.room_id || !conversation.timestamp || !conversation.messages) {
-        reject(new Error("All fields (room_id, timestamp, messages) are required."));
-        return;
-      }
-      db.collection("conversations").insertOne(conversation)
-        .then(result => {
-          db.collection("conversations").findOne({ _id: result.insertedId })
-            .then(insertedConversation => {
-              resolve(insertedConversation);
-            })
-            .catch(error => reject(error));
-        })
-        .catch(error => reject(error));
-    })
-  );
+Database.prototype.addConversation = async function (conversation) {
+  const db = await this.connected;
+  try {
+    // Check if a conversation exists with the same room_id and within a short timeframe
+    const lastConversation = await db.collection("conversations")
+      .find({ room_id: conversation.room_id })
+      .sort({ timestamp: -1 })
+      .limit(1)
+      .toArray();
+
+    if (lastConversation.length > 0 && (new Date().getTime() - lastConversation[0].timestamp) < 30000) { // 30 seconds to consider part of the same conversation
+      // Append to existing conversation
+      db.collection("conversations").updateOne(
+        { _id: lastConversation[0]._id },
+        { $push: { messages: { $each: conversation.messages } }, $set: { timestamp: new Date().getTime() } }
+      );
+    } else {
+      // Create a new conversation
+      await db.collection("conversations").insertOne(conversation);
+    }
+  } catch (error) {
+    console.error("Error updating or adding conversation:", error);
+    throw error;
+  }
 };
 
 Database.prototype.getUser = async function(username) {

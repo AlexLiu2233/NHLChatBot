@@ -3,13 +3,22 @@ import { useParams, useLocation } from 'react-router-dom';
 import { Service } from './Service';
 import '../style.css';
 
-const ChatView = ({ socket, profile }) => {
+const ChatView = ({ socket }) => {
   const { roomId } = useParams();
   const location = useLocation();
   const roomImage = location.state?.image;
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
+  const [profile, setProfile] = useState(null); // Store user profile
   const chatElem = useRef(null);
+
+  useEffect(() => {
+    Service.getProfile().then(profile => {
+      setProfile(profile);
+    }).catch(error => {
+      console.error('Failed to fetch profile:', error);
+    });
+  }, []);
 
   useEffect(() => {
     const fetchMessages = async () => {
@@ -25,7 +34,7 @@ const ChatView = ({ socket, profile }) => {
   }, [roomId]);
 
   const sendMessage = () => {
-    if (newMessage.trim() && socket) {
+    if (newMessage.trim() && socket && profile) {
       const message = { roomId, username: profile.username, text: newMessage };
       socket.send(JSON.stringify(message));
       setMessages([...messages, message]);
@@ -34,7 +43,6 @@ const ChatView = ({ socket, profile }) => {
   };
 
   useEffect(() => {
-    console.log('Checking socket in ChatView:', socket); // Log the state of socket on component mount
     if (!socket) {
       console.error('Socket is not defined in ChatView when trying to add event listener');
       return;
@@ -48,11 +56,8 @@ const ChatView = ({ socket, profile }) => {
     };
 
     socket.addEventListener('message', handleMessage);
-    console.log('Event listener added to socket in ChatView'); // Log when listener is added
-
     return () => {
       if (socket) {
-        console.log('Removing event listener from socket in ChatView'); // Log when listener is removed
         socket.removeEventListener('message', handleMessage);
       }
     };
@@ -74,7 +79,7 @@ const ChatView = ({ socket, profile }) => {
         <div className="content">
           <div className="message-list" ref={chatElem}>
             {messages.map((message, index) => (
-              <div key={index} className={message.username === profile.username ? 'message my-message' : 'message'}>
+              <div key={index} className={message.username === profile?.username ? 'message my-message' : 'message'}>
                 <span className="message-user">{message.username}</span>
                 <span className="message-text">{message.text}</span>
               </div>
