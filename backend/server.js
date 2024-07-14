@@ -198,61 +198,67 @@ app.listen(port, () => {
     console.log(`${new Date()}  App Started. Listening on ${host}:${port}, serving ${clientApp}`);
 });
 
-// WebSocket functionality to act as "message broker"
-// Middleware to protect WebSocket connections
 broker.on('connection', (ws, req) => {
     try {
-        const cookieString = req.headers.cookie;
-        const cookies = cookieString.split(';').reduce((acc, cookie) => {
-            const [key, value] = cookie.split('=').map(c => c.trim());
-            acc[key] = value;
-            return acc;
-        }, {});
-
-        const sessionToken = cookies['cpen322-session'];
-        if (!sessionManager.getUsername(sessionToken)) {
-            console.log('Invalid session token. Closing WebSocket connection.');
-            ws.close(); // Close connection if session is invalid
-            return;
-        }
-
-        ws.username = sessionManager.getUsername(sessionToken); // Store username in WebSocket object
+      const cookieString = req.headers.cookie;
+      const cookies = cookieString.split(';').reduce((acc, cookie) => {
+        const [key, value] = cookie.split('=').map(c => c.trim());
+        acc[key] = value;
+        return acc;
+      }, {});
+  
+      const sessionToken = cookies['cpen322-session'];
+      const username = sessionManager.getUsername(sessionToken);
+      if (!username) {
+        console.log('Invalid session token. Closing WebSocket connection.');
+        ws.close(1000, "Invalid session");
+        return;
+      }
+  
+      ws.username = username;
+      console.log('WebSocket connection established for:', ws.username);
     } catch (error) {
-        console.error('Error during WebSocket connection:', error);
-        ws.close();
+      console.error('Error during WebSocket connection:', error);
+      ws.close(1011, "Unexpected error");
+      return;
     }
-
+  
     ws.on('message', async (message) => {
-        let parsedMessage;
-        try {
-            parsedMessage = JSON.parse(message);
-            parsedMessage.text = parsedMessage.text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
-            parsedMessage.username = ws.username; // Safety
-    
-            // Store message in the database
-            const conversation = {
-                room_id: parsedMessage.roomId,
-                timestamp: new Date().getTime(),
-                messages: [parsedMessage]
-            };
-    
-            await db.addConversation(conversation);  // Assuming this method exists and works correctly
-    
-            if (parsedMessage.text.startsWith('#AI')) {
-                // Handle AI response generation
-            } else {
-                const forwardMessage = JSON.stringify(parsedMessage);
-                broker.clients.forEach(client => {
-                    if (client !== ws && client.readyState === WebSocket.OPEN) {
-                        client.send(forwardMessage);
-                    }
-                });
-            }
-        } catch (e) {
-            console.error("Error parsing or handling message", e);
-        }
-    });    
-});
+      if (ws.readyState !== WebSocket.OPEN) {
+        console.log('WebSocket is not open, skipping message processing.');
+        return;
+      }
+  
+      let parsedMessage;
+      try {
+        console.log('Raw message received:', message);
+        parsedMessage = JSON.parse(message);
+        console.log('Parsed message:', parsedMessage);
+  
+        parsedMessage.text = parsedMessage.text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+  
+        const forwardMessage = JSON.stringify({ roomId: parsedMessage.roomId, text: parsedMessage.text });
+        console.log('Sending message:', forwardMessage);
+  
+        broker.clients.forEach(client => {
+          if (client !== ws && client.readyState === WebSocket.OPEN) {
+            client.send(forwardMessage);
+          }
+        });
+      } catch (e) {
+        console.error("Error parsing or handling message", e);
+      }
+    });
+  
+    ws.on('close', (code, reason) => {
+      console.log(`WebSocket closed for ${ws.username}. Code: ${code}, Reason: ${reason}`);
+    });
+  
+    ws.on('error', (error) => {
+      console.error("WebSocket error for ", ws.username, ":", error);
+      ws.close(1011, "Error occurred");
+    });
+  });  
 
 function logRequest(req, res, next) {
     console.log(`${new Date()}  ${req.ip} : ${req.method} ${req.path}`);
@@ -272,5 +278,3 @@ async function isCorrectPassword(password, saltedHash) {
 
     return originalHash === hash;
 }
-
-

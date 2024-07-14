@@ -35,7 +35,19 @@ const ChatView = ({ socket }) => {
 
   const sendMessage = () => {
     if (newMessage.trim() && socket && profile) {
-      const message = { roomId, username: profile.username, text: newMessage };
+      if (socket.readyState !== WebSocket.OPEN) {
+        console.error('WebSocket is not open. Cannot send message.');
+        return;
+      }
+  
+      const formattedMessage = newMessage.trim();
+      const message = { 
+        roomId, 
+        username: profile.username,  
+        text: `${profile.username}: ${formattedMessage}`
+      };
+  
+      console.log(message);
       socket.send(JSON.stringify(message));
       setMessages([...messages, message]);
       setNewMessage('');
@@ -47,21 +59,44 @@ const ChatView = ({ socket }) => {
       console.error('Socket is not defined in ChatView when trying to add event listener');
       return;
     }
-
+  
+    console.log('WebSocket is readyState:', socket.readyState);
+  
     const handleMessage = (event) => {
+      console.log('Received event:', event);
       const data = JSON.parse(event.data);
       if (data.roomId === roomId) {
-        setMessages((prevMessages) => [...prevMessages, data]);
+        setMessages(prevMessages => [...prevMessages, { username: profile.username, text: data.text }]);
       }
     };
-
+  
+    const handleOpen = () => {
+      console.log('WebSocket connection opened');
+    };
+  
+    const handleClose = (event) => {
+      console.log('WebSocket connection closed:', event);
+    };
+  
+    const handleError = (error) => {
+      console.error('WebSocket error:', error);
+    };
+  
     socket.addEventListener('message', handleMessage);
+    socket.addEventListener('open', handleOpen);
+    socket.addEventListener('close', handleClose);
+    socket.addEventListener('error', handleError);
+  
     return () => {
       if (socket) {
         socket.removeEventListener('message', handleMessage);
+        socket.removeEventListener('open', handleOpen);
+        socket.removeEventListener('close', handleClose);
+        socket.removeEventListener('error', handleError);
       }
     };
   }, [roomId, socket]);
+  
 
   useEffect(() => {
     if (chatElem.current) {
@@ -80,11 +115,12 @@ const ChatView = ({ socket }) => {
           <div className="message-list" ref={chatElem}>
             {messages.map((message, index) => (
               <div key={index} className={message.username === profile?.username ? 'message my-message' : 'message'}>
-                <span className="message-user">{message.username}</span>
-                <span className="message-text">{message.text}</span>
+                <span className="message-user" dangerouslySetInnerHTML={{ __html: message.username }}></span>
+                <span className="message-text" dangerouslySetInnerHTML={{ __html: message.text }}></span>
               </div>
             ))}
           </div>
+
           <div className="page-control">
             <textarea
               placeholder="Write your message here..."
