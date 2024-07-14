@@ -47,13 +47,13 @@ const ChatView = ({ socket }) => {
         text: `${profile.username}: ${formattedMessage}`
       };
   
-      console.log(message);
+      console.log('Sending message:', message);
       socket.send(JSON.stringify(message));
       setMessages([...messages, message]);
       setNewMessage('');
     }
   };
-
+  
   useEffect(() => {
     if (!socket) {
       console.error('Socket is not defined in ChatView when trying to add event listener');

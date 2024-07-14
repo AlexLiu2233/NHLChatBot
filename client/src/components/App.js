@@ -14,30 +14,41 @@ const App = () => {
     console.log("Authentication status changed:", isAuthenticated);
   }, [isAuthenticated]); // Log whenever isAuthenticated changes
 
-  useEffect(() => {
-    Service.checkSession()
-      .then((response) => {
-        if (response.message === 'Session is valid') {
-          setIsAuthenticated(true);
-          Service.getAllRooms()
-            .then(setRooms)
-            .catch(error => console.error('Error fetching rooms:', error));
-        } else {
-          setIsAuthenticated(false);
-        }
-      })
-      .catch(() => setIsAuthenticated(false));
-
-    // Initialize WebSocket connection here
-    const newSocket = new WebSocket('ws://localhost:8000'); 
-    setSocket(newSocket);
-    
-    return () => {
-      if (newSocket) {
-        newSocket.close(); // Clean up the socket when the component unmounts
+  // App.js
+useEffect(() => {
+  Service.checkSession()
+    .then((response) => {
+      if (response.message === 'Session is valid') {
+        setIsAuthenticated(true);
+        Service.getAllRooms()
+          .then(setRooms)
+          .catch(error => console.error('Error fetching rooms:', error));
+      } else {
+        setIsAuthenticated(false);
       }
-    };
-  }, []);
+    })
+    .catch(() => setIsAuthenticated(false));
+
+  // Initialize WebSocket connection here
+  const newSocket = new WebSocket('ws://localhost:8000'); 
+  newSocket.onopen = () => {
+    console.log('WebSocket connection opened');
+  };
+  newSocket.onclose = (event) => {
+    console.log('WebSocket connection closed:', event);
+  };
+  newSocket.onerror = (error) => {
+    console.error('WebSocket error:', error);
+  };
+  setSocket(newSocket);
+  
+  return () => {
+    if (newSocket) {
+      newSocket.close(); // Clean up the socket when the component unmounts
+    }
+  };
+}, []);
+
 
   return (
     <Router>
