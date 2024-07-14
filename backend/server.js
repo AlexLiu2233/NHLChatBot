@@ -7,13 +7,13 @@ const Database = require('./Database.js');
 const SessionManager = require('./SessionManager.js');
 const sessionManager = new SessionManager();
 const { createCompletion, loadModel } = require('gpt4all');
-const axios = require('axios'); // Ensure axios is imported
+const axios = require('axios');
 const app = express();
 const db = new Database('mongodb://127.0.0.1:27017', 'cpen322-messenger');
 const broker = new WebSocket.Server({ port: 8000 });
 const messageBlockSize = 10;
 const protectRoute = sessionManager.middleware;
-const clientApp = path.join(__dirname, '../client/build');
+const clientApp = path.join(__dirname, '../client/build'); // Adjusted to point to the correct build directory
 let messages = {};
 
 // Express Server
@@ -23,20 +23,20 @@ const port = 3000;
 // Load the GPT4All model
 const modelPromise = loadModel("mistral-7b-openorca.gguf2.Q4_0.gguf", {
     verbose: true,
-    device: "gpu" // or 'cpu', depending on your setup
+    device: "gpu"
 });
 
 // Initialize messages for each room
 db.getRooms().then(rooms => {
     rooms.forEach(room => {
-        messages[room._id.toString()] = []; // Initialize an empty array for each room using the _id field
+        messages[room._id.toString()] = [];
     });
 }).catch(err => {
     console.error('Error initializing rooms:', err);
 });
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true })); // to parse application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: true }));
 app.use(logRequest);
 
 // API Routes
@@ -78,27 +78,27 @@ app.post('/api/generate-player', async (req, res) => {
 
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
-    console.log(`Login attempt for username: '${username}' with password: '${password}'`); // Ensure you log this
+    console.log(`Login attempt for username: '${username}' with password: '${password}'`);
 
     try {
         const user = await db.getUser(username);
         if (!user) {
             console.log('User not found');
-            return res.status(401).send('User not found');
+            return res.status(401).json({ message: 'User not found' });
         }
 
         const passwordMatches = await isCorrectPassword(password, user.password);
         if (passwordMatches) {
             sessionManager.createSession(res, username);
             console.log('Authentication successful');
-            return res.status(200).send('Authentication successful');
+            return res.status(200).json({ message: 'Authentication successful' });
         } else {
             console.log('Authentication failed');
-            return res.status(401).send('Authentication failed');
+            return res.status(401).json({ message: 'Authentication failed' });
         }
     } catch (err) {
         console.error('Error during login:', err);
-        res.status(500).send('Internal Server Error on /login POST');
+        res.status(500).json({ message: 'Internal Server Error on /login POST' });
     }
 });
 
@@ -111,7 +111,7 @@ app.get('/chat/:room_id/messages', protectRoute, (req, res) => {
             if (conversation) {
                 res.json(conversation);
             } else {
-                res.json({ messages: [] }); // empty
+                res.json({ messages: [] });
             }
         })
         .catch(err => {
@@ -121,7 +121,7 @@ app.get('/chat/:room_id/messages', protectRoute, (req, res) => {
 });
 
 app.get('/chat/:room_id', protectRoute, (req, res) => {
-    const roomId = req.params.room_id; // Get the room ID from the request parameters
+    const roomId = req.params.room_id;
     db.getRoom(roomId).then(room => {
         if (room) {
             res.json(room);
@@ -162,19 +162,11 @@ app.get('/profile', protectRoute, (req, res) => {
     }
 });
 
-// Add this near your other API routes in server.js
-app.get('/check-session', sessionManager.middleware, (req, res) => {
-    // If the middleware does not throw an error, the session is valid
-    res.status(200).json({ message: 'Session is valid' });
-});
-
-// Static middleware for images directory
-app.use('/images', express.static(path.join(__dirname, '../client/assets')));
-
 // Serve static files from the React app build directory
-app.use(express.static(clientApp, { extensions: ['html'] }));
+console.log(`Serving static files from: ${clientApp}`);
+app.use(express.static(clientApp));
 
-// Catch-all route to serve React app
+// Catch-all route to serve the index.html for client-side routing
 app.get('*', (req, res) => {
     res.sendFile(path.join(clientApp, 'index.html'));
 });
@@ -200,7 +192,7 @@ broker.on('connection', (ws, req) => {
         acc[key] = value;
         return acc;
       }, {});
-  
+
       const sessionToken = cookies['cpen322-session'];
       const username = sessionManager.getUsername(sessionToken);
       if (!username) {
@@ -208,7 +200,7 @@ broker.on('connection', (ws, req) => {
         ws.close(1000, "Invalid session");
         return;
       }
-  
+
       ws.username = username;
       console.log('WebSocket connection established for:', ws.username);
     } catch (error) {
@@ -216,24 +208,24 @@ broker.on('connection', (ws, req) => {
       ws.close(1011, "Unexpected error");
       return;
     }
-  
+
     ws.on('message', async (message) => {
       if (ws.readyState !== WebSocket.OPEN) {
         console.log('WebSocket is not open, skipping message processing.');
         return;
       }
-  
+
       let parsedMessage;
       try {
         console.log('Raw message received:', message);
         parsedMessage = JSON.parse(message);
         console.log('Parsed message:', parsedMessage);
-  
+
         parsedMessage.text = parsedMessage.text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
-  
+
         const forwardMessage = JSON.stringify({ roomId: parsedMessage.roomId, text: parsedMessage.text });
         console.log('Sending message:', forwardMessage);
-  
+
         broker.clients.forEach(client => {
           if (client !== ws && client.readyState === WebSocket.OPEN) {
             client.send(forwardMessage);
@@ -243,17 +235,16 @@ broker.on('connection', (ws, req) => {
         console.error("Error parsing or handling message", e);
       }
     });
-  
+
     ws.on('close', (code, reason) => {
       console.log(`WebSocket closed for ${ws.username}. Code: ${code}, Reason: ${reason}`);
     });
-  
+
     ws.on('error', (error) => {
       console.error("WebSocket error for ", ws.username, ":", error);
       ws.close(1011, "Error occurred");
     });
-  });
-  
+});
 
 function logRequest(req, res, next) {
     console.log(`${new Date()}  ${req.ip} : ${req.method} ${req.path}`);
@@ -264,7 +255,6 @@ async function isCorrectPassword(password, saltedHash) {
     const salt = saltedHash.substring(0, 20);
     const originalHash = saltedHash.substring(20);
 
-    // Convert the first letter to uppercase and the rest to lowercase
     const formattedPassword = password.charAt(0).toUpperCase() + password.slice(1).toLowerCase();
 
     const hash = crypto.createHash('sha256').update(formattedPassword + salt).digest('base64');

@@ -106,18 +106,26 @@ Service.getLastConversation = function (roomId, before) {
 
 Service.checkSession = function () {
   return fetch(`${this.origin}/check-session`, { credentials: 'include' })
-      .then(response => {
-          console.log(`Check session response status: ${response.status}`);
-          return response.json(); // Ensure this is correctly parsing JSON
-      })
-      .then(json => {
-          console.log(`Check session response body: ${JSON.stringify(json)}`);
-          return json;
-      })
-      .catch(error => {
-          console.error('Session check failed:', error);
-          throw error;
+    .then(response => {
+      console.log(`Check session response status: ${response.status}`);
+      return response.text().then(text => {
+        try {
+          return JSON.parse(text);
+        } catch (error) {
+          console.error('Failed to parse response as JSON:', text);
+          throw new Error('Response is not valid JSON');
+        }
       });
+    })
+    .then(json => {
+      console.log(`Check session response body: ${JSON.stringify(json)}`);
+      return json;
+    })
+    .catch(error => {
+      console.error('Session check failed:', error);
+      throw error;
+    });
 };
+
 
 export { Service };

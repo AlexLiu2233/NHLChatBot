@@ -5,6 +5,26 @@ import { Player } from '@lottiefiles/react-lottie-player';
 import animationData from '../animations/MascotPanda.json';
 import '../style.css';
 
+// Define a list of teams and hints in your component or fetch from the database
+const teamsHints = {
+    "VANCOUVER CANUCKS": {
+      teamHint: "Think of a team from Canada's west coast.",
+      captainHint: "The captain's last name starts with 'H'."
+    },
+    // Add more teams and hints as needed
+  };
+  const [currentTeam, setCurrentTeam] = useState("VANCOUVER CANUCKS");
+  const [teamHint, setTeamHint] = useState('');
+  const [captainHint, setCaptainHint] = useState('');
+  
+  // Update hints based on the team
+  useEffect(() => {
+    if (currentTeam in teamsHints) {
+      setTeamHint(teamsHints[currentTeam].teamHint);
+      setCaptainHint(teamsHints[currentTeam].captainHint);
+    }
+  }, [currentTeam]); // Update hints when currentTeam changes    
+
 const LoginPage = ({ setIsAuthenticated }) => {
     const history = useHistory();
     const [usernameBoxes, setUsernameBoxes] = useState([]);

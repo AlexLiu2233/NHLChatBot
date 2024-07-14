@@ -8,47 +8,44 @@ import { Service } from './Service';
 const App = () => {
   const [rooms, setRooms] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [socket, setSocket] = useState(null);  // State to hold the socket
+  const [socket, setSocket] = useState(null);
 
   useEffect(() => {
     console.log("Authentication status changed:", isAuthenticated);
-  }, [isAuthenticated]); // Log whenever isAuthenticated changes
+  }, [isAuthenticated]);
 
-  // App.js
-useEffect(() => {
-  Service.checkSession()
-    .then((response) => {
-      if (response.message === 'Session is valid') {
-        setIsAuthenticated(true);
-        Service.getAllRooms()
-          .then(setRooms)
-          .catch(error => console.error('Error fetching rooms:', error));
-      } else {
-        setIsAuthenticated(false);
+  useEffect(() => {
+    Service.checkSession()
+      .then((response) => {
+        if (response.message === 'Session is valid') {
+          setIsAuthenticated(true);
+          Service.getAllRooms()
+            .then(setRooms)
+            .catch(error => console.error('Error fetching rooms:', error));
+        } else {
+          setIsAuthenticated(false);
+        }
+      })
+      .catch(() => setIsAuthenticated(false));
+
+    const newSocket = new WebSocket('ws://localhost:8000'); 
+    newSocket.onopen = () => {
+      console.log('WebSocket connection opened');
+    };
+    newSocket.onclose = (event) => {
+      console.log('WebSocket connection closed:', event);
+    };
+    newSocket.onerror = (error) => {
+      console.error('WebSocket error:', error);
+    };
+    setSocket(newSocket);
+
+    return () => {
+      if (newSocket) {
+        newSocket.close();
       }
-    })
-    .catch(() => setIsAuthenticated(false));
-
-  // Initialize WebSocket connection here
-  const newSocket = new WebSocket('ws://localhost:8000'); 
-  newSocket.onopen = () => {
-    console.log('WebSocket connection opened');
-  };
-  newSocket.onclose = (event) => {
-    console.log('WebSocket connection closed:', event);
-  };
-  newSocket.onerror = (error) => {
-    console.error('WebSocket error:', error);
-  };
-  setSocket(newSocket);
-  
-  return () => {
-    if (newSocket) {
-      newSocket.close(); // Clean up the socket when the component unmounts
-    }
-  };
-}, []);
-
+    };
+  }, []);
 
   return (
     <Router>
