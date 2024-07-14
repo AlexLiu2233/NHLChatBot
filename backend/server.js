@@ -1,5 +1,3 @@
-// server.js
-
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
@@ -9,6 +7,7 @@ const Database = require('./Database.js');
 const SessionManager = require('./SessionManager.js');
 const sessionManager = new SessionManager();
 const { createCompletion, loadModel } = require('gpt4all');
+const axios = require('axios'); // Ensure axios is imported
 const app = express();
 const db = new Database('mongodb://127.0.0.1:27017', 'cpen322-messenger');
 const broker = new WebSocket.Server({ port: 8000 });
@@ -16,7 +15,6 @@ const messageBlockSize = 10;
 const protectRoute = sessionManager.middleware;
 const clientApp = path.join(__dirname, '../client/build');
 let messages = {};
-const axios = require('axios'); // Add this at the top with other require statements
 
 // Express Server
 const host = 'localhost';
@@ -28,7 +26,7 @@ const modelPromise = loadModel("mistral-7b-openorca.gguf2.Q4_0.gguf", {
     device: "gpu" // or 'cpu', depending on your setup
 });
 
-// Call getRooms from the Database instance and initialize messages
+// Initialize messages for each room
 db.getRooms().then(rooms => {
     rooms.forEach(room => {
         messages[room._id.toString()] = []; // Initialize an empty array for each room using the _id field
@@ -194,71 +192,67 @@ app.use((err, req, res, next) => {
     }
 });
 
-app.listen(port, () => {
-    console.log(`${new Date()}  App Started. Listening on ${host}:${port}, serving ${clientApp}`);
-});
-
 broker.on('connection', (ws, req) => {
     try {
-      const cookieString = req.headers.cookie;
-      const cookies = cookieString.split(';').reduce((acc, cookie) => {
-        const [key, value] = cookie.split('=').map(c => c.trim());
-        acc[key] = value;
-        return acc;
-      }, {});
-  
-      const sessionToken = cookies['cpen322-session'];
-      const username = sessionManager.getUsername(sessionToken);
-      if (!username) {
-        console.log('Invalid session token. Closing WebSocket connection.');
-        ws.close(1000, "Invalid session");
-        return;
-      }
-  
-      ws.username = username;
-      console.log('WebSocket connection established for:', ws.username);
+        const cookieString = req.headers.cookie;
+        const cookies = cookieString.split(';').reduce((acc, cookie) => {
+            const [key, value] = cookie.split('=').map(c => c.trim());
+            acc[key] = value;
+            return acc;
+        }, {});
+
+        const sessionToken = cookies['cpen322-session'];
+        const username = sessionManager.getUsername(sessionToken);
+        if (!username) {
+            console.log('Invalid session token. Closing WebSocket connection.');
+            ws.close(1000, "Invalid session");
+            return;
+        }
+
+        ws.username = username;
+        console.log('WebSocket connection established for:', ws.username);
     } catch (error) {
-      console.error('Error during WebSocket connection:', error);
-      ws.close(1011, "Unexpected error");
-      return;
-    }
-  
-    ws.on('message', async (message) => {
-      if (ws.readyState !== WebSocket.OPEN) {
-        console.log('WebSocket is not open, skipping message processing.');
+        console.error('Error during WebSocket connection:', error);
+        ws.close(1011, "Unexpected error");
         return;
-      }
-  
-      let parsedMessage;
-      try {
-        console.log('Raw message received:', message);
-        parsedMessage = JSON.parse(message);
-        console.log('Parsed message:', parsedMessage);
-  
-        parsedMessage.text = parsedMessage.text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
-  
-        const forwardMessage = JSON.stringify({ roomId: parsedMessage.roomId, text: parsedMessage.text });
-        console.log('Sending message:', forwardMessage);
-  
-        broker.clients.forEach(client => {
-          if (client !== ws && client.readyState === WebSocket.OPEN) {
-            client.send(forwardMessage);
-          }
-        });
-      } catch (e) {
-        console.error("Error parsing or handling message", e);
-      }
+    }
+
+    ws.on('message', async (message) => {
+        if (ws.readyState !== WebSocket.OPEN) {
+            console.log('WebSocket is not open, skipping message processing.');
+            return;
+        }
+
+        let parsedMessage;
+        try {
+            console.log('Raw message received:', message);
+            parsedMessage = JSON.parse(message);
+            console.log('Parsed message:', parsedMessage);
+
+            parsedMessage.text = parsedMessage.text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+
+            const forwardMessage = JSON.stringify({ roomId: parsedMessage.roomId, text: parsedMessage.text });
+            console.log('Sending message:', forwardMessage);
+
+            broker.clients.forEach(client => {
+                if (client !== ws && client.readyState === WebSocket.OPEN) {
+                    client.send(forwardMessage);
+                }
+            });
+        } catch (e) {
+            console.error("Error parsing or handling message", e);
+        }
     });
-  
+
     ws.on('close', (code, reason) => {
-      console.log(`WebSocket closed for ${ws.username}. Code: ${code}, Reason: ${reason}`);
+        console.log(`WebSocket closed for ${ws.username}. Code: ${code}, Reason: ${reason}`);
     });
-  
+
     ws.on('error', (error) => {
-      console.error("WebSocket error for ", ws.username, ":", error);
-      ws.close(1011, "Error occurred");
+        console.error("WebSocket error for ", ws.username, ":", error);
+        ws.close(1011, "Error occurred");
     });
-  });  
+});  
 
 function logRequest(req, res, next) {
     console.log(`${new Date()}  ${req.ip} : ${req.method} ${req.path}`);
@@ -278,3 +272,7 @@ async function isCorrectPassword(password, saltedHash) {
 
     return originalHash === hash;
 }
+
+app.listen(port, () => {
+    console.log(`${new Date()}  App Started. Listening on ${host}:${port}, serving ${clientApp}`);
+});
