@@ -32,7 +32,7 @@ const LoginPage = ({ setIsAuthenticated }) => {
         e.preventDefault();
         const usernameGuess = usernameBoxes.map(box => box.letter || ' ').join('').trim().toUpperCase();
         const passwordGuess = passwordBoxes.map(box => box.letter || ' ').join('').trim().toUpperCase();
-    
+
         if (usernameGuess === correctUsername && passwordGuess === correctPassword) {
             try {
                 const success = await Service.login(usernameGuess, passwordGuess);
@@ -59,10 +59,10 @@ const LoginPage = ({ setIsAuthenticated }) => {
     const handleUsernameChange = (index, event) => {
         const value = event.target.value.toUpperCase();
         const updatedUsernameBoxes = [...usernameBoxes];
-        if (updatedUsernameBoxes[index].editable && value) {
+        if (updatedUsernameBoxes[index].editable) {
             updatedUsernameBoxes[index].letter = value;
             setUsernameBoxes(updatedUsernameBoxes);
-            if (index + 1 < usernameBoxes.length) {
+            if (value && index + 1 < usernameBoxes.length) {
                 usernameRefs.current[index + 1].focus();
             }
         }
@@ -71,12 +71,20 @@ const LoginPage = ({ setIsAuthenticated }) => {
     const handlePasswordChange = (index, event) => {
         const value = event.target.value.toUpperCase();
         const updatedPasswordBoxes = [...passwordBoxes];
-        if (updatedPasswordBoxes[index].editable && value) {
+        if (updatedPasswordBoxes[index].editable) {
             updatedPasswordBoxes[index].letter = value;
             setPasswordBoxes(updatedPasswordBoxes);
-            if (index + 1 < passwordBoxes.length) {
+            if (value && index + 1 < passwordBoxes.length) {
                 passwordRefs.current[index + 1].focus();
             }
+        }
+    };
+
+    const handleKeyDown = (index, event, refsArray) => {
+        if (event.key === 'ArrowRight' && index + 1 < refsArray.length) {
+            refsArray[index + 1].focus();
+        } else if (event.key === 'ArrowLeft' && index - 1 >= 0) {
+            refsArray[index - 1].focus();
         }
     };
 
@@ -120,6 +128,7 @@ const LoginPage = ({ setIsAuthenticated }) => {
                             maxLength="1"
                             value={box.letter}
                             onChange={(e) => handleUsernameChange(index, e)}
+                            onKeyDown={(e) => handleKeyDown(index, e, usernameRefs.current)}
                             className={`letter-box ${box.class} ${box.editable ? '' : 'non-editable'}`}
                             disabled={!box.editable}
                         />
@@ -134,6 +143,7 @@ const LoginPage = ({ setIsAuthenticated }) => {
                             maxLength="1"
                             value={box.letter}
                             onChange={(e) => handlePasswordChange(index, e)}
+                            onKeyDown={(e) => handleKeyDown(index, e, passwordRefs.current)}
                             className={`letter-box ${box.class} ${box.editable ? '' : 'non-editable'}`}
                             disabled={!box.editable}
                         />
