@@ -299,7 +299,6 @@ img.chat-icon {
     object-fit: cover;
 }
 
-/* New styles for login page */
 .login-container {
     display: flex;
     flex-direction: column;
@@ -379,14 +378,30 @@ img.chat-icon {
 }
 
 .letter-box.present {
-    background-color: #c9b458; /* Yellow for present but wrong position */
+    background-color: #c9b458; /* Yellow for correct letter, wrong position */
 }
 
 .letter-box.absent {
-    background-color: #787c7e; /* Gray for not present */
+    background-color: #787c7e; /* Gray for incorrect letter */
 }
 
-.letter-box.non-editable {
-    background-color: #e0e0e0;
-    pointer-events: none;
+.login-form button {
+    width: 50%;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #ff6700;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-form button:hover {
+    background-color: #ffaa00;
+}
+
+.message {
+    margin-top: 10px;
+    font-size: 18px;
 }

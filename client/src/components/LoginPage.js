@@ -1,98 +1,142 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Service } from './Service';
 import { Player } from '@lottiefiles/react-lottie-player';
 import animationData from '../animations/MascotPanda.json';
 import '../style.css';
 
+/**
+ * LoginPage Component
+ * 
+ * This component renders a login page with a Wordle-style guessing game.
+ * Users are prompted to enter a team name and a player name. Each letter 
+ * of the guess is colored based on its correctness:
+ * - Green: Correct letter in the correct position
+ * - Yellow: Correct letter in the wrong position
+ * - Gray: Incorrect letter
+ * 
+ * Props:
+ * - setIsAuthenticated: Function to set the authentication state in the parent component.
+ * 
+ * State:
+ * - teamName: Stores the current team name input by the user.
+ * - playerName: Stores the current player name input by the user.
+ * - message: Stores the feedback message to be displayed to the user.
+ * - teamColors: Stores the color state for each letter of the team name guess.
+ * - playerColors: Stores the color state for each letter of the player name guess.
+ * 
+ * Methods:
+ * - handleGuess: Handles the form submission and evaluates the guesses.
+ * - getColors: Determines the color of each letter based on its correctness.
+ * - renderColoredWord: Renders the word with colored letters.
+ * 
+ * Example correct guesses:
+ * - Team Name: "VANCOUVER CANUCKS"
+ * - Player Name: "HUGHES"
+ */
+
 const LoginPage = ({ setIsAuthenticated }) => {
     const history = useHistory();
-    const [usernameBoxes, setUsernameBoxes] = useState([]);
-    const [passwordBoxes, setPasswordBoxes] = useState([]);
+    const [teamName, setTeamName] = useState('');
+    const [playerName, setPlayerName] = useState('');
     const [message, setMessage] = useState('');
-    const usernameRefs = useRef([]);
-    const passwordRefs = useRef([]);
+    const [teamColors, setTeamColors] = useState([]);
+    const [playerColors, setPlayerColors] = useState([]);
 
-    const correctUsername = "VANCOUVER CANUCKS"; // Example correct username
-    const correctPassword = "HUGHES"; // Example correct password
+    const correctTeamName = "VANCOUVER CANUCKS"; // Example correct team name
+    const correctPlayerName = "HUGHES"; // Example correct player name
 
-    useEffect(() => {
-        setUsernameBoxes(correctUsername.split('').map((char, index) => ({
-            letter: '', class: '', editable: char !== ' ', ref: React.createRef()
-        })));
-        setPasswordBoxes(correctPassword.split('').map((char, index) => ({
-            letter: '', class: '', editable: char !== ' ', ref: React.createRef()
-        })));
-    }, []);
-
+    /**
+     * Handles the form submission and evaluates the guesses.
+     * Updates the color state based on the correctness of each letter.
+     */
     const handleGuess = async (e) => {
         e.preventDefault();
-        const usernameGuess = usernameBoxes.map(box => box.letter || ' ').join('').trim().toUpperCase();
-        const passwordGuess = passwordBoxes.map(box => box.letter || ' ').join('').trim().toUpperCase();
+        const teamGuess = teamName.trim().toUpperCase();
+        const playerGuess = playerName.trim().toUpperCase();
 
-        if (usernameGuess === correctUsername && passwordGuess === correctPassword) {
-            const success = await Service.login(usernameGuess, passwordGuess);
+        setTeamColors(getColors(teamGuess, correctTeamName));
+        setPlayerColors(getColors(playerGuess, correctPlayerName));
+
+        if (teamGuess === correctTeamName && playerGuess === correctPlayerName) {
+            const success = await Service.login(teamGuess, playerGuess);
             if (success) {
                 setMessage('Login successful!');
                 setIsAuthenticated(true);
                 history.push('/lobby');
             } else {
                 setMessage('Login failed. Please try again.');
-                highlightBoxes();
             }
         } else {
             setMessage('Incorrect guess. Try again.');
-            highlightBoxes();
         }
     };
 
-    const handleInputChange = (type, index, event) => {
-        const value = event.target.value.toUpperCase();
-        const boxes = type === 'username' ? [...usernameBoxes] : [...passwordBoxes];
-        const refs = type === 'username' ? usernameRefs.current : passwordRefs.current;
+    /**
+     * Determines the color of each letter based on its correctness.
+     * @param {string} guess - The user's guess.
+     * @param {string} correct - The correct answer.
+     * @returns {Array} - Array of color states for each letter.
+     */
+    const getColors = (guess, correct) => {
+        let colors = new Array(correct.length).fill('absent');
+        let correctChars = correct.split('');
+        let guessChars = guess.split('');
 
-        if (boxes[index].editable) {
-            boxes[index].letter = value;
-            type === 'username' ? setUsernameBoxes(boxes) : setPasswordBoxes(boxes);
-
-            if (value && index + 1 < boxes.length) {
-                refs[index + 1].focus();
+        // First pass: Check for correct positions
+        guessChars.forEach((char, index) => {
+            if (char === correctChars[index]) {
+                colors[index] = 'correct';
+                correctChars[index] = null;
+                guessChars[index] = null;
             }
-        }
+        });
+
+        // Second pass: Check for correct letters in wrong positions
+        guessChars.forEach((char, index) => {
+            if (char && correctChars.includes(char)) {
+                colors[index] = 'present';
+                correctChars[correctChars.indexOf(char)] = null;
+            }
+        });
+
+        return colors;
     };
 
-    const highlightBoxes = () => {
-        // Add logic to highlight boxes based on correctness
-    };
+    /**
+     * Renders the word with colored letters.
+     * @param {string} word - The word to render.
+     * @param {Array} colors - The color states for each letter.
+     * @returns {JSX.Element} - The rendered word with colored letters.
+     */
+    const renderColoredWord = (word, colors) => (
+        <div className="word-boxes">
+            {word.split('').map((char, index) => (
+                <span key={index} className={`letter-box ${colors[index] || ''}`}>{char}</span>
+            ))}
+        </div>
+    );
 
     return (
         <div className="login-container">
             <Player autoplay loop src={animationData} style={{ height: '200px', width: '200px' }} />
             <form onSubmit={handleGuess} className="login-form">
-                {usernameBoxes.map((box, index) => (
-                    <input
-                        key={index}
-                        ref={el => usernameRefs.current[index] = el}
-                        type="text"
-                        maxLength="1"
-                        value={box.letter}
-                        onChange={(e) => handleInputChange('username', index, e)}
-                        className={`letter-box ${box.class} ${box.editable ? '' : 'non-editable'}`}
-                        disabled={!box.editable}
-                    />
-                ))}
-                {passwordBoxes.map((box, index) => (
-                    <input
-                        key={index}
-                        ref={el => passwordRefs.current[index] = el}
-                        type="text"
-                        maxLength="1"
-                        value={box.letter}
-                        onChange={(e) => handleInputChange('password', index, e)}
-                        className={`letter-box ${box.class} ${box.editable ? '' : 'non-editable'}`}
-                        disabled={!box.editable}
-                    />
-                ))}
+                <input
+                    type="text"
+                    value={teamName}
+                    onChange={(e) => setTeamName(e.target.value)}
+                    placeholder="Enter team name"
+                    className="word-input"
+                />
+                {renderColoredWord(teamName, teamColors)}
+                <input
+                    type="text"
+                    value={playerName}
+                    onChange={(e) => setPlayerName(e.target.value)}
+                    placeholder="Enter player name"
+                    className="word-input"
+                />
+                {renderColoredWord(playerName, playerColors)}
                 <button type="submit">Guess</button>
                 <div className="message">{message}</div>
             </form>
