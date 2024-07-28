@@ -1,78 +1,48 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+/**
+ * App.js
+ * 
+ * This file defines the root component for the React application.
+ * It sets up routing using React Router and manages the authentication state.
+ * 
+ * Components:
+ * - LoginPage: Handles user login.
+ * - LobbyView: Displays the lobby with available chat rooms.
+ * - ChatView: Manages individual chat rooms.
+ * 
+ * Dependencies:
+ * - React: Library for building the user interface.
+ * - react-router-dom: Provides routing functionalities.
+ * 
+ * Usage:
+ * This component is mounted to the DOM in index.js and handles all top-level routing
+ * and state management for authentication.
+ */
+
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 import LoginPage from './LoginPage';
-import ChatView from './ChatView';
 import LobbyView from './LobbyView';
-import { Service } from './Service';
+import ChatView from './ChatView';
 
 const App = () => {
-  const [rooms, setRooms] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [socket, setSocket] = useState(null);
-
-  useEffect(() => {
-    console.log("Authentication status changed:", isAuthenticated);
-  }, [isAuthenticated]);
-
-  useEffect(() => {
-    Service.checkSession()
-      .then((response) => {
-        if (response.message === 'Session is valid') {
-          setIsAuthenticated(true);
-          Service.getAllRooms()
-            .then(setRooms)
-            .catch(error => console.error('Error fetching rooms:', error));
-        } else {
-          setIsAuthenticated(false);
-        }
-      })
-      .catch(() => setIsAuthenticated(false));
-
-    const newSocket = new WebSocket('ws://localhost:8000'); 
-    newSocket.onopen = () => {
-      console.log('WebSocket connection opened');
-    };
-    newSocket.onclose = (event) => {
-      console.log('WebSocket connection closed:', event);
-    };
-    newSocket.onerror = (error) => {
-      console.error('WebSocket error:', error);
-    };
-    setSocket(newSocket);
-
-    return () => {
-      if (newSocket) {
-        newSocket.close();
-      }
-    };
-  }, []);
 
   return (
     <Router>
-      <div>
-        <h1>Chat Application</h1>
-        <Switch>
-          <Route path="/login">
-            {!isAuthenticated ? <LoginPage setIsAuthenticated={setIsAuthenticated} /> : <Redirect to="/" />}
-          </Route>
-          <Route path="/" exact>
-            {isAuthenticated ? <LobbyView rooms={rooms} setRooms={setRooms} /> : <Redirect to="/login" />}
-          </Route>
-          <Route path="/chat/:roomId">
-            {isAuthenticated ? <ChatView socket={socket} /> : <Redirect to="/login" />}
-          </Route>
-          <Route path="/profile">
-            {isAuthenticated ? <Profile /> : <Redirect to="/login" />}
-          </Route>
-          <Redirect to="/login" />
-        </Switch>
-      </div>
+      <Switch>
+        <Route exact path="/">
+          {isAuthenticated ? <Redirect to="/lobby" /> : <LoginPage setIsAuthenticated={setIsAuthenticated} />}
+        </Route>
+        <Route path="/lobby">
+          {isAuthenticated ? <LobbyView /> : <Redirect to="/" />}
+        </Route>
+        <Route path="/chat/:roomId">
+          {isAuthenticated ? <ChatView /> : <Redirect to="/" />}
+        </Route>
+        <Redirect to="/" />
+      </Switch>
     </Router>
   );
-};
-
-const Profile = () => {
-  return <div>Profile</div>;
 };
 
 export default App;

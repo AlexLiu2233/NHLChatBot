@@ -1,3 +1,26 @@
+/**
+ * SessionManager.js
+ * 
+ * This file defines the SessionManager class which handles session management using cookies.
+ * It provides methods for creating sessions, deleting sessions, and middleware for session validation.
+ * 
+ * Methods:
+ * - createSession: Creates a new session and sets a cookie in the response.
+ * - deleteSession: Deletes a session based on the request.
+ * - middleware: Middleware for validating sessions in incoming requests.
+ * - getUsername: Fetches the username associated with a session token.
+ * 
+ * Dependencies:
+ * - crypto: Node.js module for generating random tokens.
+ * 
+ * Connected Files:
+ * - This module is imported and used in server.js for session management.
+ * 
+ * Usage:
+ * Create an instance of the SessionManager class and use its methods for managing user sessions.
+ */
+
+
 const crypto = require('crypto');
 
 class SessionError extends Error { };

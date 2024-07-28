@@ -1,6 +1,15 @@
 {
   "dependencies": {
+    "axios": "^1.7.2",
+    "crypto": "^1.0.1",
+    "express": "^4.19.2",
     "lottie-react": "^2.4.0",
-    "react-lottie": "^1.2.4"
+    "mongoose": "^8.5.1",
+    "react-lottie": "^1.2.4",
+    "websocket": "^1.0.35"
+  },
+  "devDependencies": {
+    "webpack": "^5.93.0",
+    "webpack-cli": "^5.1.4"
   }
 }

@@ -1,3 +1,29 @@
+/**
+ * LobbyView.js
+ * 
+ * This file defines the LobbyView component which renders a list of chat rooms available to the user.
+ * It fetches the list of rooms from the backend using the Service.getAllRooms function and displays them.
+ * 
+ * Props:
+ * - rooms (array): An array of room objects to be displayed.
+ * - setRooms (function): A function to update the rooms state in the parent component.
+ * 
+ * Dependencies:
+ * - React: Library for building the user interface.
+ * - useEffect: React hook for handling side effects.
+ * - Link: React Router component for navigation links.
+ * - Service: Custom service module for making API requests.
+ * - style.css: Contains the styles used in this component.
+ * 
+ * Connected Files:
+ * - Service.js: Contains the Service.getAllRooms function used for fetching room data.
+ * - style.css: Contains the styles used in this component.
+ * 
+ * Usage:
+ * Import this component and use it to display the chat rooms available to the user.
+ */
+
+
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Service } from './Service';

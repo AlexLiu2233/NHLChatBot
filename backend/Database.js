@@ -1,3 +1,29 @@
+/**
+ * Database.js
+ * 
+ * This file defines the Database class which handles database operations using MongoDB.
+ * It provides methods for connecting to the database, fetching rooms, adding rooms, fetching conversations, and more.
+ * 
+ * Methods:
+ * - constructor: Initializes the database connection.
+ * - getRoom: Fetches a specific room by its ID.
+ * - addRoom: Adds a new room to the database.
+ * - getRooms: Fetches all rooms.
+ * - getLastConversation: Fetches the last conversation for a specific room.
+ * - addConversation: Adds a new conversation or updates the last one if within a short timeframe.
+ * - getUser: Fetches a user by username.
+ * 
+ * Dependencies:
+ * - MongoClient: MongoDB client for connecting to the database.
+ * - ObjectId: MongoDB ObjectId for handling document IDs.
+ * 
+ * Connected Files:
+ * - This module is imported and used in server.js for database operations.
+ * 
+ * Usage:
+ * Create an instance of the Database class and use its methods to interact with the MongoDB database.
+ */
+
 const { MongoClient, ObjectId } = require('mongodb');
 
 function Database(mongoUrl, dbName) {

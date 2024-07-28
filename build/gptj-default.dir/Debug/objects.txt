@@ -1,3 +1,0 @@
-C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/gptj-default.dir/Debug/gptj.obj
-C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/gptj-default.dir/Debug/utils.obj
-C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/build/gptj-default.dir/Debug/llmodel_shared.obj

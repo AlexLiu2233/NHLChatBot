@@ -1,3 +1,28 @@
+/**
+ * Service.js
+ * 
+ * This file defines the Service module which contains functions for making API requests to the backend.
+ * It includes methods for logging in, fetching rooms, fetching user profiles, and more.
+ * 
+ * Functions:
+ * - login: Authenticates the user with username and password.
+ * - getAllRooms: Fetches the list of chat rooms.
+ * - getProfile: Fetches the user's profile.
+ * - addRoom: Adds a new chat room.
+ * - getLastConversation: Fetches the last conversation for a specific room.
+ * - checkSession: Checks if the user's session is valid.
+ * 
+ * Dependencies:
+ * - fetch: API for making HTTP requests.
+ * 
+ * Connected Files:
+ * - This module is imported and used in various components like LoginPage.js, LobbyView.js, and ChatView.js.
+ * 
+ * Usage:
+ * Import the Service module and use its functions to interact with the backend API.
+ */
+
+
 const Service = {};
 
 Service.origin = window.location.origin;

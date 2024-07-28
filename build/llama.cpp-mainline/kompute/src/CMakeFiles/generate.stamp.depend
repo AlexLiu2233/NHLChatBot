@@ -1,6 +1,0 @@
-# CMake generation dependency list for this directory.
-C:/Program Files/CMake/share/cmake-3.29/Modules/CMakePackageConfigHelpers.cmake
-C:/Program Files/CMake/share/cmake-3.29/Modules/GNUInstallDirs.cmake
-C:/Program Files/CMake/share/cmake-3.29/Modules/WriteBasicConfigVersionFile.cmake
-C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/gpt4all/gpt4all-backend/llama.cpp-mainline/kompute/cmake/komputeConfig.cmake.in
-C:/Users/liujp/OneDrive/Documents/Alex/School/2024/CPEN322/Assignment/project-right-weasel/gpt4all/gpt4all-backend/llama.cpp-mainline/kompute/src/CMakeLists.txt

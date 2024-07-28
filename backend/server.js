@@ -1,3 +1,26 @@
+/**
+ * SessionManager.js
+ * 
+ * This file defines the SessionManager class which handles session management using cookies.
+ * It provides methods for creating sessions, deleting sessions, and middleware for session validation.
+ * 
+ * Methods:
+ * - createSession: Creates a new session and sets a cookie in the response.
+ * - deleteSession: Deletes a session based on the request.
+ * - middleware: Middleware for validating sessions in incoming requests.
+ * - getUsername: Fetches the username associated with a session token.
+ * 
+ * Dependencies:
+ * - crypto: Node.js module for generating random tokens.
+ * 
+ * Connected Files:
+ * - This module is imported and used in server.js for session management.
+ * 
+ * Usage:
+ * Create an instance of the SessionManager class and use its methods for managing user sessions.
+ */
+
+
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
@@ -37,7 +60,13 @@ db.getRooms().then(rooms => {
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(logRequest);
+app.use(express.static(clientApp)); // Serve static files
+
+// Logging middleware for debugging
+app.use((req, res, next) => {
+    console.log(`${new Date()} - ${req.method} ${req.path}`);
+    next();
+});
 
 // API Routes
 app.get('/chat', protectRoute, (req, res) => {
@@ -162,28 +191,6 @@ app.get('/profile', protectRoute, (req, res) => {
     }
 });
 
-// Serve static files from the React app build directory
-console.log(`Serving static files from: ${clientApp}`);
-app.use(express.static(clientApp));
-
-// Catch-all route to serve the index.html for client-side routing
-app.get('*', (req, res) => {
-    res.sendFile(path.join(clientApp, 'index.html'));
-});
-
-app.use((err, req, res, next) => {
-    if (err instanceof SessionManager.Error) {
-        if (req.headers.accept === 'application/json') {
-            res.status(401).json({ error: err.message });
-        } else {
-            res.redirect('/login');
-        }
-    } else {
-        console.error(err); // Log the error
-        res.status(500).send("Internal Server Error");
-    }
-});
-
 broker.on('connection', (ws, req) => {
     try {
       const cookieString = req.headers.cookie;
@@ -244,6 +251,11 @@ broker.on('connection', (ws, req) => {
       console.error("WebSocket error for ", ws.username, ":", error);
       ws.close(1011, "Error occurred");
     });
+});
+
+// Catch-all route to serve the index.html for client-side routing
+app.get('*', (req, res) => {
+    res.sendFile(path.join(clientApp, 'index.html'));
 });
 
 function logRequest(req, res, next) {

@@ -1,3 +1,27 @@
+/**
+ * LoginPage.js
+ * 
+ * This file defines the LoginPage component which serves as the entry point to the application.
+ * It implements a login form where users can enter their username and password. The component
+ * validates the user's credentials by calling the Service.login function.
+ * 
+ * Props:
+ * - setIsAuthenticated (function): A function to update the authentication state in the parent component.
+ * 
+ * Dependencies:
+ * - React: Library for building the user interface.
+ * - useHistory: React Router hook for navigation.
+ * - Service: Custom service module for making API requests.
+ * - Player: LottieFiles React component for animations.
+ * 
+ * Connected Files:
+ * - Service.js: Contains the Service.login function used for user authentication.
+ * - style.css: Contains the styles used in this component.
+ * 
+ * Usage:
+ * Import this component and use it in the main application to handle user authentication.
+ */
+
 import React, { useState, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Service } from './Service';
@@ -60,7 +84,7 @@ const LoginPage = ({ setIsAuthenticated }) => {
                 if (success) {
                     setMessage('Login successful!');
                     setIsAuthenticated(true);
-                    history.push('/');
+                    history.push('/lobby');
                 } else {
                     setMessage('Login failed. Please try again.');
                 }
@@ -178,3 +202,4 @@ const LoginPage = ({ setIsAuthenticated }) => {
 };
 
 export default LoginPage;
+

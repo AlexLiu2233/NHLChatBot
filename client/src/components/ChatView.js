@@ -1,3 +1,27 @@
+/**
+ * ChatView.js
+ * 
+ * This file defines the ChatView component which renders the chat interface for a specific room.
+ * It allows users to send and receive messages in real-time using WebSockets.
+ * 
+ * Props:
+ * - socket (WebSocket): WebSocket connection used for real-time communication.
+ * 
+ * Dependencies:
+ * - React: Library for building the user interface.
+ * - useParams: React Router hook for accessing route parameters.
+ * - useLocation: React Router hook for accessing location state.
+ * - Service: Custom service module for making API requests.
+ * - style.css: Contains the styles used in this component.
+ * 
+ * Connected Files:
+ * - Service.js: Contains the Service.getProfile and Service.getLastConversation functions used for fetching data.
+ * - style.css: Contains the styles used in this component.
+ * 
+ * Usage:
+ * Import this component and use it to enable real-time chat functionality in your application.
+ */
+
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { Service } from './Service';
