@@ -1,0 +1,10 @@
+Can you help me with the Front end of my REACT application?
+
+I will share the LoginPage, the App, and the Service of the Front End.
+Furthermore, I will include the Database, Session Manager, and Srver of the Backend
+
+The LoginPage, once the password game is passed and the user then verified (setAuthenticate is true)
+->The SessionManager should handle accordingly for cookies
+->The user is redirected to the LobbyView Page
+
+Please review my 6 files, and to confirm you understand, could you please give a quick summary, with key functions for each file? And how they relate to each othe

@@ -52,25 +52,35 @@ const LoginPage = ({ setIsAuthenticated }) => {
      */
     const handleGuess = async (e) => {
         e.preventDefault();
+        // Convert inputs to uppercase for case-insensitive comparison
         const teamGuess = teamName.trim().toUpperCase();
         const playerGuess = playerName.trim().toUpperCase();
-
-        setTeamColors(getColors(teamGuess, correctTeamName));
-        setPlayerColors(getColors(playerGuess, correctPlayerName));
-
-        if (teamGuess === correctTeamName && playerGuess === correctPlayerName) {
+    
+        // Convert correct answers to uppercase for case-insensitive comparison
+        const correctTeam = correctTeamName.toUpperCase();
+        const correctPlayer = correctPlayerName.toUpperCase();
+    
+        setTeamColors(getColors(teamGuess, correctTeam));
+        setPlayerColors(getColors(playerGuess, correctPlayer));
+    
+        if (teamGuess === correctTeam && playerGuess === correctPlayer) {
+            console.log("Guesses are correct. Attempting login...");
             const success = await Service.login(teamGuess, playerGuess);
             if (success) {
+                console.log("Login successful. Setting authentication state and redirecting to lobby...");
                 setMessage('Login successful!');
                 setIsAuthenticated(true);
                 history.push('/lobby');
             } else {
+                console.log("Login failed. Server did not authenticate the user.");
                 setMessage('Login failed. Please try again.');
             }
         } else {
+            console.log("Guesses are incorrect. Providing feedback to the user.");
             setMessage('Incorrect guess. Try again.');
         }
     };
+    
 
     /**
      * Determines the color of each letter based on its correctness.
@@ -129,6 +139,8 @@ const LoginPage = ({ setIsAuthenticated }) => {
                     className="word-input"
                 />
                 {renderColoredWord(teamName, teamColors)}
+                <p>{`Team Name Length: ${teamName.length}`}</p> {/* Display the character count */}
+    
                 <input
                     type="text"
                     value={playerName}
@@ -137,11 +149,14 @@ const LoginPage = ({ setIsAuthenticated }) => {
                     className="word-input"
                 />
                 {renderColoredWord(playerName, playerColors)}
+                <p>{`Player Name Length: ${playerName.length}`}</p> {/* Display the character count */}
+    
                 <button type="submit">Guess</button>
                 <div className="message">{message}</div>
             </form>
         </div>
     );
+    
 };
 
 export default LoginPage;

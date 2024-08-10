@@ -1,0 +1,41 @@
+Guesses are correct. Attempting login...
+Service.js:40 Response status: 200
+LoginPage.js:39 Login successful. Setting authentication state and redirecting to lobby...
+react-dom.production.min.js:188  TypeError: Cannot read properties of undefined (reading 'map')
+    at Se (LobbyView.js:60:20)
+    at ms (react-dom.production.min.js:160:137)
+    at _l (react-dom.production.min.js:289:337)
+    at xh (react-dom.production.min.js:279:389)
+    at gh (react-dom.production.min.js:279:320)
+    at yh (react-dom.production.min.js:279:180)
+    at ih (react-dom.production.min.js:270:88)
+    at ah (react-dom.production.min.js:267:429)
+    at E (scheduler.production.min.js:13:203)
+    at MessagePort.T (scheduler.production.min.js:14:128)
+co @ react-dom.production.min.js:188
+r.callback @ react-dom.production.min.js:188
+Wi @ react-dom.production.min.js:156
+bl @ react-dom.production.min.js:261
+xl @ react-dom.production.min.js:259
+vl @ react-dom.production.min.js:258
+(anonymous) @ react-dom.production.min.js:282
+kh @ react-dom.production.min.js:280
+ah @ react-dom.production.min.js:269
+E @ scheduler.production.min.js:13
+T @ scheduler.production.min.js:14
+Show 11 more frames
+Show less
+LobbyView.js:60  Uncaught TypeError: Cannot read properties of undefined (reading 'map')
+    at Se (LobbyView.js:60:20)
+    at ms (react-dom.production.min.js:160:137)
+    at _l (react-dom.production.min.js:289:337)
+    at xh (react-dom.production.min.js:279:389)
+    at gh (react-dom.production.min.js:279:320)
+    at yh (react-dom.production.min.js:279:180)
+    at ih (react-dom.production.min.js:270:88)
+    at ah (react-dom.production.min.js:267:429)
+    at E (scheduler.production.min.js:13:203)
+    at MessagePort.T (scheduler.production.min.js:14:128)
+
+
+** Occuring on Login
