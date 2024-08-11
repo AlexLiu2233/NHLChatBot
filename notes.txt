@@ -1,41 +1,132 @@
-Guesses are correct. Attempting login...
-Service.js:40 Response status: 200
-LoginPage.js:39 Login successful. Setting authentication state and redirecting to lobby...
-react-dom.production.min.js:188  TypeError: Cannot read properties of undefined (reading 'map')
-    at Se (LobbyView.js:60:20)
-    at ms (react-dom.production.min.js:160:137)
-    at _l (react-dom.production.min.js:289:337)
-    at xh (react-dom.production.min.js:279:389)
-    at gh (react-dom.production.min.js:279:320)
-    at yh (react-dom.production.min.js:279:180)
-    at ih (react-dom.production.min.js:270:88)
-    at ah (react-dom.production.min.js:267:429)
-    at E (scheduler.production.min.js:13:203)
-    at MessagePort.T (scheduler.production.min.js:14:128)
-co @ react-dom.production.min.js:188
-r.callback @ react-dom.production.min.js:188
-Wi @ react-dom.production.min.js:156
-bl @ react-dom.production.min.js:261
-xl @ react-dom.production.min.js:259
-vl @ react-dom.production.min.js:258
-(anonymous) @ react-dom.production.min.js:282
-kh @ react-dom.production.min.js:280
-ah @ react-dom.production.min.js:269
-E @ scheduler.production.min.js:13
-T @ scheduler.production.min.js:14
-Show 11 more frames
-Show less
-LobbyView.js:60  Uncaught TypeError: Cannot read properties of undefined (reading 'map')
-    at Se (LobbyView.js:60:20)
-    at ms (react-dom.production.min.js:160:137)
-    at _l (react-dom.production.min.js:289:337)
-    at xh (react-dom.production.min.js:279:389)
-    at gh (react-dom.production.min.js:279:320)
-    at yh (react-dom.production.min.js:279:180)
-    at ih (react-dom.production.min.js:270:88)
-    at ah (react-dom.production.min.js:267:429)
-    at E (scheduler.production.min.js:13:203)
-    at MessagePort.T (scheduler.production.min.js:14:128)
+import React, { useState, useRef } from 'react';
+import { useHistory } from 'react-router-dom';
+import { Service } from './Service';
+import { Player } from '@lottiefiles/react-lottie-player';
+import animationData from '../animations/MascotPanda.json';
+import '../style.css';
 
+const LoginPage = ({ setIsAuthenticated }) => {
+    const history = useHistory();
+    const teamLength = 18; // Maximum length of team name
+    const playerLength = 6; // Maximum length of player name
 
-** Occuring on Login
+    const [teamName, setTeamName] = useState(Array(teamLength).fill(''));
+    const [playerName, setPlayerName] = useState(Array(playerLength).fill(''));
+    const [message, setMessage] = useState('');
+    const [teamColors, setTeamColors] = useState(Array(teamLength).fill(''));
+    const [playerColors, setPlayerColors] = useState(Array(playerLength).fill(''));
+
+    const teamRefs = useRef([]);
+    const playerRefs = useRef([]);
+
+    const correctTeamName = "VANCOUVER CANUCKS";
+    const correctPlayerName = "HUGHES";
+
+    const handleGuess = async (e) => {
+        e.preventDefault();
+
+        const teamGuess = teamName.join('').trim().toUpperCase();
+        const playerGuess = playerName.join('').trim().toUpperCase();
+
+        setTeamColors(getColors(teamGuess, correctTeamName));
+        setPlayerColors(getColors(playerGuess, correctPlayerName));
+
+        if (teamGuess === correctTeamName && playerGuess === correctPlayerName) {
+            const success = await Service.login(teamGuess, playerGuess);
+            if (success) {
+                setMessage('Login successful!');
+                setIsAuthenticated(true);
+                history.push('/lobby');
+            } else {
+                setMessage('Login failed. Please try again.');
+            }
+        } else {
+            setMessage('Incorrect guess. Try again.');
+        }
+    };
+
+    const handleInputChange = (e, index, type) => {
+        const value = e.target.value.toUpperCase();
+        if (type === 'team') {
+            const updatedTeamName = [...teamName];
+            updatedTeamName[index] = value;
+            setTeamName(updatedTeamName);
+            if (value && index < teamLength - 1) {
+                teamRefs.current[index + 1].focus();
+            }
+        } else if (type === 'player') {
+            const updatedPlayerName = [...playerName];
+            updatedPlayerName[index] = value;
+            setPlayerName(updatedPlayerName);
+            if (value && index < playerLength - 1) {
+                playerRefs.current[index + 1].focus();
+            }
+        }
+    };
+
+    const getColors = (guess, correct) => {
+        let colors = new Array(correct.length).fill('absent');
+        let correctChars = correct.split('');
+        let guessChars = guess.split('');
+
+        guessChars.forEach((char, index) => {
+            if (char === correctChars[index]) {
+                colors[index] = 'correct';
+                correctChars[index] = null;
+                guessChars[index] = null;
+            }
+        });
+
+        guessChars.forEach((char, index) => {
+            if (char && correctChars.includes(char)) {
+                colors[index] = 'present';
+                correctChars[correctChars.indexOf(char)] = null;
+            }
+        });
+
+        return colors;
+    };
+
+    const renderInputBlocks = (inputArray, refs, handleChange, type) => (
+        <div className="word-boxes">
+            {inputArray.map((char, index) => (
+                <input
+                    key={index}
+                    ref={el => refs.current[index] = el}
+                    maxLength="1"
+                    value={char}
+                    onChange={(e) => handleChange(e, index, type)}
+                    className="letter-box"
+                />
+            ))}
+        </div>
+    );
+
+    const renderColoredWord = (word, colors) => (
+        <div className="word-boxes">
+            {word.split('').map((char, index) => (
+                <span key={index} className={`letter-box ${colors[index] || ''}`}>{char}</span>
+            ))}
+        </div>
+    );
+
+    return (
+        <div className="login-container">
+            <Player autoplay loop src={animationData} style={{ height: '200px', width: '200px' }} />
+            <form onSubmit={handleGuess} className="login-form">
+                <label>Team Name:</label>
+                {renderInputBlocks(teamName, teamRefs, handleInputChange, 'team')}
+                {renderColoredWord(teamName.join(''), teamColors)}
+
+                <label>Player Name:</label>
+                {renderInputBlocks(playerName, playerRefs, handleInputChange, 'player')}
+                {renderColoredWord(playerName.join(''), playerColors)}
+
+                <button type="submit">Guess</button>
+                <div className="message">{message}</div>
+            </form>
+        </div>
+    );
+};
+
+export default LoginPage;
