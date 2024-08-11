@@ -2,7 +2,7 @@
 conn = new Mongo();
 db = conn.getDB("HockeyWordleAnswers");
 
-result = db.default.insertMany([
+result = db.defaultanswers.insertMany([
 
     {
         teamName: 'Anaheim Ducks',

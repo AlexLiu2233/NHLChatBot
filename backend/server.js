@@ -32,7 +32,7 @@ const sessionManager = new SessionManager();
 const { createCompletion, loadModel } = require('gpt4all');
 const axios = require('axios');
 const app = express();
-const db = new Database('mongodb://127.0.0.1:27017', 'cpen322-messenger');
+const db = new Database('mongodb://127.0.0.1:27017', 'HockeyWordleAnswers');
 const broker = new WebSocket.Server({ port: 8000 });
 const messageBlockSize = 10;
 const protectRoute = sessionManager.middleware;
@@ -116,7 +116,8 @@ app.post('/login', async (req, res) => {
             return res.status(401).json({ message: 'User not found' });
         }
 
-        const passwordMatches = await isCorrectPassword(password, user.password);
+        // Use the simple password check
+        const passwordMatches = await isCorrectPasswordSimple(password, user.playerName);
         if (passwordMatches) {
             sessionManager.createSession(res, username);
             console.log('Authentication successful');
@@ -130,6 +131,7 @@ app.post('/login', async (req, res) => {
         res.status(500).json({ message: 'Internal Server Error on /login POST' });
     }
 });
+
 
 app.get('/chat/:room_id/messages', protectRoute, (req, res) => {
     const roomId = req.params.room_id;
@@ -263,7 +265,7 @@ function logRequest(req, res, next) {
     next();
 }
 
-async function isCorrectPassword(password, saltedHash) {
+async function isCorrectPasswordSalted(password, saltedHash) {
     const salt = saltedHash.substring(0, 20);
     const originalHash = saltedHash.substring(20);
 
@@ -275,6 +277,18 @@ async function isCorrectPassword(password, saltedHash) {
 
     return originalHash === hash;
 }
+
+async function isCorrectPasswordSimple(inputPassword, correctPassword) {
+    const formattedInputPassword = inputPassword.trim().toLowerCase();
+    const formattedCorrectPassword = correctPassword.trim().toLowerCase();
+
+    console.log(`Input Password: ${formattedInputPassword}`);
+    console.log(`Correct Password: ${formattedCorrectPassword}`);
+
+    return formattedInputPassword === formattedCorrectPassword;
+}
+
+
 
 app.listen(port, () => {
     console.log(`${new Date()}  App Started. Listening on ${host}:${port}, serving ${clientApp}`);
