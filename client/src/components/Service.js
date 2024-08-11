@@ -152,5 +152,16 @@ Service.checkSession = function () {
     });
 };
 
+Service.getRandomHockeyWordle = function() {
+  return fetch(`${this.origin}/api/random-hockey-wordle`, { credentials: 'include' })
+      .then(response => {
+          if (!response.ok) {
+              throw new Error('Failed to fetch random Hockey Wordle answer');
+          }
+          return response.json();
+      });
+};
+
+
 
 export { Service };

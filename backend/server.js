@@ -193,6 +193,25 @@ app.get('/profile', protectRoute, (req, res) => {
     }
 });
 
+app.get('/api/random-hockey-wordle', async (req, res) => {
+    try {
+        const randomAnswer = await db.getRandomHockeyWordleAnswer();
+        
+        if (randomAnswer) {
+            console.log('Random Team Name:', randomAnswer.teamName);
+            console.log('Random Player Name:', randomAnswer.playerName);
+            res.json(randomAnswer);
+        } else {
+            console.error('Random Hockey Wordle Answer is undefined');
+            res.status(500).json({ error: 'Failed to fetch random Hockey Wordle answer' });
+        }
+    } catch (error) {
+        console.error('Failed to fetch random Hockey Wordle answer:', error);
+        res.status(500).json({ error: 'Failed to fetch random Hockey Wordle answer' });
+    }
+});
+
+
 broker.on('connection', (ws, req) => {
     try {
       const cookieString = req.headers.cookie;

@@ -135,4 +135,30 @@ Database.prototype.getUser = async function(username) {
   }
 }
 
+Database.prototype.getRandomHockeyWordleAnswer = async function() {
+  const db = await this.connected;
+  try {
+      const count = await db.collection('defaultanswers').countDocuments();
+      console.log('Number of answers in HockeyWordleAnswers:', count);
+
+      if (count === 0) {
+          console.error('No answers found in HockeyWordleAnswers collection.');
+          return null;
+      }
+
+      const randomIndex = Math.floor(Math.random() * count);
+      console.log('Random index selected:', randomIndex);
+
+      const randomEntry = await db.collection('defaultanswers').find().skip(randomIndex).limit(1).toArray();
+      console.log('Random entry fetched:', randomEntry);
+
+      return randomEntry[0];
+  } catch (error) {
+      console.error("Error fetching random HockeyWordleAnswer from MongoDB:", error);
+      throw error;
+  }
+};
+
+
+
 module.exports = Database;
