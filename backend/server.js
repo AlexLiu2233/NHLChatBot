@@ -201,68 +201,100 @@ app.get('/api/random-hockey-wordle', async (req, res) => {
     }
 });
 
-
+// WebSocket message handling
 broker.on('connection', (ws, req) => {
     try {
-      const cookieString = req.headers.cookie;
-      const cookies = cookieString.split(';').reduce((acc, cookie) => {
-        const [key, value] = cookie.split('=').map(c => c.trim());
-        acc[key] = value;
-        return acc;
-      }, {});
+        const cookieString = req.headers.cookie;
+        const cookies = cookieString.split(';').reduce((acc, cookie) => {
+            const [key, value] = cookie.split('=').map(c => c.trim());
+            acc[key] = value;
+            return acc;
+        }, {});
 
-      const sessionToken = cookies['cpen322-session'];
-      const username = sessionManager.getUsername(sessionToken);
-      if (!username) {
-        console.log('Invalid session token. Closing WebSocket connection.');
-        ws.close(1000, "Invalid session");
-        return;
-      }
+        const sessionToken = cookies['cpen322-session']; // Change to your new session name if needed
+        const username = sessionManager.getUsername(sessionToken);
+        if (!username) {
+            console.log('Invalid session token. Closing WebSocket connection.');
+            ws.close(1000, "Invalid session");
+            return;
+        }
 
-      ws.username = username;
-      console.log('WebSocket connection established for:', ws.username);
+        ws.username = username;
+        console.log(`WebSocket connection established for user: ${ws.username}`);
     } catch (error) {
-      console.error('Error during WebSocket connection:', error);
-      ws.close(1011, "Unexpected error");
-      return;
+        console.error('Error during WebSocket connection initialization:', error);
+        ws.close(1011, "Unexpected error during initialization");
+        return;
     }
 
     ws.on('message', async (message) => {
-      if (ws.readyState !== WebSocket.OPEN) {
-        console.log('WebSocket is not open, skipping message processing.');
-        return;
-      }
+        if (ws.readyState !== WebSocket.OPEN) {
+            console.log('WebSocket is not open. Cannot process the message:', message);
+            return;
+        }
 
-      let parsedMessage;
-      try {
-        console.log('Raw message received:', message);
-        parsedMessage = JSON.parse(message);
-        console.log('Parsed message:', parsedMessage);
+        let parsedMessage;
+        try {
+            console.log('Raw message received:', message);
+            parsedMessage = JSON.parse(message);
+            console.log('Parsed message:', parsedMessage);
 
-        parsedMessage.text = parsedMessage.text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+            const playerName = parsedMessage.text.trim();
+            const roomId = parsedMessage.roomId;
 
-        const forwardMessage = JSON.stringify({ roomId: parsedMessage.roomId, text: parsedMessage.text });
-        console.log('Sending message:', forwardMessage);
+            // Logging player and room information
+            console.log(`Processing message for player: "${playerName}" in room: "${roomId}"`);
 
-        broker.clients.forEach(client => {
-          if (client !== ws && client.readyState === WebSocket.OPEN) {
-            client.send(forwardMessage);
-          }
-        });
-      } catch (e) {
-        console.error("Error parsing or handling message", e);
-      }
+            // Generate a response based on playerName and room's team name
+            const room = await db.getRoom(roomId);
+            if (!room) {
+                console.log(`Room with ID "${roomId}" not found.`);
+                ws.send(JSON.stringify({ roomId, username: 'Bot', text: `Room not found.` }));
+                return;
+            }
+
+            const teamName = room.name;
+            console.log(`Generating response for player: "${playerName}" with team context: "${teamName}"`);
+
+            const prompt = `Write a wiki-style report on the player "${playerName}" focusing on the team "${teamName}".`;
+            const generatedResponse = await generateText(prompt);
+
+            let responseText = "Unable to generate report. Please try again.";
+            if (generatedResponse && generatedResponse.content) {
+                responseText = generatedResponse.content.trim();
+                console.log('Generated response:', responseText);
+            } else {
+                console.log('No content generated for the response.');
+            }
+
+            const responseMessage = JSON.stringify({ roomId, username: 'Bot', text: responseText });
+            console.log('Sending generated response:', responseMessage);
+
+            // Send response to all clients in the room
+            broker.clients.forEach(client => {
+                if (client.readyState === WebSocket.OPEN) {
+                    client.send(responseMessage);
+                    console.log('Sent response to client:', client.username);
+                }
+            });
+
+        } catch (e) {
+            console.error("Error parsing or handling message:", e);
+            ws.send(JSON.stringify({ roomId: parsedMessage?.roomId, username: 'Bot', text: 'Error processing your request.' }));
+        }
     });
 
     ws.on('close', (code, reason) => {
-      console.log(`WebSocket closed for ${ws.username}. Code: ${code}, Reason: ${reason}`);
+        console.log(`WebSocket connection closed for ${ws.username}. Code: ${code}, Reason: ${reason}`);
     });
 
     ws.on('error', (error) => {
-      console.error("WebSocket error for ", ws.username, ":", error);
-      ws.close(1011, "Error occurred");
+        console.error(`WebSocket error for ${ws.username}:`, error);
+        ws.close(1011, "Error occurred during WebSocket communication");
     });
 });
+
+
 
 // Catch-all route to serve the index.html for client-side routing
 app.get('*', (req, res) => {

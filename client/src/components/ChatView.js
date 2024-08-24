@@ -1,42 +1,20 @@
-/**
- * ChatView.js
- * 
- * This file defines the ChatView component which renders the chat interface for a specific room.
- * It allows users to send and receive messages in real-time using WebSockets.
- * 
- * Props:
- * - socket (WebSocket): WebSocket connection used for real-time communication.
- * 
- * Dependencies:
- * - React: Library for building the user interface.
- * - useParams: React Router hook for accessing route parameters.
- * - useLocation: React Router hook for accessing location state.
- * - Service: Custom service module for making API requests.
- * - style.css: Contains the styles used in this component.
- * 
- * Connected Files:
- * - Service.js: Contains the Service.getProfile and Service.getLastConversation functions used for fetching data.
- * - style.css: Contains the styles used in this component.
- * 
- * Usage:
- * Import this component and use it to enable real-time chat functionality in your application.
- */
-
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { Service } from './Service';
 import '../style.css';
 
-const ChatView = ({ socket }) => {
+const ChatView = () => {
   const { roomId } = useParams();
   const location = useLocation();
   const roomImage = location.state?.image || ''; // Default to empty string if no image provided
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const [profile, setProfile] = useState(null); // Store user profile
+  const [socket, setSocket] = useState(null); // WebSocket state
   const chatElem = useRef(null);
 
   useEffect(() => {
+    // Fetch user profile
     Service.getProfile().then(profile => {
       setProfile(profile);
     }).catch(error => {
@@ -45,6 +23,7 @@ const ChatView = ({ socket }) => {
   }, []);
 
   useEffect(() => {
+    // Fetch old conversations
     const fetchMessages = async () => {
       try {
         const conversation = await Service.getLastConversation(roomId);
@@ -57,6 +36,49 @@ const ChatView = ({ socket }) => {
     fetchMessages();
   }, [roomId]);
 
+  useEffect(() => {
+    // Open WebSocket connection when component mounts
+    const newSocket = new WebSocket('ws://localhost:8000'); // Replace with your WebSocket URL
+    setSocket(newSocket);
+
+    const handleMessage = (event) => {
+      console.log('Received event:', event);
+      const data = JSON.parse(event.data);
+      if (data.roomId === roomId) {
+        setMessages(prevMessages => [...prevMessages, { username: data.username, text: data.text }]);
+      }
+    };
+
+    const handleOpen = () => {
+      console.log('WebSocket connection opened');
+    };
+
+    const handleClose = (event) => {
+      console.log('WebSocket connection closed:', event);
+    };
+
+    const handleError = (error) => {
+      console.error('WebSocket error:', error);
+    };
+
+    newSocket.addEventListener('message', handleMessage);
+    newSocket.addEventListener('open', handleOpen);
+    newSocket.addEventListener('close', handleClose);
+    newSocket.addEventListener('error', handleError);
+
+    return () => {
+      // Close WebSocket connection when component unmounts
+      if (newSocket.readyState === WebSocket.OPEN) {
+        newSocket.close();
+        console.log('WebSocket connection closed upon unmount');
+      }
+      newSocket.removeEventListener('message', handleMessage);
+      newSocket.removeEventListener('open', handleOpen);
+      newSocket.removeEventListener('close', handleClose);
+      newSocket.removeEventListener('error', handleError);
+    };
+  }, [roomId]); // Run when roomId changes
+
   const sendMessage = () => {
     if (newMessage.trim() && socket && profile) {
       if (socket.readyState !== WebSocket.OPEN) {
@@ -68,59 +90,15 @@ const ChatView = ({ socket }) => {
       const message = { 
         roomId, 
         username: profile.username,  
-        text: `${profile.username}: ${formattedMessage}`
+        text: formattedMessage // Send just the player's name to the server
       };
   
       console.log('Sending message:', message);
-      socket.send(JSON.stringify(message));
-      setMessages([...messages, message]);
+      socket.send(JSON.stringify(message)); // Send message to server
+      setMessages([...messages, { username: profile.username, text: formattedMessage }]); // Update messages locally
       setNewMessage('');
     }
   };
-  
-  useEffect(() => {
-    if (!socket) {
-      console.error('Socket is not defined in ChatView when trying to add event listener');
-      return;
-    }
-  
-    console.log('WebSocket is readyState:', socket.readyState);
-  
-    const handleMessage = (event) => {
-      console.log('Received event:', event);
-      const data = JSON.parse(event.data);
-      if (data.roomId === roomId) {
-        setMessages(prevMessages => [...prevMessages, { username: data.username, text: data.text }]);
-      }
-    };
-  
-    const handleOpen = () => {
-      console.log('WebSocket connection opened');
-    };
-  
-    const handleClose = (event) => {
-      console.log('WebSocket connection closed:', event);
-    };
-  
-    const handleError = (error) => {
-      console.error('WebSocket error:', error);
-    };
-  
-    socket.addEventListener('message', handleMessage);
-    socket.addEventListener('open', handleOpen);
-    socket.addEventListener('close', handleClose);
-    socket.addEventListener('error', handleError);
-  
-    return () => {
-      if (socket) {
-        socket.removeEventListener('message', handleMessage);
-        socket.removeEventListener('open', handleOpen);
-        socket.removeEventListener('close', handleClose);
-        socket.removeEventListener('error', handleError);
-      }
-    };
-  }, [roomId, socket, profile]);
-  
 
   useEffect(() => {
     if (chatElem.current) {
