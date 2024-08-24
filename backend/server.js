@@ -74,9 +74,11 @@ app.get('/chat', protectRoute, (req, res) => {
         const roomList = rooms.map(room => ({
             _id: room._id,
             name: room.name,
-            image: room.image ? `/images/${room.image}` : '/assets/default-room-icon.png',
+            // Fixing image path
+            image: room.image || '/assets/default-room-icon.png',
             messages: messages[room._id.toString()] || []
         }));
+        console.log('Rooms being sent to client:', roomList);
         res.json(roomList);
     }).catch(err => {
         console.error('Error fetching chat rooms:', err);

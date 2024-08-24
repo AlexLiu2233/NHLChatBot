@@ -1,10 +1,18 @@
 Can you help me with the Front end of my REACT application?
 
-I will share the LoginPage, the App, and the Service of the Front End.
+I will share the LoginPage, the App, the Service, and the LobbyView of the Front End.
 Furthermore, I will include the Database, Session Manager, and Srver of the Backend
 
-The LoginPage, once the password game is passed and the user then verified (setAuthenticate is true)
-->The SessionManager should handle accordingly for cookies
-->The user is redirected to the LobbyView Page
+The end goal is to have the user input some info (To begin with, starting with a name)
+The AI will take this prompt and generate a wiki style summary of the player, with a key focus based on the teamname of the chatroom currently in (ChatView)
 
-Please review my 6 files, and to confirm you understand, could you please give a quick summary, with key functions for each file? And how they relate to each othe
+Lets begin by fixing the connections. Currently, I am getting the following error when navigating to the ChatView page"
+LobbyView.js:40  Error fetching rooms: TypeError: n is not a function
+    at LobbyView.js:38:9
+(anonymous) @ LobbyView.js:40
+LobbyView.js:41  Uncaught (in promise) TypeError: n is not a function
+    at LobbyView.js:41:9
+
+Can you begin by helping me to debug this problem, and get my Chatrooms loaded please? Thanks!
+
+Let me know if you require any other information from me

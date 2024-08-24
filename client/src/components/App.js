@@ -26,6 +26,7 @@ import ChatView from './ChatView';
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [rooms, setRooms] = useState([]); // Define rooms state here
 
   return (
     <Router>
@@ -34,7 +35,7 @@ const App = () => {
           {isAuthenticated ? <Redirect to="/lobby" /> : <LoginPage setIsAuthenticated={setIsAuthenticated} />}
         </Route>
         <Route path="/lobby">
-          {isAuthenticated ? <LobbyView /> : <Redirect to="/" />}
+          {isAuthenticated ? <LobbyView rooms={rooms} setRooms={setRooms} /> : <Redirect to="/" />}
         </Route>
         <Route path="/chat/:roomId">
           {isAuthenticated ? <ChatView /> : <Redirect to="/" />}

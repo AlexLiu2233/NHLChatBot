@@ -47,27 +47,34 @@ Service.login = async function (username, password) {
 
 Service.getAllRooms = function () {
   return new Promise((resolve, reject) => {
-      var xhr = new XMLHttpRequest();
-      xhr.open('GET', this.origin + '/chat', true);
-      xhr.withCredentials = true; // Ensure cookies are included
-      xhr.onload = function () {
-          if (xhr.status === 200) {
-              try {
-                  const rooms = JSON.parse(xhr.responseText);
-                  console.log('Service.getAllRooms response:', rooms); // Log the response
-                  resolve(rooms);
-              } catch (error) {
-                  console.error('Error parsing JSON:', error);
-                  reject(error);
-              }
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', this.origin + '/chat', true);
+    xhr.withCredentials = true; // Ensure cookies are included
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+        try {
+          const rooms = JSON.parse(xhr.responseText);
+          if (Array.isArray(rooms)) {
+            console.log('Successfully fetched rooms:', rooms); // Log successful fetch
+            resolve(rooms);
           } else {
-              reject(new Error(xhr.responseText));
+            console.error('Data fetched is not an array:', rooms); // Log if the data is not an array
+            reject(new Error('Invalid data format'));
           }
-      };
-      xhr.onerror = function () {
-          reject(new Error(xhr.responseText));
-      };
-      xhr.send();
+        } catch (error) {
+          console.error('Error parsing JSON:', error);
+          reject(error);
+        }
+      } else {
+        console.error('Failed to fetch rooms. Status:', xhr.status, 'Response:', xhr.responseText);
+        reject(new Error(xhr.responseText));
+      }
+    };
+    xhr.onerror = function () {
+      console.error('Network error occurred while fetching rooms.');
+      reject(new Error(xhr.responseText));
+    };
+    xhr.send();
   });
 };
 
@@ -152,14 +159,14 @@ Service.checkSession = function () {
     });
 };
 
-Service.getRandomHockeyWordle = function() {
+Service.getRandomHockeyWordle = function () {
   return fetch(`${this.origin}/api/random-hockey-wordle`, { credentials: 'include' })
-      .then(response => {
-          if (!response.ok) {
-              throw new Error('Failed to fetch random Hockey Wordle answer');
-          }
-          return response.json();
-      });
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Failed to fetch random Hockey Wordle answer');
+      }
+      return response.json();
+    });
 };
 
 

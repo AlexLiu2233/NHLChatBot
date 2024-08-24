@@ -1,5 +1,5 @@
 conn = new Mongo();
-db = conn.getDB("cpen322-messenger");
+db = conn.getDB("HockeyWordleAnswers");
 db.dropDatabase();
 imgHost = '/images/';
 
