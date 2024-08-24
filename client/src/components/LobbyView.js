@@ -66,8 +66,8 @@ const LobbyView = ({ rooms = [], setRooms }) => {
                         {rooms.map((room) => (
                             <li key={room._id} className="room">
                                 <Link to={{
-                                    pathname: `/chat/${room._id}`,
-                                    state: { image: room.image }
+                                    pathname: `/chat/${room._id}`, // Navigates to ChatView with the room ID
+                                    state: { image: room.image } // Pass additional state, like the room image
                                 }} className="room-link">
                                     <img className="chat-icon" src={room.image} alt={room.name} />
                                     {room.name}

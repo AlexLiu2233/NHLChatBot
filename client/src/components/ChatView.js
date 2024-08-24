@@ -30,7 +30,7 @@ import '../style.css';
 const ChatView = ({ socket }) => {
   const { roomId } = useParams();
   const location = useLocation();
-  const roomImage = location.state?.image;
+  const roomImage = location.state?.image || ''; // Default to empty string if no image provided
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
   const [profile, setProfile] = useState(null); // Store user profile
@@ -90,7 +90,7 @@ const ChatView = ({ socket }) => {
       console.log('Received event:', event);
       const data = JSON.parse(event.data);
       if (data.roomId === roomId) {
-        setMessages(prevMessages => [...prevMessages, { username: profile.username, text: data.text }]);
+        setMessages(prevMessages => [...prevMessages, { username: data.username, text: data.text }]);
       }
     };
   
@@ -119,7 +119,7 @@ const ChatView = ({ socket }) => {
         socket.removeEventListener('error', handleError);
       }
     };
-  }, [roomId, socket]);
+  }, [roomId, socket, profile]);
   
 
   useEffect(() => {
