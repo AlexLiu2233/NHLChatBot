@@ -29,7 +29,7 @@ import { Link } from 'react-router-dom';
 import { Service } from './Service';
 import '../style.css';
 
-const LobbyView = ({ rooms, setRooms }) => {
+const LobbyView = ({ rooms = [], setRooms }) => {
   useEffect(() => {
     const fetchRooms = async () => {
       try {
@@ -57,7 +57,7 @@ const LobbyView = ({ rooms, setRooms }) => {
       <div id="page-view">
         <div className="content">
           <ul className="room-list">
-            {rooms.map((room) => (
+            {rooms?.map((room) => (
               <li key={room._id} className="room">
                 <Link to={{
                   pathname: `/chat/${room._id}`,
