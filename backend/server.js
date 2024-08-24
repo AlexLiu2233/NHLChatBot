@@ -1,25 +1,9 @@
 /**
- * SessionManager.js
+ * server.js
  * 
- * This file defines the SessionManager class which handles session management using cookies.
- * It provides methods for creating sessions, deleting sessions, and middleware for session validation.
- * 
- * Methods:
- * - createSession: Creates a new session and sets a cookie in the response.
- * - deleteSession: Deletes a session based on the request.
- * - middleware: Middleware for validating sessions in incoming requests.
- * - getUsername: Fetches the username associated with a session token.
- * 
- * Dependencies:
- * - crypto: Node.js module for generating random tokens.
- * 
- * Connected Files:
- * - This module is imported and used in server.js for session management.
- * 
- * Usage:
- * Create an instance of the SessionManager class and use its methods for managing user sessions.
+ * This file sets up the Express server, handles API routes, WebSocket connections, and session management.
+ * It also serves static files and provides a framework for interaction with a MongoDB database.
  */
-
 
 const express = require('express');
 const path = require('path');
@@ -62,6 +46,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(clientApp)); // Serve static files
 
+// Serve static files from the 'images' directory
+// Serve static files from the '../images' directory
+app.use('/images', express.static(path.join(__dirname, '../images')));
+
+
 // Logging middleware for debugging
 app.use((req, res, next) => {
     console.log(`${new Date()} - ${req.method} ${req.path}`);
@@ -74,7 +63,6 @@ app.get('/chat', protectRoute, (req, res) => {
         const roomList = rooms.map(room => ({
             _id: room._id,
             name: room.name,
-            // Fixing image path
             image: room.image || '/assets/default-room-icon.png',
             messages: messages[room._id.toString()] || []
         }));
